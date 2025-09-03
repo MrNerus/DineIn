@@ -1,0 +1,28 @@
+button {
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: 1s ease-in-out;
+}
+
+button:hover * {
+    color: red;
+    fill: red;
+}
+
+i {
+    font-size: 3rem;
+}
+svg {
+    width: 3rem;
+    height: 3rem;
+    fill: #f5f5f5;
+    filter: drop-shadow(0 0 0.1rem #ffffff20) drop-shadow(0 0 0.2rem #ffffff20) drop-shadow(0 0 0.3rem #e6007320) drop-shadow(0 0 0.4rem #e6007320) drop-shadow(0 0 0.5rem #e6007320) drop-shadow(0 0 0.6rem #e6007320) drop-shadow(0 0 0.7rem #e6007320);
+}
+
+section {
+    width: min(100%, 50rem);
+    margin: 1rem;
+}

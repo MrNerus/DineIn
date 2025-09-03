@@ -1,1 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --focus-color: #ff0000;
+    --background-color: #0a0a0a;
+}
+
+
+.glass {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5rem);
+    -webkit-backdrop-filter: blur(5rem);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0rem 0.5rem 0.5rem 0 rgba(31, 38, 135, 0.37);
+    color: #f5f5f5;
+}
+.glowText {
+    text-shadow: 0 0 0.1rem #ffffff10, 0 0 0.2rem #ffffff10, 0 0 0.3rem #e6007310, 0 0 0.4rem #e6007310, 0 0 0.5rem #e6007310, 0 0 0.6rem #e6007310, 0 0 0.7rem #e60073;
+}
+.glass:hover {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0.5rem 0.5rem 0.5rem 0 rgba(31, 38, 135, 0.47);
+    transition: all 0.3s ease-in-out;
+}
+
+.grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+.span-col-2 {
+    grid-column: span 2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.body {
+    background: radial-gradient(circle at top left,
+              #ff003c 0%, 
+              #99001a 5%, 
+              #290007 20%, 
+              #000000 100%);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    place-items: center;
+    
+}
