@@ -1,0 +1,19 @@
+.contact-container {
+  padding: 2rem;
+}
+
+.branches, .social-media {
+  margin-bottom: 2rem;
+}
+
+.branch {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.social-media a {
+  display: inline-block;
+  margin-right: 1rem;
+  font-weight: bold;
+}

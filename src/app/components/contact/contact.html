@@ -1,0 +1,21 @@
+<div class="contact-container">
+  <h2>Contact Us</h2>
+
+  <div class="branches">
+    <h3>Our Branches</h3>
+    @for (branch of branches(); track branch.name) {
+      <div class="branch">
+        <h4>{{ branch.name }}</h4>
+        <p>{{ branch.address }}</p>
+        <p>Phone: {{ branch.phone }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="social-media">
+    <h3>Follow Us</h3>
+    @for (social of socialMedia(); track social.name) {
+      <a [href]="social.url" target="_blank">{{ social.name }}</a>
+    }
+  </div>
+</div>

@@ -1,0 +1,21 @@
+
+[
+  {
+    "name": "Classic Burger",
+    "description": "A juicy beef patty with lettuce, tomato, and our special sauce.",
+    "price": 12.99,
+    "image": "assets/images/burger.jpg"
+  },
+  {
+    "name": "Margherita Pizza",
+    "description": "Classic pizza with fresh mozzarella, tomatoes, and basil.",
+    "price": 15.99,
+    "image": "assets/images/pizza.jpg"
+  },
+  {
+    "name": "Caesar Salad",
+    "description": "Crisp romaine lettuce with parmesan cheese, croutons, and Caesar dressing.",
+    "price": 9.99,
+    "image": "assets/images/salad.jpg"
+  }
+]

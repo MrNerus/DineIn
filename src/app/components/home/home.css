@@ -1,13 +1,12 @@
-button {
+a {
     font-size: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    transition: 1s ease-in-out;
 }
 
-button:hover * {
+a:hover * {
     color: red;
     fill: red;
 }

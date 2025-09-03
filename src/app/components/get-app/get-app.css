@@ -1,0 +1,13 @@
+.get-app-container {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.buttons {
+  margin-top: 2rem;
+}
+
+button {
+  margin: 0 1rem;
+  font-size: 1rem;
+}

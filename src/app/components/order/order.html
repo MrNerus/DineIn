@@ -1,0 +1,42 @@
+<div class="order-container">
+  <div class="menu">
+    <h2>Menu</h2>
+    @for (item of menu(); track item.name) {
+      <div class="menu-item">
+        <img [src]="item.image" [alt]="item.name">
+        <div class="item-details">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+          <p class="price">{{ item.price | currency }}</p>
+        </div>
+        <button (click)="addToOrder(item)">Add to Order</button>
+      </div>
+    }
+  </div>
+
+  <div class="order-summary">
+    <h2>Order Summary</h2>
+    @for (orderItem of order(); track orderItem.item.name) {
+      <div class="order-item">
+        <div class="item-details">
+          <h3>{{ orderItem.item.name }}</h3>
+          <p class="price">{{ orderItem.item.price | currency }}</p>
+        </div>
+        <div class="quantity-controls">
+          <button (click)="removeFromOrder(orderItem.item)">-</button>
+          <span>{{ orderItem.quantity }}</span>
+          <button (click)="addToOrder(orderItem.item)">+</button>
+        </div>
+      </div>
+    }
+
+    @if (order().length > 0) {
+      <div class="total">
+        <h3>Total: {{ total() | currency }}</h3>
+        <button>Proceed to Checkout</button>
+      </div>
+    } @else {
+      <p>Your order is empty.</p>
+    }
+  </div>
+</div>
