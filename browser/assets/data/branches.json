@@ -1,0 +1,33 @@
+
+{
+  "locations": [
+    {
+      "name": "Downtown Branch",
+      "address": "123 Main St, Anytown, USA",
+      "phone": "555-123-4567",
+      "lat": 34.052235,
+      "lng": -118.243683
+    },
+    {
+      "name": "Uptown Branch",
+      "address": "456 Oak Ave, Anytown, USA",
+      "phone": "555-987-6543",
+      "lat": 34.062235,
+      "lng": -118.253683
+    }
+  ],
+  "socialMedia": [
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://www.twitter.com"
+    }
+  ]
+}
