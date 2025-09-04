@@ -1,39 +1,39 @@
 <div class="order-container">
-  <div class="menu">
+  <div class="menu glass">
     <h2>Menu</h2>
     @for (item of menu(); track item.name) {
-      <div class="menu-item">
+      <div class="menu-item glass">
         <img [src]="item.image" [alt]="item.name">
         <div class="item-details">
           <h3>{{ item.name }}</h3>
           <p>{{ item.description }}</p>
           <p class="price">{{ item.price | currency }}</p>
         </div>
-        <button (click)="addToOrder(item)">Add to Order</button>
+        <button (click)="addToOrder(item)" class="glass"><i class="material-icons">add_shopping_cart</i></button>
       </div>
     }
   </div>
 
-  <div class="order-summary">
+  <div class="order-summary glass">
     <h2>Order Summary</h2>
     @for (orderItem of order(); track orderItem.item.name) {
-      <div class="order-item">
+      <div class="order-item glass">
         <div class="item-details">
           <h3>{{ orderItem.item.name }}</h3>
           <p class="price">{{ orderItem.item.price | currency }}</p>
         </div>
         <div class="quantity-controls">
-          <button (click)="removeFromOrder(orderItem.item)">-</button>
+          <button (click)="removeFromOrder(orderItem.item)" class="glass"><i class="material-icons">remove</i></button>
           <span>{{ orderItem.quantity }}</span>
-          <button (click)="addToOrder(orderItem.item)">+</button>
+          <button (click)="addToOrder(orderItem.item)" class="glass"><i class="material-icons">add</i></button>
         </div>
       </div>
     }
 
     @if (order().length > 0) {
-      <div class="total">
+      <div class="total glass">
         <h3>Total: {{ total() | currency }}</h3>
-        <button>Proceed to Checkout</button>
+        <button class="glass"><i class="material-icons">shopping_cart_checkout</i></button>
       </div>
     } @else {
       <p>Your order is empty.</p>
