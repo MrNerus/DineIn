@@ -1,12 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { DataService } from '../../services/data';
+import { DataService } from '../../../services/data';
 import { CommonModule } from '@angular/common';
 
 export interface MenuItem {
+  id: number;
+  category: number;
   name: string;
   description: string;
   price: number;
   image: string;
+}
+
+export interface CategoryItem {
+  id: number;
+  name: string;
+  description: string;
+  items: MenuItem[];
 }
 
 export interface OrderItem {
@@ -24,7 +33,7 @@ export interface OrderItem {
 export class OrderComponent {
   private dataService = inject(DataService);
 
-  menu = signal<MenuItem[]>([]);
+  menu = signal<CategoryItem[]>([]);
   order = signal<OrderItem[]>([]);
 
   total = computed(() => {
@@ -35,7 +44,7 @@ export class OrderComponent {
       this.dataService.getMenu().subscribe(data => {
         this.menu.set(data);
       });
-    }   
+    }
 
   addToOrder(item: MenuItem) {
     const existingItem = this.order().find(orderItem => orderItem.item.name === item.name);

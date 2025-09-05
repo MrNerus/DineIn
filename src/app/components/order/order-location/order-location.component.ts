@@ -1,35 +1,29 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { DataService } from '../../services/data';
+import { DataService } from '../../../services/data';
 import { CommonModule } from '@angular/common';
 
-export interface Branch {
+interface Branch {
+  identifier: string;
   name: string;
   address: string;
   phone: string;
 }
 
-export interface SocialMedia {
-  name: string;
-  url: string;
-}
-
 @Component({
-  selector: 'app-contact',
+  selector: 'app-order-location',
   imports: [CommonModule],
-  templateUrl: './contact.html',
-  styleUrl: './contact.css',
+  templateUrl: './order-location.html',
+  styleUrl: './order-location.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactComponent {
+export class OrderLocationComponent {
   private dataService = inject(DataService);
 
   branches = signal<Branch[]>([]);
-  socialMedia = signal<SocialMedia[]>([]);
 
   ngOnInit() {
     this.dataService.getBranches().subscribe((data: any) => {
       this.branches.set(data.locations);
-      this.socialMedia.set(data.socialMedia);
     });
   }
 }

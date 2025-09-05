@@ -1,9 +1,9 @@
 <main class="grid grid-center">
   <div class="contact-container glass">
     <h2>Contact Us</h2>
-  
-    <div class="branches">
-      <h3>Our Branches</h3>
+
+    <div class="branches grid grid-2">
+      <h3 class="span-col-2">Our Branches</h3>
       @for (branch of branches(); track branch.name) {
         <div class="branch glass">
           <h4>{{ branch.name }}</h4>
@@ -12,7 +12,7 @@
         </div>
       }
     </div>
-  
+
     <div class="social-media">
       <h3>Follow Us</h3>
       @for (social of socialMedia(); track social.name) {
