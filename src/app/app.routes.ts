@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path: 'order', component: OrderLocationComponent },
   { path: 'DineIn/', component: HomeComponent },
   { path: 'DineIn/order', component: OrderComponent },
-  { path: 'DineIn/dine-in', component: DineInComponent },
+  { path: 'DineIn/dine-in-and-takeaway', component: DineInAndTakeawayComponent },
   { path: 'DineIn/booking', component: BookingComponent },
   { path: 'DineIn/location', component: LocationComponent },
   { path: 'DineIn/get-app', component: GetAppComponent },
