@@ -1,15 +1,22 @@
 <div class="order-container">
   <div class="menu glass">
     <h2>Menu</h2>
-    @for (item of menu(); track item.name) {
-      <div class="menu-item glass">
-        <img [src]="item.image" [alt]="item.name">
-        <div class="item-details">
-          <h3>{{ item.name }}</h3>
-          <p>{{ item.description }}</p>
-          <p class="price">{{ item.price | currency }}</p>
-        </div>
-        <button (click)="addToOrder(item)" class="glass"><i class="material-icons">add_shopping_cart</i></button>
+    @for (category of menu(); track category.id) {
+      <div class="menu-category glass">
+        <h3>{{ category.name }}</h3>
+        <p>{{ category.description }}</p>
+         @for (item of category.items; track item.id) {
+          <div class="menu-item glass">
+            <img [src]="item.image" [alt]="item.name" *ngIf="item.image">
+            <i class="material-icons" *ngIf="!item.image">fastfood</i>
+            <div class="item-details">
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.description }}</p>
+              <p class="price">{{ item.price | currency }}</p>
+            </div>
+            <button (click)="addToOrder(item)" class="glass"><i class="material-icons">add_shopping_cart</i></button>
+          </div>
+        }
       </div>
     }
   </div>

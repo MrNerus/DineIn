@@ -2,14 +2,48 @@
 {
   "locations": [
     {
-      "name": "Downtown Branch",
+      "identifier": "Amadora",
+      "name": "Savana Sushi - Amadora",
       "address": "123 Main St, Anytown, USA",
       "phone": "555-123-4567",
       "lat": 34.052235,
       "lng": -118.243683
     },
     {
-      "name": "Uptown Branch",
+      "identifier": "Ajuda",
+      "name": "Ajuda",
+      "address": "456 Oak Ave, Anytown, USA",
+      "phone": "555-987-6543",
+      "lat": 34.062235,
+      "lng": -118.253683
+    },
+    {
+      "identifier": "Oerias",
+      "name": "Oerias",
+      "address": "456 Oak Ave, Anytown, USA",
+      "phone": "555-987-6543",
+      "lat": 34.062235,
+      "lng": -118.253683
+    },
+    {
+      "identifier": "MemMartinsSintra",
+      "name": "Mem Martins Sintra",
+      "address": "456 Oak Ave, Anytown, USA",
+      "phone": "555-987-6543",
+      "lat": 34.062235,
+      "lng": -118.253683
+    },
+    {
+      "identifier": "Odivelas",
+      "name": "Odivelas",
+      "address": "456 Oak Ave, Anytown, USA",
+      "phone": "555-987-6543",
+      "lat": 34.062235,
+      "lng": -118.253683
+    },
+    {
+      "identifier": "SantAna",
+      "name": "Sant'Ana",
       "address": "456 Oak Ave, Anytown, USA",
       "phone": "555-987-6543",
       "lat": 34.062235,

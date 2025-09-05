@@ -4,49 +4,49 @@
     <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Name</label>
-        <input id="name" formControlName="name">
+        <input id="name" formControlName="name" class="glass">
         @if (bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched) {
           <div class="error">Name is required.</div>
         }
       </div>
-  
+
       <div class="form-group">
         <label for="contact">Contact</label>
-        <input id="contact" formControlName="contact">
+        <input id="contact" formControlName="contact" class="glass">
         @if (bookingForm.get('contact')?.invalid && bookingForm.get('contact')?.touched) {
           <div class="error">A valid contact number is required.</div>
         }
       </div>
-  
+
       <div class="form-group">
         <label for="date">Date</label>
-        <input id="date" type="date" formControlName="date">
+        <input id="date" type="date" formControlName="date" class="glass">
         @if (bookingForm.get('date')?.invalid && bookingForm.get('date')?.touched) {
           <div class="error">Date is required.</div>
         }
       </div>
-  
+
       <div class="form-group">
         <label for="time">Time</label>
-        <input id="time" type="time" formControlName="time">
+        <input id="time" type="time" formControlName="time" class="glass">
         @if (bookingForm.get('time')?.invalid && bookingForm.get('time')?.touched) {
           <div class="error">Time is required.</div>
         }
       </div>
-  
+
       <div class="form-group">
         <label for="numberOfPeople">Number of People</label>
-        <input id="numberOfPeople" type="number" formControlName="numberOfPeople">
+        <input id="numberOfPeople" type="number" formControlName="numberOfPeople" class="glass">
         @if (bookingForm.get('numberOfPeople')?.invalid && bookingForm.get('numberOfPeople')?.touched) {
           <div class="error">At least one person is required.</div>
         }
       </div>
-  
+
       <div class="form-group">
         <label for="remarks">Remarks</label>
-        <textarea id="remarks" formControlName="remarks"></textarea>
+        <textarea id="remarks" formControlName="remarks" class="glass"></textarea>
       </div>
-  
+
       <button type="submit" [disabled]="bookingForm.invalid" class="glass">Book Now</button>
     </form>
   </div>

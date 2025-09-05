@@ -89,6 +89,9 @@ h1, h2, h3, h4, h5, h6 {
     gap: 2rem;
 }
 
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
 .grid-3 {
     grid-template-columns: repeat(3, 1fr);
 }
@@ -98,6 +101,9 @@ h1, h2, h3, h4, h5, h6 {
 .span-col-2 {
     grid-column: span 2;
 }
+.span-col-3 {
+    grid-column: span 3;
+}
 .grid-center {
   width: 100%;
     place-items: center;
@@ -106,9 +112,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .body  {
     background: radial-gradient(circle at top left,
-              #ff003c 0%, 
-              #99001a 5%, 
-              #290007 20%, 
+              #ff003c 0%,
+              #99001a 5%,
+              #290007 20%,
               #000000 100%);
     min-height: 100vh;
     height: 100vh;

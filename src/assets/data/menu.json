@@ -1,21 +1,828 @@
-
 [
-  {
-    "name": "Classic Burger",
-    "description": "A juicy beef patty with lettuce, tomato, and our special sauce.",
-    "price": 12.99,
-    "image": "assets/images/burger.jpg"
-  },
-  {
-    "name": "Margherita Pizza",
-    "description": "Classic pizza with fresh mozzarella, tomatoes, and basil.",
-    "price": 15.99,
-    "image": "assets/images/pizza.jpg"
-  },
-  {
-    "name": "Caesar Salad",
-    "description": "Crisp romaine lettuce with parmesan cheese, croutons, and Caesar dressing.",
-    "price": 9.99,
-    "image": "assets/images/salad.jpg"
-  }
-]
+    {
+        "id": 2949969,
+        "name": "Entrada",
+        "description": "Entrada",
+        "items": [
+            {
+                "id": 17521121,
+                "category": 2949969,
+                "name": "2X1 Gyozas  Frango",
+                "description": "Gyozas de Frango 4 unidade",
+                "price": 6.5
+            },
+            {
+                "id": 17521120,
+                "category": 2949969,
+                "name": "2X1 Spring Rolls",
+                "description": "Mini Crepes / Spring Rolls.\n\n5 pieces.",
+                "price": 6.5
+            },
+            {
+                "id": 17533224,
+                "category": 2949969,
+                "name": "Miso Sopa",
+                "description": "Miso Soup sem tofu",
+                "price": 5.5
+            },
+            {
+                "id": 17533234,
+                "category": 2949969,
+                "name": "Sopa de Salmão",
+                "description": "Sopa de salmão",
+                "price": 5.5
+            },
+            {
+                "id": 17533225,
+                "category": 2949969,
+                "name": "Sunomono Salada",
+                "description": "Salada de pepino com molho japonês e algas",
+                "price": 4.99
+            },
+            {
+                "id": 17533227,
+                "category": 2949969,
+                "name": "Kimuche Salmão",
+                "description": "Molho kimuchi, salmão, cebola roxa e sementes de sésamo",
+                "price": 8.5
+            },
+            {
+                "id": 17533236,
+                "category": 2949969,
+                "name": "Kimuchi de Salmão Smokey",
+                "description": "Molho kimuchi, salmão cozido no vapor, cebola roxa, cebolinho e sementes de sésamo",
+                "price": 8.9
+            }
+        ]
+    },
+    {
+        "id": 2949970,
+        "name": "sushi fritar",
+        "description": null,
+        "items": [
+            {
+                "id": 17521122,
+                "category": 2949970,
+                "name": "Temaki Frito Novo",
+                "description": "Temaki salmão com Philadelphia frito",
+                "price": 6.5
+            },
+            {
+                "id": 17521123,
+                "category": 2949970,
+                "name": "Mix Hot Box -18 Peças",
+                "description": "Mix hot box de 8 hot roll, 4 gyosas fritas, 2 gunkan braseados e 4 crepes",
+                "price": 13.9
+            },
+            {
+                "id": 17521124,
+                "category": 2949970,
+                "name": "Hot Gambas Roll",
+                "description": "8 unidades de hot gambas roll chef freesytle",
+                "price": 6.9
+            },
+            {
+                "id": 17538961,
+                "category": 2949970,
+                "name": "Hot Roll de salmao",
+                "description": "Hot Roll de salmao",
+                "price": 6.5
+            },
+            {
+                "id": 17538964,
+                "category": 2949970,
+                "name": "Hot Filadélfia",
+                "description": "Hot Philadelphia (roll panado de salmão e Philadelphia) 8 unidades",
+                "price": 6.5
+            },
+            {
+                "id": 17538987,
+                "category": 2949970,
+                "name": "Makis Quente 8 Peças",
+                "description": "Makis quentes 8 peças de salmão, Philadelphia e manga chef freestyle",
+                "price": 7.9
+            }
+        ]
+    },
+    {
+        "id": 2952214,
+        "name": "Promoçoes 2X1 = 2 POR 1",
+        "description": null,
+        "items": [
+            {
+                "id": 17533263,
+                "category": 2952214,
+                "name": "2X1 SAVANA MISTO 2 - 20 Peças",
+                "description": "SAVANA MISTO 2 - 20 Peças\n4 URAMAKI ,6 NIGIRI MIX , 6 HSSOMAKI MIX , 4 HOTROLL\ncombinado de sushi em Promoço",
+                "price": 24.9
+            },
+            {
+                "id": 17533264,
+                "category": 2952214,
+                "name": "2X1 SAVANA Mix Sushi M- 18 Peças",
+                "description": "Mix Sushi M (18 UNIDADES)\n18 PEÇAS DE SUSHI COM Uramaki ,Fotomaki,Sashimi ,Nigiri,,Hosomaki",
+                "price": 24.5
+            },
+            {
+                "id": 17533265,
+                "category": 2952214,
+                "name": "2X1 Saki Hot Roll - 8 Peças",
+                "description": "Mix hot  rolls com Philadelphia e cebola frita -",
+                "price": 10.9
+            },
+            {
+                "id": 17533267,
+                "category": 2952214,
+                "name": "2X1 Promo Hosomaki",
+                "description": "10 unidades de misto hosomaki",
+                "price": 11.9
+            }
+        ]
+    },
+    {
+        "id": 2952215,
+        "name": "Savana Premium Box",
+        "description": null,
+        "items": [
+            {
+                "id": 17533272,
+                "category": 2952215,
+                "name": "Savana Mix Sushi A+ 40 Peças",
+                "description": "combinado mix sushi Mixed sushi de (Mix Hosomaki , Mix Nigiri, foutomaki, Mix uramaki, gunkan, sashimi, hot roll e Mais chef-freestyle, . Fusion combinado de Tudos 40 peças .",
+                "price": 29.99
+            },
+            {
+                "id": 17533274,
+                "category": 2952215,
+                "name": "Royal savana 40 Peças",
+                "description": "Combinado de Sushi ( peças de uramaki, peças de futomaki, peças de mix hosomaki, peças mix nigiri , 1 Gunkan , Sashimi salmon Fresco )",
+                "price": 31.9
+            },
+            {
+                "id": 17533277,
+                "category": 2952215,
+                "name": "Savana Caixa M Salmão A+",
+                "description": "Savana caixa m de 30 peças (2 gunkan, 4 hosomaki, 8 uramaki, 4 nigiri e 4 sashimi salmão e 8 sunset roll)",
+                "price": 25.9
+            },
+            {
+                "id": 17533278,
+                "category": 2952215,
+                "name": "Savana Mix Sushi (70 Unidades)",
+                "description": "combinado de 70 peças de sushi, incluindo misto sashimi, misto nigiri, gunkan de salmão, uramaki, futomaki, hosomaki à chef freestyle",
+                "price": 54.9
+            },
+            {
+                "id": 17533280,
+                "category": 2952215,
+                "name": "Savana Jantar Box",
+                "description": "18 peças de sushi (4 peças de uramaki, 4 peças de hosomaki, 3 peças de futomaki, 2 peças de nigiri, 2 peças gunkan e 3 peças de sashimi)",
+                "price": 14.9
+            }
+        ]
+    },
+    {
+        "id": 2952216,
+        "name": "Combinados Caixa Oferta Espumante \\ Vinhos",
+        "description": null,
+        "items": [
+            {
+                "id": 17533284,
+                "category": 2952216,
+                "name": "Combi Mix Sushi (Party-pak) Oferta Vinho\\Espumante",
+                "description": "Combinado de 60 peças de sushi, incluindo uramaki, sashimi, nigiri, gunkan, futomaki, hosomaki, temaki e hot roll - chef freestyle, acompanhado com vinho garrafa ou espumante/champagne",
+                "price": 51.9
+            },
+            {
+                "id": 17533287,
+                "category": 2952216,
+                "name": "Combi Mix Sushi (Couple-Pak Oferta Vinho\\ Espumante)",
+                "description": "Combinado de 30 peças de sushi, incluindo uramaki-8, sashimi-8, nigiri-4, gunkan-2, hosomaki-6, temaki-2) com um vinho garrafa ou espumante/ champagne",
+                "price": 27.9
+            },
+            {
+                "id": 17533288,
+                "category": 2952216,
+                "name": "Promo Mix 80 Peças (Oferta Espumante\\Venho)",
+                "description": "Combinado de 80 peças de sushi incluindo misto de sashimi, misto de nigiri, gunkan de salmão, uramaki, futomaki, hosomak e chef freestyle, acompanhado com espumante grátis",
+                "price": 61.9
+            },
+            {
+                "id": 17533290,
+                "category": 2952216,
+                "name": "Combi Mix 90 Peças (Oferta Espumante\\venho)",
+                "description": "Combinado de 90 peças de sushi incluindo misto de Sashimi, misto de Nigiri, Gunkan de Salmão, Uramaki, Futomaki, Hosomak , Hotroll e chef freestyle -VINHO \\espumante GRATIS .",
+                "price": 76.9
+            }
+        ]
+    },
+    {
+        "id": 2952218,
+        "name": "Savana Special Sushi Caixa",
+        "description": null,
+        "items": [
+            {
+                "id": 17533302,
+                "category": 2952218,
+                "name": "Sushi Caixa 1 - 26 Peças",
+                "description": "26 peças (7 unidade de salmão e atum nigiri, 8 pecas de uramaki e 8 peças de salmão hossomaki, 3 unidade de sashimi salmao )",
+                "price": 15.99
+            },
+            {
+                "id": 17533305,
+                "category": 2952218,
+                "name": "Box 2 -Hosomaki",
+                "description": "Hosomaki 18 unidades de salmão.",
+                "price": 10.9
+            },
+            {
+                "id": 17533303,
+                "category": 2952218,
+                "name": "Box 3 - Makis Misto 26 Peças",
+                "description": "Makis misto 26 Peças de uramaki + Hosomaki e foutomaki .",
+                "price": 16.5
+            },
+            {
+                "id": 17533304,
+                "category": 2952218,
+                "name": "Sushi Caixa 5 - 26 Peças A+",
+                "description": "26 peças (7 unidades de salmão nigiri, 8 peças de uramaki e 8 peças de salmão hossomaki e 3 sashimi de salmão)",
+                "price": 15.5
+            },
+            {
+                "id": 17533307,
+                "category": 2952218,
+                "name": "Sushi Caixa 6 -26 Peças",
+                "description": "26 peças (10 unidades de nigiri, 2 salmão, 2 atum, 3 camarão e 3 peixe manteiga, 8 peças de uramaki e 8 peças de salmão hossomaki)",
+                "price": 15.9
+            }
+        ]
+    },
+    {
+        "id": 2952219,
+        "name": "Savana Sashimi Fresco",
+        "description": null,
+        "items": [
+            {
+                "id": 17533527,
+                "category": 2952219,
+                "name": "Sashimi Salmão 10 Unidades",
+                "description": "Sashimi salmão de 10 unidades",
+                "price": 7.9
+            },
+            {
+                "id": 17533529,
+                "category": 2952219,
+                "name": "Sashimi Salmão 20 Unidades",
+                "description": "Sashimi salmão 20 unidades",
+                "price": 14.9
+            },
+            {
+                "id": 17533531,
+                "category": 2952219,
+                "name": "Sashimi Misto 20 Peças",
+                "description": "Sashimi misto, 20 peças de salmão e atum",
+                "price": 15.9
+            },
+            {
+                "id": 17533532,
+                "category": 2952219,
+                "name": "Tataki Misto 20 Peças (Braseado)",
+                "description": "Tataki misto 20 peças, fatias de sashimi de salmão e sashimi de atum braseado",
+                "price": 16.9
+            }
+        ]
+    },
+    {
+        "id": 2952221,
+        "name": "Gunkan",
+        "description": null,
+        "items": [
+            {
+                "id": 17533314,
+                "category": 2952221,
+                "name": "Gunkan Misto 4 Unidades",
+                "description": "4 peças, misto gunkan de salmão, salmão Philadelphia e gunkan salmão braseado",
+                "price": 6.5
+            },
+            {
+                "id": 17533316,
+                "category": 2952221,
+                "name": "Gunkan Pepino",
+                "description": "4 unidades, gunkan de pepino com molho especial chef freestyle",
+                "price": 3.5
+            },
+            {
+                "id": 17533325,
+                "category": 2952221,
+                "name": "Gunkan Salmão",
+                "description": "4 unidades, fatias de salmão cobertura de salmão picado com cebolinho",
+                "price": 4.9
+            },
+            {
+                "id": 17533326,
+                "category": 2952221,
+                "name": "Gunkan Salmão Braseado",
+                "description": "4 unidades. Fatias de salmão e cobertura de salmão braseado com toco de cebolinia",
+                "price": 5.5
+            },
+            {
+                "id": 17533327,
+                "category": 2952221,
+                "name": "Gunkan Salmão Philadelphia",
+                "description": "4 unidades, fatias de salmão e cobertura de salmão picado com cebolinho e queijo Philadelphia",
+                "price": 4.99
+            }
+        ]
+    },
+    {
+        "id": 2952918,
+        "name": "Niguiri",
+        "description": null,
+        "items": [
+            {
+                "id": 17538795,
+                "category": 2952918,
+                "name": "Niguiri Salmao 4 Unidades",
+                "description": "Nigiri salmão, 4 unidades",
+                "price": 4.5
+            },
+            {
+                "id": 17538798,
+                "category": 2952918,
+                "name": "Niguiri Salmão Braseado 4 Unidades",
+                "description": "4 unidades, fatia de salmão braseado sobre base de arroz",
+                "price": 4.9
+            },
+            {
+                "id": 17538800,
+                "category": 2952918,
+                "name": "Niguiri Camarão 4 Unidades",
+                "description": "4 unidades, fatia de camarão sobre base de arroz",
+                "price": 5.5
+            },
+            {
+                "id": 17538804,
+                "category": 2952918,
+                "name": "Mix Niguiri 4 Unidades",
+                "description": "Mix nigiri de salmão, atum, camarão e peixe branco 4 unidades",
+                "price": 5.9
+            },
+            {
+                "id": 17538809,
+                "category": 2952918,
+                "name": "Niguiri Avacado 4 unidade",
+                "description": "4 unidades de avocado com base de arroz",
+                "price": 4.5
+            }
+        ]
+    },
+    {
+        "id": 2952921,
+        "name": "Temaki - Rollo de Mão",
+        "description": null,
+        "items": [
+            {
+                "id": 17538814,
+                "category": 2952921,
+                "name": "Temaki Salmão Philadelphia",
+                "description": "1 unidade, salmão, cebolinho e queijo Philadelphia",
+                "price": 6.5
+            },
+            {
+                "id": 17538817,
+                "category": 2952921,
+                "name": "Temaki Salmão",
+                "description": "1 unidade",
+                "price": 4.9
+            },
+            {
+                "id": 17538820,
+                "category": 2952921,
+                "name": "Temaki de Atum",
+                "description": "1 unidade temaki de atum",
+                "price": 6.9
+            },
+            {
+                "id": 17538823,
+                "category": 2952921,
+                "name": "Temaki Veggie",
+                "description": "1 unidade, abacate, manga e pepino",
+                "price": 4.1
+            },
+            {
+                "id": 17538834,
+                "category": 2952921,
+                "name": "Temaki Combi 4 Unidades",
+                "description": "4 temakis chef freesytle",
+                "price": 16.99
+            },
+            {
+                "id": 17538837,
+                "category": 2952921,
+                "name": "Tartar Salmão",
+                "description": "Tartar salmão (arroz de sushi, base com salmão em cubo, com sésamo, morango e avocado)",
+                "price": 10.5
+            },
+            {
+                "id": 17538840,
+                "category": 2952921,
+                "name": "Tartar Atum",
+                "description": "Tartar atum (arroz de sushi, base com atum em cubo, com sésamo e avocado)",
+                "price": 12.5
+            }
+        ]
+    },
+    {
+        "id": 2952930,
+        "name": "Savana Poke Bowl Special",
+        "description": null,
+        "items": [
+            {
+                "id": 17538853,
+                "category": 2952930,
+                "name": "Poke-Salmão-Ball",
+                "description": "Poke bowl (bolinha de salmão com molho teryaki e arroz, manga, abacate e rúcula), saudável bowl",
+                "price": 9.7
+            },
+            {
+                "id": 17538856,
+                "category": 2952930,
+                "name": "Poke Camarão",
+                "description": "Camarão panado com molho cocktail, edame, morango, manga, abacate, coco, caju, sunomono, cebola roxa e arroz",
+                "price": 9.8
+            },
+            {
+                "id": 17538860,
+                "category": 2952930,
+                "name": "Poke Savana A+",
+                "description": "Cubo de salmão com molho teriyaki, manga, abacate, morango, cebola roxa, edamame, caju, coco, sunomono e base de arroz",
+                "price": 10.9
+            },
+            {
+                "id": 17538869,
+                "category": 2952930,
+                "name": "Pot Classic",
+                "description": "Cubo de salmão, manga, abacate, morango, cebola frita, edamame, caju, coco, sunomono e base de arroz",
+                "price": 9.9
+            },
+            {
+                "id": 17538876,
+                "category": 2952930,
+                "name": "Poke Frango",
+                "description": "Frango panado, manga, abacate, morango, cebola roxa, edamame, caju, coco, sunomono e base de arroz",
+                "price": 9.5
+            },
+            {
+                "id": 17538883,
+                "category": 2952930,
+                "name": "Poke Cherry",
+                "description": "Tomate cherry, salmão picado, manga, abacate, morango, cebola roxa, edamame, caju, coco, sunomono e base de arroz",
+                "price": 10.9
+            },
+            {
+                "id": 17538889,
+                "category": 2952930,
+                "name": "Pot Veggie",
+                "description": "Manga, abacate, morango, cebola roxa, edamame, pepino, rúcula, coco, sunomono e base de arroz",
+                "price": 9.2
+            }
+        ]
+    },
+    {
+        "id": 2952940,
+        "name": "Vegan Caixa",
+        "description": null,
+        "items": [
+            {
+                "id": 17538895,
+                "category": 2952940,
+                "name": "Morango Roll",
+                "description": "Morango,  e topping de morango, 8 peças",
+                "price": 8.9
+            },
+            {
+                "id": 17538898,
+                "category": 2952940,
+                "name": "Vegi Caixa 2",
+                "description": "Veggie caixa 2 (uramaki de 8 peças, 6 hossomaki veggie, 2 nigiri e 2 gunkan mix)",
+                "price": 14.5
+            },
+            {
+                "id": 17538902,
+                "category": 2952940,
+                "name": "Vegi Caixa 1",
+                "description": "Veggie caixa de 16 peças (8 peças de uramaki mix, 6 peças de hosomaki de frutas e 2 gunkan mix)",
+                "price": 13.5
+            }
+        ]
+    },
+    {
+        "id": 2952944,
+        "name": "Massas",
+        "description": null,
+        "items": [
+            {
+                "id": 17538910,
+                "category": 2952944,
+                "name": "Massa Com Camarão",
+                "description": "Massa com camarão",
+                "price": 9.5
+            },
+            {
+                "id": 17538913,
+                "category": 2952944,
+                "name": "Massa Com Carne(vaca)",
+                "description": "Massa Com Carne(vaca)",
+                "price": 9.99
+            },
+            {
+                "id": 17538916,
+                "category": 2952944,
+                "name": "Massa Com Frango",
+                "description": "Massa Com Frango",
+                "price": 8.99
+            },
+            {
+                "id": 17538920,
+                "category": 2952944,
+                "name": "Massa Com Vegan",
+                "description": "1 caixa de massa acompanhada com ovo e vegetais",
+                "price": 8.9
+            },
+            {
+                "id": 17538923,
+                "category": 2952944,
+                "name": "Massa Fina Frango",
+                "description": "Massa Fina Frango",
+                "price": 8.99
+            },
+            {
+                "id": 17538926,
+                "category": 2952944,
+                "name": "Massa Fina Vegan",
+                "description": "Massa fina com legumes",
+                "price": 8.5
+            },
+            {
+                "id": 17538928,
+                "category": 2952944,
+                "name": "Massa Fina Com Carne(vaca)",
+                "description": "Massa Fina Com Carne(vaca)",
+                "price": 9.99
+            },
+            {
+                "id": 17538931,
+                "category": 2952944,
+                "name": "Massa Fina camarao",
+                "description": "Massa Fina camarao",
+                "price": 9.5
+            },
+            {
+                "id": 21798126,
+                "category": 2952944,
+                "name": "Ramen de Porco -TONKOTSU",
+                "description": "Sopa japonesa feita com caldo de frango, carne de frango Marinado com alho, ovo marinado, naruto, cebolinha, massa instante ,cogumelo, pak choi e tomate cherry .",
+                "price": 12.9
+            },
+            {
+                "id": 21798132,
+                "category": 2952944,
+                "name": "Ramen de Frango- Ritsu",
+                "description": "Sopa japonesa feita com caldo de frango, carne de frango Marinado com alho, ovo marinado, naruto, cebolinha, massa instante ,cogumelo, pak choi e tomate cherry .",
+                "price": 11.9
+            },
+            {
+                "id": 21798135,
+                "category": 2952944,
+                "name": "Ramen de Vegan",
+                "description": "Sopa vegana com edamame, brócolis, cebolinha ,cogumelo ,rebento de soja ,pak choi ,ovo marinado, massa instante e tomate cherry .",
+                "price": 10.9
+            }
+        ]
+    },
+    {
+        "id": 2952948,
+        "name": "Menu Quente \\Fritar",
+        "description": null,
+        "items": [
+            {
+                "id": 17538974,
+                "category": 2952948,
+                "name": "Savana Prawan 4 Pecas",
+                "description": "Savana camarão panado",
+                "price": 4.5
+            },
+            {
+                "id": 17538978,
+                "category": 2952948,
+                "name": "Crepes Gambas",
+                "description": "Crepes de gambas, 4 unidades",
+                "price": 4.8
+            },
+            {
+                "id": 17538983,
+                "category": 2952948,
+                "name": "Crepes",
+                "description": "Mini crepes spring roll, 5 peças",
+                "price": 6.5
+            },
+            {
+                "id": 17538993,
+                "category": 2952948,
+                "name": "Gyozas de Frango 4 unidade",
+                "description": "4 unidades de gyozas de frango",
+                "price": 6.5
+            },
+            {
+                "id": 17538998,
+                "category": 2952948,
+                "name": "Batatas Fritas",
+                "description": "Batatas Fritas",
+                "price": 3.9
+            }
+        ]
+    },
+    {
+        "id": 2952954,
+        "name": "Arroz com Acompanhamentos",
+        "description": null,
+        "items": [
+            {
+                "id": 17539012,
+                "category": 2952954,
+                "name": "Arroz Chau Chau de Camarao",
+                "description": "Arroz com vegetais, ovo e camarão",
+                "price": 8.9
+            },
+            {
+                "id": 17539014,
+                "category": 2952954,
+                "name": "Arroz Chau Chau Vaca",
+                "description": "Arroz Chau Chau Vaca",
+                "price": 9.9
+            },
+            {
+                "id": 17539018,
+                "category": 2952954,
+                "name": "Arroz Chau Chau Frango",
+                "description": "Arroz Chau Chau Frango",
+                "price": 8.2
+            },
+            {
+                "id": 17539020,
+                "category": 2952954,
+                "name": "Arroz Chau Chau Vegan",
+                "description": "Arroz Chau Chau Vegan",
+                "price": 7.9
+            }
+        ]
+    },
+    {
+        "id": 2952963,
+        "name": "Extra Molho e Mais",
+        "description": null,
+        "items": [
+            {
+                "id": 17539043,
+                "category": 2952963,
+                "name": "Molho de Soja",
+                "description": "Molho de Soja",
+                "price": 0.5
+            },
+            {
+                "id": 17539044,
+                "category": 2952963,
+                "name": "Molho Teriyaki",
+                "description": "Molho Teriyaki",
+                "price": 0.6
+            },
+            {
+                "id": 17539045,
+                "category": 2952963,
+                "name": "Molho Agridoce",
+                "description": "Molho Agridoce",
+                "price": 0.6
+            },
+            {
+                "id": 17539046,
+                "category": 2952963,
+                "name": "pauzinho extra",
+                "description": "pauzinho extra 1",
+                "price": 0.4
+            },
+            {
+                "id": 17539049,
+                "category": 2952963,
+                "name": "Pauzinha com Elastico",
+                "description": "Pauzinha com Elastico 1",
+                "price": 0.7
+            }
+        ]
+    },
+    {
+        "id": 2952966,
+        "name": "Savana Caixa Deluxe",
+        "description": null,
+        "items": [
+            {
+                "id": 17539064,
+                "category": 2952966,
+                "name": "Sushi Caixa Média 1",
+                "description": "12 peças (4 peças de uramaki, 4 peças hosomaki de salmão e vegan, 2 gunkan e 2 nigiri)",
+                "price": 7.6
+            },
+            {
+                "id": 17539056,
+                "category": 2952966,
+                "name": "Sushi Caixa Média 2 - Sashimi Lovers",
+                "description": "Sushi caixa média de 14 peças (6 peças de sashimi de salmão e atum, 4 nigiri de salmão e atum e 4 uramaki)",
+                "price": 10.9
+            },
+            {
+                "id": 17539052,
+                "category": 2952966,
+                "name": "Sushi Caixa Média 3",
+                "description": "Sushi caixa média de 12 peças (2 nigiri de salmão e atum, 6 hosomaki, 4 uramaki)",
+                "price": 7.99
+            },
+            {
+                "id": 17539061,
+                "category": 2952966,
+                "name": "Sushi Caixa Media 4",
+                "description": "12 peças de sushi (8 peças de uramaki e 4 peças de nigiri)",
+                "price": 9.9
+            }
+        ]
+    },
+    {
+        "id": 2952975,
+        "name": "Cervejas",
+        "description": null,
+        "items": [
+            {
+                "id": 17539145,
+                "category": 2952975,
+                "name": "Sagres 33 cl",
+                "description": "Sagres 33 cl",
+                "price": 2
+            },
+            {
+                "id": 17539146,
+                "category": 2952975,
+                "name": "Super Bock 33 cl",
+                "description": "Super Bock 33 cl",
+                "price": 2
+            },
+            {
+                "id": 17539147,
+                "category": 2952975,
+                "name": "Sommersby",
+                "description": "Sommersby 33 cl",
+                "price": 2.2
+            }
+        ]
+    },
+    {
+        "id": 2952976,
+        "name": "Refrigerantes",
+        "description": null,
+        "items": [
+            {
+                "id": 17539149,
+                "category": 2952976,
+                "name": "Coca Cola 33 cl",
+                "description": "Coca Cola 33 cl",
+                "price": 1.9
+            },
+            {
+                "id": 17539150,
+                "category": 2952976,
+                "name": "Ice Tea 33 cl",
+                "description": "Ice Tea 33 cl",
+                "price": 1.9
+            },
+            {
+                "id": 17539151,
+                "category": 2952976,
+                "name": "Fanta 33 cl",
+                "description": "Fanta 33 cl",
+                "price": 1.9
+            },
+            {
+                "id": 21798114,
+                "category": 2952976,
+                "name": "Guarana lata 33 Cl",
+                "description": "Guarana lata 33 Cl",
+                "price": 1.9
+            },
+            {
+                "id": 17539152,
+                "category": 2952976,
+                "name": "Água 50cl",
+                "description": "Água 50cl",
+                "price": 1.5
+            }
+        ]
+    }
+  ]
