@@ -16,4 +16,11 @@ export const routes: Routes = [
   { path: 'location', component: LocationComponent },
   { path: 'get-app', component: GetAppComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'DineIn/', component: HomeComponent },
+  { path: 'DineIn/order', component: OrderComponent },
+  { path: 'DineIn/dine-in', component: DineInComponent },
+  { path: 'DineIn/booking', component: BookingComponent },
+  { path: 'DineIn/location', component: LocationComponent },
+  { path: 'DineIn/get-app', component: GetAppComponent },
+  { path: 'DineIn/contact', component: ContactComponent },
 ];
