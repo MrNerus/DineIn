@@ -3,7 +3,7 @@
     {
       "identifier": "Amadora",
       "name": "Amadora",
-      "address": "10A Rua Doutor António José de Almeida, , 2700-269, Amadora",
+      "address": "10A Rua Doutor António José de Almeida, 2700-269, Amadora",
       "phone": "+351214952367",
       "lat": 51.5321870369761,
       "long": -0.11959615491732808,
@@ -35,12 +35,12 @@
       ]
     },
     {
-      "identifier": "SantAna",
-      "name": "Sant'Ana",
-      "address": "CC de Sant'Ana 11, 1150-052 Lisboa",
-      "phone": "+351214952367",
-      "lat": 38.73857890117687,
-      "long": -9.144315067672418,
+      "identifier": "Sintra",
+      "name": "Mem Martins Sintra",
+      "address": "Estrada do Algueirão 21, 2725-022, Amadora",
+      "phone": "+351210133261",
+      "lat": 38.80568593028966,
+      "long": -9.34300615015358,
       "socials": [
         {
           "name": "Facebook",
@@ -55,10 +55,16 @@
           "image": null
         }
       ],
+      "deliveryTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 22h40 (11 AM to 10:40 PM)"
+        }
+      ],
       "pickupTime":[
         {
           "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 23h (11 AM to 11 PM)"
+          "time": "das 11h às 22h40 (11 AM to 10:40 PM)"
         }
       ]
     }
