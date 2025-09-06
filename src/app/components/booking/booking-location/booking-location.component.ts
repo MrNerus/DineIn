@@ -4,13 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Branch } from '../../../interfaces/DTO';
 
 @Component({
-  selector: 'app-order-location',
+  selector: 'app-booking-location',
   imports: [CommonModule],
-  templateUrl: './order-location.html',
-  styleUrl: './order-location.css',
+  templateUrl: './booking-location.html',
+  styleUrl: './booking-location.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrderLocationComponent {
+export class bookingLocationComponent {
   private dataService = inject(DataService);
 
   branches = signal<Branch[]>([]);

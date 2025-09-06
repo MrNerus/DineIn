@@ -1,1 +1,37 @@
-<div id="map"></div>
+<main class="grid grid-center">
+    <div class="container glass">
+
+        @for (branch of branches(); track branch.identifier) {
+            <div class="glass">
+                <div class="data">
+                    <div>
+                        <h2>{{branch.name}}</h2>
+                    </div>
+                    <div class="glass">
+                        <p><i class="material-icons">location_on</i> {{branch.address}}</p>
+                        <P><i class="material-icons">phone</i> {{branch.phone}}</P>
+                    </div>
+                @if (branch.deliveryTime) {
+                    <div class="glass">
+                        <h3>Delivery Time:</h3>
+                        @for (time of branch.deliveryTime; track time.day) {
+                            <p>{{time.day}}: {{time.time}}</p>
+                        }
+                    </div>
+                }
+                @if (branch.pickupTime) {
+                    <div class="glass">
+                        <h3>Pickup Time:</h3>
+                        @for (time of branch.pickupTime; track time.day) {
+                            <p>{{time.day}}: {{time.time}}</p>
+                        }
+                    </div>
+                }
+            </div>
+            <br>
+            <div id="map-{{branch.identifier}}" class="map"></div>
+        </div>
+    }
+</div>
+
+</main>

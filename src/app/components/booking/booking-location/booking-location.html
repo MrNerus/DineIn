@@ -1,11 +1,12 @@
 <main class="grid grid-center">
   <div class="order-location-container glass">
-    <h2>Peça Agora (Order Now)</h2>
+    <h1>Order Now</h1>
 
     <div class="branches grid grid-2">
+      <h2 class="span-col-2">Our Branches</h2>
       @for (branch of branches(); track branch.identifier) {
-        <a class="branch glass" href="/order/{{ branch.identifier}}">
-            <i class="material-icons">location_on</i>
+        <a class="branch glass" href="/booking/{{ branch.identifier}}">
+            <i class="material-icons">map</i>
             <span>{{ branch.name }}</span>
         </a>
       }

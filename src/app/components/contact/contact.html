@@ -1,22 +1,15 @@
 <main class="grid grid-center">
   <div class="contact-container glass">
-    <h2>Contact Us</h2>
+    <h2 class="text-justify-center">Contact Us</h2>
 
-    <div class="branches grid grid-2">
-      <h3 class="span-col-2">Our Branches</h3>
-      @for (branch of branches(); track branch.name) {
+    <div class="branches grid">
+      <h3 class="text-justify-center">Our Branches</h3>
+      @for (branch of branches(); track branch.identifier) {
         <div class="branch glass">
           <h4>{{ branch.name }}</h4>
-          <p>{{ branch.address }}</p>
-          <p>Phone: {{ branch.phone }}</p>
+          <p><i class="material-icons">location_on</i> {{ branch.address }}</p>
+          <p><i class="material-icons">phone</i> {{ branch.phone }}</p>
         </div>
-      }
-    </div>
-
-    <div class="social-media">
-      <h3>Follow Us</h3>
-      @for (social of socialMedia(); track social.name) {
-        <a [href]="social.url" target="_blank" class="glass">{{ social.name }}</a>
       }
     </div>
   </div>

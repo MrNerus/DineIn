@@ -61,7 +61,7 @@
   text-align: right;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 50rem) {
   .order-container {
     grid-template-columns: 1fr;
   }
