@@ -1,67 +1,65 @@
 
-{
-  "locations": [
+[
     {
       "identifier": "Amadora",
-      "name": "Savana Sushi - Amadora",
-      "address": "123 Main St, Anytown, USA",
-      "phone": "555-123-4567",
-      "lat": 34.052235,
-      "lng": -118.243683
-    },
-    {
-      "identifier": "Ajuda",
-      "name": "Ajuda",
-      "address": "456 Oak Ave, Anytown, USA",
-      "phone": "555-987-6543",
-      "lat": 34.062235,
-      "lng": -118.253683
-    },
-    {
-      "identifier": "Oerias",
-      "name": "Oerias",
-      "address": "456 Oak Ave, Anytown, USA",
-      "phone": "555-987-6543",
-      "lat": 34.062235,
-      "lng": -118.253683
-    },
-    {
-      "identifier": "MemMartinsSintra",
-      "name": "Mem Martins Sintra",
-      "address": "456 Oak Ave, Anytown, USA",
-      "phone": "555-987-6543",
-      "lat": 34.062235,
-      "lng": -118.253683
-    },
-    {
-      "identifier": "Odivelas",
-      "name": "Odivelas",
-      "address": "456 Oak Ave, Anytown, USA",
-      "phone": "555-987-6543",
-      "lat": 34.062235,
-      "lng": -118.253683
+      "name": "Amadora",
+      "address": "10A Rua Doutor António José de Almeida, , 2700-269, Amadora",
+      "phone": "+351214952367",
+      "lat": 51.5321870369761,
+      "long": -0.11959615491732808,
+      "socials": [
+        {
+          "name": "Facebook",
+          "url": "https://www.facebook.com/savanasushi",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M80 299.3l0 212.7 116 0 0-212.7 86.5 0 18-97.8-104.5 0 0-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 .4 37 1.2l0-88.7C291.4 4 256.4 0 236.2 0 129.3 0 80 50.5 80 159.4l0 42.1-66 0 0 97.8 66 0z\" class=\"glowText\"/></svg>",
+          "image": null
+        },
+        {
+          "name": "Instagram",
+          "url": "https://www.facebook.com/savanasushi",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path d=\"M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z\"/></svg>",
+          "image": null
+        }
+      ],
+      "pickupTime":[
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 23h (11 AM to 11 PM)"
+        }
+      ],
+      "deliveryTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 23h (11 AM to 11 PM)"
+        }
+      ]
     },
     {
       "identifier": "SantAna",
       "name": "Sant'Ana",
-      "address": "456 Oak Ave, Anytown, USA",
-      "phone": "555-987-6543",
-      "lat": 34.062235,
-      "lng": -118.253683
-    }
-  ],
-  "socialMedia": [
-    {
-      "name": "Facebook",
-      "url": "https://www.facebook.com"
-    },
-    {
-      "name": "Instagram",
-      "url": "https://www.instagram.com"
-    },
-    {
-      "name": "Twitter",
-      "url": "https://www.twitter.com"
+      "address": "CC de Sant'Ana 11, 1150-052 Lisboa",
+      "phone": "+351214952367",
+      "lat": 38.73857890117687,
+      "long": -9.144315067672418,
+      "socials": [
+        {
+          "name": "Facebook",
+          "url": "https://www.facebook.com/savanasushi",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M80 299.3l0 212.7 116 0 0-212.7 86.5 0 18-97.8-104.5 0 0-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 .4 37 1.2l0-88.7C291.4 4 256.4 0 236.2 0 129.3 0 80 50.5 80 159.4l0 42.1-66 0 0 97.8 66 0z\" class=\"glowText\"/></svg>",
+          "image": null
+        },
+        {
+          "name": "Instagram",
+          "url": "https://www.facebook.com/savanasushi",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path d=\"M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z\"/></svg>",
+          "image": null
+        }
+      ],
+      "pickupTime":[
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 23h (11 AM to 11 PM)"
+        }
+      ]
     }
   ]
-}
