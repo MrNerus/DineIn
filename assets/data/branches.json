@@ -32,12 +32,29 @@
           "day": "Segunda a domingo (Monday to Sunday)",
           "time": "das 11h às 23h (11 AM to 11 PM)"
         }
-      ]
+      ],
+      "openingTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 15h30, das 18h às 23h (11 AM to 3:40 PM, 6 PM to 11 PM), "
+        }
+      ],
+      "redirects": {
+        "reservation": "https://www.google.com/search?q=redirect+link+for+reservation",
+        "delivery": "https://www.google.com/search?q=redirect+link+for+delivery",
+        "pickup": "https://www.google.com/search?q=redirect+link+for+pickup",
+        "googleReview": "https://www.google.com/search?q=savana+sushi+amadora",
+        "pdf": {
+          "takeaway": "assets/pdfs/menu.pdf",
+          "dinein1": "assets/pdfs/menu.pdf",
+          "dinein2": "assets/pdfs/menu.pdf"
+        }
+      }
     },
     {
       "identifier": "Sintra",
-      "name": "Mem Martins Sintra",
-      "address": "Estrada do Algueirão 21, 2725-022, Amadora",
+      "name": "Mem-Martins Sintra",
+      "address": "Estrada do Algueirão 21, 2725-022, Mem-Martins",
       "phone": "+351210133261",
       "lat": 38.80568593028966,
       "long": -9.34300615015358,
@@ -66,6 +83,24 @@
           "day": "Segunda a domingo (Monday to Sunday)",
           "time": "das 11h às 22h40 (11 AM to 10:40 PM)"
         }
-      ]
+      ],
+      "openingTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "time": "das 11h às 15h30, das 18h às 23h (11 AM to 3:40 PM, 6 PM to 11 PM), "
+        }
+      ],
+      "redirects": {
+        "reservation": "https://www.google.com/search?q=redirect+link+for+reservation",
+        "delivery": "https://www.google.com/search?q=redirect+link+for+delivery",
+        "pickup": "https://www.google.com/search?q=redirect+link+for+pickup",
+        "googleReview": "https://www.google.com/search?q=savana+sushi+mem+martins",
+
+        "pdf": {
+          "takeaway": "assets/pdfs/menu.pdf",
+          "dinein1": "assets/pdfs/menu.pdf",
+          "dinein2": "assets/pdfs/menu.pdf"
+        }
+      }
     }
   ]
