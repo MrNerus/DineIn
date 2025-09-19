@@ -40,9 +40,9 @@
         }
       ],
       "redirects": {
-        "reservation": "https://www.google.com/search?q=redirect+link+for+reservation",
-        "delivery": "https://www.google.com/search?q=redirect+link+for+delivery",
-        "pickup": "https://www.google.com/search?q=redirect+link+for+pickup",
+        "reservation": "https://reservation.umai.io/en/widget/savana-sushi-amadora",
+        "delivery": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
+        "pickup": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
         "googleReview": "https://www.google.com/search?q=savana+sushi+amadora",
         "pdf": {
           "takeaway": "assets/pdfs/menu.pdf",
@@ -91,9 +91,9 @@
         }
       ],
       "redirects": {
-        "reservation": "https://www.google.com/search?q=redirect+link+for+reservation",
-        "delivery": "https://www.google.com/search?q=redirect+link+for+delivery",
-        "pickup": "https://www.google.com/search?q=redirect+link+for+pickup",
+        "reservation": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins",
+        "delivery": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
+        "pickup": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
         "googleReview": "https://www.google.com/search?q=savana+sushi+mem+martins",
 
         "pdf": {
