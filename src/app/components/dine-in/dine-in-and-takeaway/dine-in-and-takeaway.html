@@ -1,8 +1,24 @@
 <main class="grid grid-center">
-  <div class="grid grid-2 glass">
-    <h1 class="span-col-2">Dine In or Take Away</h1>
-    <button (click)="openTakeAwayPdfInNewTab()" class="glass"><h2>Almoco e jantar</h2><h3>(Take Away)</h3></button>
-    <button (click)="openDineInPdfInNewTab()" class="glass"><h2>Delivery e Levantar</h2><h3>(Dine In)</h3></button>
+  <div class="dinein-takeaway-container card-width glass">
+    <h2 class="text-justify-center">Comer no local ou para levar</h2>
+    <h3 class="text-justify-center">(Dine In or Take Away)</h3>
+
+    <div class="grid grid-2">
+        <a class="glass flex flex-align-center gap-1 cursor-pointer" href="/dine-in-and-takeaway/{{ branch().identifier }}/dine-in">
+            <i class="material-icons">table_bar</i>
+            <span>
+              <h2>Comer no local</h2>
+              <h3>(Dine In)</h3>  
+            </span>
+        </a>
+        <a class="glass flex flex-align-center gap-1 cursor-pointer" href="{{branch().redirects?.pdf?.takeaway}}">
+            <i class="material-icons">moped</i>
+            <span>
+              <h2>Para levar</h2>
+              <h3>(Take Away)</h3>  
+            </span>
+        </a>
+    </div>
   </div>
 
 </main>

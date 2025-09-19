@@ -8,6 +8,8 @@ export interface Branch {
   socials: SocialMedia[];
   deliveryTime: TimeTable[];
   pickupTime: TimeTable[];
+  openingTime: TimeTable[];
+  redirects: Redirects;
 
 }
 
@@ -21,4 +23,18 @@ export interface SocialMedia {
 export interface TimeTable {
     day: string;
     time: string;
+}
+
+export interface Redirects {
+  reservation: string | null;
+  delivery: string | null;
+  pickup: string | null;
+  googleReview: string | null;
+  pdf: PdfMenu;
+}
+
+export interface PdfMenu {
+  takeaway: string | null;
+  dinein1: string | null;
+  dinein2: string | null;
 }

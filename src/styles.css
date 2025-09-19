@@ -92,8 +92,29 @@ h1, h2, h3, h4, h5, h6 {
 .grid-center {
   width: 100%;
     place-items: center;
-    height: calc(100% - 5rem);
+    height: calc(100% - 12rem);
 }
+
+.card-width {
+    width: min(100%, 50rem);
+}
+
+
+.pointer-cursor { cursor: pointer; }
+
+
+.flex { display: flex; }
+.flex-center { justify-content: center; align-items: center; }
+.flex-align-center { align-items: center; }
+.flex-justify-center { justify-content: center; }
+
+
+.gap-0_5 { gap: 0.5rem; }
+.gap-0_25 { gap: 0.25rem; }
+.gap-1 { gap: 1rem; }
+.gap-1 { gap: 1rem; }
+.gap-2 { gap: 2rem; }
+
 
 .grid-1 {grid-template-columns: 1fr;}
 .grid-2 {grid-template-columns: repeat(2, 1fr);}

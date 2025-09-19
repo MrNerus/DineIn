@@ -3,7 +3,9 @@
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
   padding: 2rem;
+  width: min(100%, 50rem);
 }
+
 .menu-category {
   display: flex;
   flex-direction: column;
@@ -66,3 +68,4 @@
     grid-template-columns: 1fr;
   }
 }
+

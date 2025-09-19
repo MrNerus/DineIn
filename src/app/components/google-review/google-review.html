@@ -1,11 +1,11 @@
 <main class="grid grid-center">
   <div class="order-location-container glass">
-    <h1 class="text-justify-center">Book Now</h1>
+    <h2>Avaliaqöes no Google</h2>
+    <h3>Review on Google</h3>
 
     <div class="branches grid grid-2">
-      <h2 class="span-col-2 text-justify-center">Our Branches</h2>
       @for (branch of branches(); track branch.identifier) {
-        <a class="branch glass flex flex-align-center cursor-pointer" href="{{ branch.redirects.reservation }}" target="_blank">
+        <a class="branch glass" href="{{ branch.redirects.googleReview }}" target="_blank">
             <i class="material-icons">location_on</i>
             <span>{{ branch.name }}</span>
         </a>

@@ -1,0 +1,11 @@
+.order-location-container {
+  width: min(100%, 50rem);
+}
+
+i {
+  font-size: 2rem;
+}
+
+span > h2, span > h3 {
+  line-height: 1rem;
+}

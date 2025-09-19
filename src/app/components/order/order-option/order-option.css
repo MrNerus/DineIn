@@ -1,4 +1,7 @@
-button {cursor: pointer;}
+.container {
+  padding: 2rem;
+  width: min(100%, 50rem);
+}
 
 i {
   font-size: 3rem;

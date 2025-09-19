@@ -1,0 +1,16 @@
+<main class="grid grid-center">
+  <div class="order-location-container card-width glass">
+    <h2 class="text-justify-center">Para levar e para comer no local</h2>
+    <h3 class="text-justify-center">(Take Away and Dine in)</h3>
+
+    <div class="branches grid grid-2">
+      @for (branch of branches(); track branch.identifier) {
+        <a class="flex flex-align-center gap-1 cursor-pointer glass" href="/dine-in-and-takeaway/{{ branch.identifier }}">
+            <i class="material-icons">location_on</i>
+            <span>{{ branch.name }}</span>
+        </a>
+      }
+    </div>
+  </div>
+
+</main>

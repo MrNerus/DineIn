@@ -4,13 +4,15 @@ import { Branch } from '../../../interfaces/DTO';
 import { DataService } from '../../../services/data';
 
 @Component({
-  selector: 'dine-in-and-takeaway-app',
+  selector: 'dine-in-category-app',
   imports: [],
-  templateUrl: './dine-in-and-takeaway.html',
-  styleUrl: './dine-in-and-takeaway.css',
+  templateUrl: './dine-in-category.html',
+  styleUrl: './dine-in-category.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DineInAndTakeawayComponent {
+export class DineInCategoryComponent {
+  pdfSrcForTakeAway = 'assets/pdfs/menu.pdf';
+  pdfSrcForDineIn = 'assets/pdfs/menu.pdf';
 
   constructor(private route: ActivatedRoute) {}
 
@@ -18,7 +20,6 @@ export class DineInAndTakeawayComponent {
 
   branch = signal<Partial<Branch>>({});
   branchId = signal<string>("");
-
 
   ngOnInit() {
     this.branchId.set(this.route.snapshot.paramMap.get('branchId')!);

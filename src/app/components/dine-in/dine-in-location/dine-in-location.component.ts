@@ -5,25 +5,22 @@ import { Branch } from '../../../interfaces/DTO';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-order-location',
+  selector: 'app-dine-in-location',
   imports: [CommonModule],
-  templateUrl: './order-location.html',
-  styleUrl: './order-location.css',
+  templateUrl: './dine-in-location.html',
+  styleUrl: './dine-in-location.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrderLocationComponent {
+export class DineInLocationComponent {
   constructor(private route: ActivatedRoute) {}
 
   private dataService = inject(DataService);
 
   branches = signal<Branch[]>([]);
-  orderType = signal<string>('');
 
   ngOnInit() {
     this.dataService.getBranches().subscribe((data: any) => {
       this.branches.set(data);
     });
-
-    this.orderType.set(this.route.snapshot.paramMap.get('orderType')!);
   }
 }

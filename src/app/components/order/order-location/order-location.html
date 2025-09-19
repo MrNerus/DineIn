@@ -1,10 +1,11 @@
 <main class="grid grid-center">
   <div class="order-location-container glass">
-    <h2>Peça Agora (Order Now)</h2>
+    <h2>{{ orderType().toLowerCase() === 'delivery' ? "escolha o local para entrega" : "escolha o local para a retirada"  }}</h2>
+    <h3>{{ orderType().toLowerCase() === 'delivery' ?  "(Choose location for delivery)" : "(Choose location for pickup)" }}</h3>
 
     <div class="branches grid grid-2">
       @for (branch of branches(); track branch.identifier) {
-        <a class="branch glass" href="/DineIn/order/{{ branch.identifier}}">
+        <a class="branch glass" href="{{ orderType().toLowerCase() === 'delivery' ? branch.redirects.delivery : branch.redirects.pickup  }}">
             <i class="material-icons">location_on</i>
             <span>{{ branch.name }}</span>
         </a>
