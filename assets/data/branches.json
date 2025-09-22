@@ -3,10 +3,10 @@
     {
       "identifier": "Amadora",
       "name": "Amadora",
-      "address": "10A Rua Doutor António José de Almeida, 2700-269, Amadora",
+      "address": "1R. Dr. António José de Almeida 10A, 2700-269 Amadora",
       "phone": "+351214952367",
-      "lat": 51.5321870369761,
-      "long": -0.11959615491732808,
+      "lat": 38.755245291772184,
+      "long": -9.220227233102092,
       "socials": [
         {
           "name": "Facebook",
@@ -21,22 +21,11 @@
           "image": null
         }
       ],
-      "pickupTime":[
-        {
-          "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 23h (11 AM to 11 PM)"
-        }
-      ],
-      "deliveryTime": [
-        {
-          "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 23h (11 AM to 11 PM)"
-        }
-      ],
       "openingTime": [
         {
           "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 15h30, das 18h às 23h (11 AM to 3:40 PM, 6 PM to 11 PM), "
+          "timePt": "das 11h às 15h30, das 18h às 23h",
+          "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
         }
       ],
       "redirects": {
@@ -44,20 +33,20 @@
         "delivery": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
         "pickup": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
         "googleReview": "https://www.google.com/search?q=savana+sushi+amadora",
+        "location": "https://maps.app.goo.gl/XmMZ91ucpEXyWpZg9?g_st=ipc",
         "pdf": {
-          "takeaway": "assets/pdfs/menu.pdf",
-          "dinein1": "assets/pdfs/menu.pdf",
-          "dinein2": "assets/pdfs/menu.pdf"
+          "dinein1": "assets/pdfs/DineIn.pdf",
+          "dinein2": "assets/pdfs/Rozidio.pdf"
         }
       }
     },
     {
       "identifier": "Sintra",
-      "name": "Mem-Martins Sintra",
-      "address": "Estrada do Algueirão 21, 2725-022, Mem-Martins",
+      "name": "Mem Martins - Sintra",
+      "address": "Estr. Algueirão 21, 2725-025 Algueirão-Mem Martins",
       "phone": "+351210133261",
-      "lat": 38.80568593028966,
-      "long": -9.34300615015358,
+      "lat": 38.79846169317772,
+      "long": -9.341457822088252,
       "socials": [
         {
           "name": "Facebook",
@@ -72,22 +61,11 @@
           "image": null
         }
       ],
-      "deliveryTime": [
-        {
-          "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 22h40 (11 AM to 10:40 PM)"
-        }
-      ],
-      "pickupTime":[
-        {
-          "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 22h40 (11 AM to 10:40 PM)"
-        }
-      ],
       "openingTime": [
         {
           "day": "Segunda a domingo (Monday to Sunday)",
-          "time": "das 11h às 15h30, das 18h às 23h (11 AM to 3:40 PM, 6 PM to 11 PM), "
+          "timePt": "das 11h às 15h30, das 18h às 23h",
+          "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
         }
       ],
       "redirects": {
@@ -95,11 +73,11 @@
         "delivery": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
         "pickup": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
         "googleReview": "https://www.google.com/search?q=savana+sushi+mem+martins",
+        "location": "https://maps.app.goo.gl/gRD6ZAo21mNFAn3N6?g_st=iwb",
 
         "pdf": {
-          "takeaway": "assets/pdfs/menu.pdf",
-          "dinein1": "assets/pdfs/menu.pdf",
-          "dinein2": "assets/pdfs/menu.pdf"
+          "dinein1": "assets/pdfs/DineIn.pdf",
+          "dinein2": "assets/pdfs/Rozidio.pdf"
         }
       }
     }
