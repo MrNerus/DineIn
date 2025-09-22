@@ -11,8 +11,6 @@ import { DataService } from '../../../services/data';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DineInCategoryComponent {
-  pdfSrcForTakeAway = 'assets/pdfs/menu.pdf';
-  pdfSrcForDineIn = 'assets/pdfs/menu.pdf';
 
   constructor(private route: ActivatedRoute) {}
 

@@ -22,6 +22,11 @@ main {
   gap: 1rem;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* //mobile */
 /* Single column grid for mobile screen */
 @media screen and (max-width: 61rem) {

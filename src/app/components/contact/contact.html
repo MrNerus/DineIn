@@ -7,7 +7,7 @@
       @for (branch of branches(); track branch.identifier) {
         <div class="branch glass">
           <h4>{{ branch.name }}</h4>
-          <p><i class="material-icons">location_on</i> {{ branch.address }}</p>
+          <a href="{{ branch.redirects.location }}" target="_blank"><i class="material-icons">location_on</i> {{ branch.address }}</a>
           <p><i class="material-icons">phone</i> {{ branch.phone }}</p>
         </div>
       }

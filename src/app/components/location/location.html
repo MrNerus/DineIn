@@ -8,22 +8,22 @@
                         <h2>{{branch.name}}</h2>
                     </div>
                     <div class="glass">
-                        <p><i class="material-icons">location_on</i> {{branch.address}}</p>
+                        <a href="{{branch.redirects.location}}" target="_blank"><i class="material-icons">location_on</i> {{branch.address}}</a>
                         <P><i class="material-icons">phone</i> {{branch.phone}}</P>
                     </div>
-                @if (branch.openingTime) {
-                    <div class="glass">
-                        <h3>Opening Time:</h3>
-                        @for (time of branch.openingTime; track time.day) {
-                            <p>{{time.day}}: {{time.time}}</p>
-                        }
-                    </div>
-                }
+                    @if (branch.openingTime) {
+                        <div class="glass">
+                            <h3>Opening Time:</h3>
+                            @for (time of branch.openingTime; track time.day) {
+                                <div><h4>{{time.day}}:</h4><p class="margin-left-1">{{time.timePt}}</p><p class="margin-left-1">({{time.timeEn}})</p></div>
+                            }
+                        </div>
+                    }
+                </div>
+                <br>
+                <div id="map-{{branch.identifier}}" class="map"></div>
             </div>
-            <br>
-            <div id="map-{{branch.identifier}}" class="map"></div>
-        </div>
-    }
-</div>
+        }
+    </div>
 
 </main>

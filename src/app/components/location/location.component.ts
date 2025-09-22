@@ -11,9 +11,11 @@ import { Branch } from '../../interfaces/DTO';
   styleUrl: './location.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocationComponent implements AfterViewInit {
+export class LocationComponent {
   private dataService = inject(DataService);
   branches = signal<Branch[]>([]);
+
+  
 
   ngOnInit() {
     this.dataService.getBranches().subscribe((data: any) => {
@@ -36,6 +38,10 @@ export class LocationComponent implements AfterViewInit {
         .addTo(map)
         .bindPopup(`<b>${branch.name}</b><br>${branch.address}`)
         .openPopup();
+
+        setTimeout(() => map.invalidateSize(), 100);
+
     });
+    
   }
 }

@@ -1,9 +1,0 @@
-button {cursor: pointer;}
-
-i {
-  font-size: 3rem;
-}
-
-span > h2, span > h3 {
-  line-height: 1rem;
-}

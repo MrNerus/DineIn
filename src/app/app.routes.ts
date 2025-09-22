@@ -7,7 +7,6 @@ import { LocationComponent } from './components/location/location.component';
 import { GetAppComponent } from './components/get-app/get-app.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { OrderLocationComponent } from './components/order/order-location/order-location.component';
-import { DineInAndTakeawayComponent } from './components/dine-in/dine-in-and-takeaway/dine-in-and-takeaway.component';
 import { bookingLocationComponent } from './components/booking/booking-location/booking-location.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { DineInLocationComponent } from './components/dine-in/dine-in-location/dine-in-location.component';
@@ -22,8 +21,7 @@ export const routes: Routes = [
   { path: 'order/:orderType', component: OrderLocationComponent },
   { path: 'order/:orderType/:branchId', component: OrderComponent },
   { path: 'dine-in-and-takeaway', component: DineInLocationComponent },
-  { path: 'dine-in-and-takeaway/:branchId', component: DineInAndTakeawayComponent },
-  { path: 'dine-in-and-takeaway/:branchId/dine-in', component: DineInCategoryComponent },
+  { path: 'dine-in-and-takeaway/:branchId', component: DineInCategoryComponent },
   { path: 'booking', component: bookingLocationComponent },
   { path: 'booking/:branchId', component: BookingComponent },
   { path: 'location', component: LocationComponent },
@@ -34,7 +32,6 @@ export const routes: Routes = [
   { path: 'google-review', component: GoogleReviewComponent },
   { path: 'DineIn/', component: HomeComponent },
   { path: 'DineIn/order/:branchId', component: OrderComponent },
-  { path: 'DineIn/dine-in-and-takeaway', component: DineInAndTakeawayComponent },
   { path: 'DineIn/booking', component: bookingLocationComponent },
   { path: 'DineIn/booking/:branchId', component: BookingComponent },
   { path: 'DineIn/location', component: LocationComponent },

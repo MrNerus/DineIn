@@ -22,7 +22,8 @@ export interface SocialMedia {
 
 export interface TimeTable {
     day: string;
-    time: string;
+    timePt: string;
+    timeEn: string;
 }
 
 export interface Redirects {
@@ -30,11 +31,11 @@ export interface Redirects {
   delivery: string | null;
   pickup: string | null;
   googleReview: string | null;
+  location: string | null;
   pdf: PdfMenu;
 }
 
 export interface PdfMenu {
-  takeaway: string | null;
   dinein1: string | null;
   dinein2: string | null;
 }
