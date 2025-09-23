@@ -35,8 +35,8 @@
         "googleReview": "https://www.google.com/search?q=savana+sushi+amadora",
         "location": "https://maps.app.goo.gl/XmMZ91ucpEXyWpZg9?g_st=ipc",
         "pdf": {
-          "dinein1": "assets/pdfs/DineIn.pdf",
-          "dinein2": "assets/pdfs/Rozidio.pdf"
+          "dinein1": "assets/pdfs/Menu.pdf",
+          "dinein2": "assets/pdfs/Rodizio.pdf"
         }
       }
     },
@@ -76,8 +76,8 @@
         "location": "https://maps.app.goo.gl/gRD6ZAo21mNFAn3N6?g_st=iwb",
 
         "pdf": {
-          "dinein1": "assets/pdfs/DineIn.pdf",
-          "dinein2": "assets/pdfs/Rozidio.pdf"
+          "dinein1": "assets/pdfs/Menu.pdf",
+          "dinein2": "assets/pdfs/Rodizio.pdf"
         }
       }
     }
