@@ -1,11 +1,10 @@
 $sourcePath = "D:\Angular\DineIn"
 $deployPath = "D:\Angular\DineIn-ghPage"
 $distPath   = "$sourcePath\dist\myapp\browser"
-
+$commitMsg = Read-Host "Enter commit message"
 
 Set-Location $sourcePath
 git add .
-$commitMsg = Read-Host "Enter commit message for source repo"
 git commit -m "$commitMsg"
 git push
 
@@ -21,7 +20,6 @@ Copy-Item -Path "$distPath\*" -Destination $deployPath -Recurse
 Copy-Item "$deployPath\index.html" "$deployPath\404.html" -Force
 
 git add .
-$commitMsg = Read-Host "Enter commit message for gh-pages repo"
 git commit -m "$commitMsg"
 git push
 
