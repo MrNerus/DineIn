@@ -8,13 +8,13 @@
          @for (item of category.items; track item.id) {
           <div class="menu-item glass">
             <img [src]="item.image" [alt]="item.name" *ngIf="item.image">
-            <i class="material-icons" *ngIf="!item.image">fastfood</i>
+            <i class="material-symbols-outlined" *ngIf="!item.image">fastfood</i>
             <div class="item-details">
               <h3>{{ item.name }}</h3>
               <p>{{ item.description }}</p>
               <p class="price">{{ item.price | currency }}</p>
             </div>
-            <button (click)="addToOrder(item)" class="glass"><i class="material-icons">add_shopping_cart</i></button>
+            <button (click)="addToOrder(item)" class="glass"><i class="material-symbols-outlined">add_shopping_cart</i></button>
           </div>
         }
       </div>
@@ -30,9 +30,9 @@
           <p class="price">{{ orderItem.item.price | currency }}</p>
         </div>
         <div class="quantity-controls">
-          <button (click)="removeFromOrder(orderItem.item)" class="glass"><i class="material-icons">remove</i></button>
+          <button (click)="removeFromOrder(orderItem.item)" class="glass"><i class="material-symbols-outlined">remove</i></button>
           <span>{{ orderItem.quantity }}</span>
-          <button (click)="addToOrder(orderItem.item)" class="glass"><i class="material-icons">add</i></button>
+          <button (click)="addToOrder(orderItem.item)" class="glass"><i class="material-symbols-outlined">add</i></button>
         </div>
       </div>
     }
@@ -40,7 +40,7 @@
     @if (order().length > 0) {
       <div class="total glass">
         <h3>Total: {{ total() | currency }}</h3>
-        <button class="glass"><i class="material-icons">shopping_cart_checkout</i></button>
+        <button class="glass"><i class="material-symbols-outlined">shopping_cart_checkout</i></button>
       </div>
     } @else {
       <p>Your order is empty.</p>
