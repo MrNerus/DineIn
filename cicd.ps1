@@ -25,4 +25,6 @@ $commitMsg = Read-Host "Enter commit message for gh-pages repo"
 git commit -m "$commitMsg"
 git push
 
+Set-Location $sourcePath
+
 Write-Host "✅ Deployment complete!"
