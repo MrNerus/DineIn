@@ -1,0 +1,345 @@
+<div class="company-settings-container">
+  <!-- Header Title -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="header-icon-box">
+        <i class="material-symbols-outlined">store</i>
+      </div>
+      <div>
+        <h1 class="page-title">Company Settings</h1>
+        <p class="page-subtitle">Configure Company Settings or Company-Wide Applicable Options.</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button 
+        type="button" 
+        class="save-btn" 
+        [disabled]="managementService.isSaving()"
+        (click)="onSubmit()"
+      >
+        <i class="material-symbols-outlined">
+          @if (managementService.isSaving()) { sync }
+          @else { save }
+        </i>
+        <span>{{ managementService.isSaving() ? 'Saving...' : 'Save Changes' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="settings-tabs glass">
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeTab() === 'basic'"
+      (click)="setTab('basic')"
+    >
+      <i class="material-symbols-outlined">badge</i>
+      <span>Company</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeTab() === 'socials'"
+      (click)="setTab('socials')"
+    >
+      <i class="material-symbols-outlined">share</i>
+      <span>Socials & Apps</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeTab() === 'delivery'"
+      (click)="setTab('delivery')"
+    >
+      <i class="material-symbols-outlined">delivery_dining</i>
+      <span>Delivery Partners</span>
+      <span class="tab-badge">{{ deliveryPartners.length }}</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeTab() === 'notice'"
+      (click)="setTab('notice')"
+    >
+      <i class="material-symbols-outlined">campaign</i>
+      <span>Promotional Ads</span>
+      <span class="tab-badge">{{ noticeImages.length }}</span>
+    </button>
+  </div>
+
+  <!-- Settings Form -->
+  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="settings-form">
+    <!-- Tab 1: Identity & Branding -->
+    @if (activeTab() === 'basic') {
+      <div class="settings-section glass">
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="companyName" class="form-label">Company / Brand Name *</label>
+            <div class="input-wrapper" [class.input-error]="companyForm.get('name')?.invalid && companyForm.get('name')?.touched">
+              <i class="material-symbols-outlined input-icon">storefront</i>
+              <input 
+                id="companyName" 
+                type="text" 
+                formControlName="name" 
+                placeholder="e.g. Savana Sushi"
+                class="form-input"
+                [readonly]="true"
+              />
+            </div>
+            @if (companyForm.get('name')?.invalid && companyForm.get('name')?.touched) {
+              <span class="field-error">Company name is required.</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="companyLogo" class="form-label">Logo Path / URL *</label>
+            <div class="input-wrapper" [class.input-error]="companyForm.get('logo')?.invalid && companyForm.get('logo')?.touched">
+              <i class="material-symbols-outlined input-icon">image</i>
+              <input 
+                id="companyLogo" 
+                type="text" 
+                formControlName="logo" 
+                placeholder="assets/imgs/logo.png or https://..."
+                class="form-input"
+                [readonly]="true"
+              />
+            </div>
+            <span class="field-hint">Relative path to assets or public image URL.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="companyFavicon" class="form-label">Favicon Path / URL *</label>
+            <div class="input-wrapper" [class.input-error]="companyForm.get('favicon')?.invalid && companyForm.get('favicon')?.touched">
+              <i class="material-symbols-outlined input-icon">bookmark</i>
+              <input 
+                id="companyFavicon" 
+                type="text" 
+                formControlName="favicon" 
+                placeholder="assets/imgs/logo.png"
+                class="form-input"
+                [readonly]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Visual Preview -->
+        <div class="preview-box glass">
+          <span class="preview-title">Logo Preview:</span>
+          <div class="preview-content">
+            <img [src]="companyForm.get('logo')?.value || 'assets/imgs/logo.png'" alt="Preview" class="preview-logo-img" />
+            <div class="preview-brand-text">
+              <span class="comic-relief-bold text-italic">{{ companyForm.get('name')?.value || 'Savana Sushi' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Tab 2: Socials & Apps -->
+    @if (activeTab() === 'socials') {
+      <div class="settings-section glass">
+        <div class="form-grid" formGroupName="socials">
+          <div class="form-group">
+            <label for="facebookUrl" class="form-label">Facebook Page URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">public</i>
+              <input 
+                id="facebookUrl" 
+                type="url" 
+                formControlName="facebook" 
+                placeholder="https://www.facebook.com/savanasushi"
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="instagramUrl" class="form-label">Instagram Profile URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">photo_camera</i>
+              <input 
+                id="instagramUrl" 
+                type="url" 
+                formControlName="instagram" 
+                placeholder="https://www.instagram.com/savana.sushi"
+                class="form-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-grid" formGroupName="apps">
+          <div class="form-group">
+            <label for="googlePlay" class="form-label">Google Play Store URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">android</i>
+              <input 
+                id="googlePlay" 
+                type="url" 
+                formControlName="googlePlayStore" 
+                placeholder="https://play.google.com/store/apps/details?id=..."
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="appleApp" class="form-label">Apple App Store URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">phone_iphone</i>
+              <input 
+                id="appleApp" 
+                type="url" 
+                formControlName="appleAppStore" 
+                placeholder="https://apps.apple.com/app/id..."
+                class="form-input"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Tab 3: Delivery Partners -->
+    @if (activeTab() === 'delivery') {
+      <div class="settings-section glass">
+        <div class="section-header-flex">
+          <button type="button" class="add-item-btn" (click)="addDeliveryPartner()">
+            <i class="material-symbols-outlined">add</i>
+            <span>Add Partner</span>
+          </button>
+        </div>
+
+        <div class="dynamic-items-list" formArrayName="deliveryPartners">
+          @for (partner of deliveryPartners.controls; track $index) {
+            <div class="dynamic-item-card glass" [formGroupName]="$index">
+              <div class="item-index-badge">#{{ $index + 1 }}</div>
+
+              <div class="item-inputs-grid">
+                <div class="form-group">
+                  <label class="form-label">Platform Name *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">business</i>
+                    <input 
+                      type="text" 
+                      formControlName="name" 
+                      placeholder="e.g. Uber Eats, Glovo"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Redirect URL *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">link</i>
+                    <input 
+                      type="url" 
+                      formControlName="url" 
+                      placeholder="https://www.ubereats.com/..."
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                type="button" 
+                class="remove-item-btn" 
+                (click)="removeDeliveryPartner($index)" 
+                title="Remove partner"
+              >
+                <i class="material-symbols-outlined">delete</i>
+              </button>
+            </div>
+          } @empty {
+            <div class="empty-items-notice glass">
+              <i class="material-symbols-outlined">inbox</i>
+              <p>No delivery partners configured. Click "Add Partner" above.</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Tab 4: Promotional Ads -->
+    @if (activeTab() === 'notice') {
+      <div class="settings-section glass">
+        <div class="section-header-flex">
+          <button type="button" class="add-item-btn" (click)="addNoticeImage()">
+            <i class="material-symbols-outlined">add_photo_alternate</i>
+            <span>Add Image</span>
+          </button>
+        </div>
+
+        <div class="dynamic-items-list" formArrayName="notice">
+          @for (imgCtrl of noticeImages.controls; track $index) {
+            <div class="dynamic-item-card glass">
+              <div class="item-index-badge">#{{ $index + 1 }}</div>
+
+              <div class="notice-image-input-wrapper">
+                <div class="form-group full-width">
+                  <label class="form-label">Promo Image Path / URL *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">image</i>
+                    <input 
+                      type="text" 
+                      [formControlName]="$index" 
+                      placeholder="assets/imgs/Ads1.jpg or https://..."
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <!-- Thumbnail Preview -->
+                @if (imgCtrl.value) {
+                  <div class="notice-thumbnail-box">
+                    <img [src]="imgCtrl.value" alt="Ad preview" class="notice-thumb" />
+                  </div>
+                }
+              </div>
+
+              <button 
+                type="button" 
+                class="remove-item-btn" 
+                (click)="removeNoticeImage($index)" 
+                title="Remove ad"
+              >
+                <i class="material-symbols-outlined">delete</i>
+              </button>
+            </div>
+          } @empty {
+            <div class="empty-items-notice glass">
+              <i class="material-symbols-outlined">photo_library</i>
+              <p>No active announcement images. The promo popup will not be displayed.</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Bottom Save Trigger -->
+    <div class="form-bottom-actions">
+      <button 
+        type="submit" 
+        class="save-btn large" 
+        [disabled]="managementService.isSaving()"
+      >
+        <i class="material-symbols-outlined">
+          @if (managementService.isSaving()) { sync }
+          @else { save }
+        </i>
+        <span>{{ managementService.isSaving() ? 'Saving...' : 'Save All Changes' }}</span>
+      </button>
+    </div>
+  </form>
+</div>
+

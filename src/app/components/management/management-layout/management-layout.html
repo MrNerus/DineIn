@@ -1,0 +1,141 @@
+<div class="cms-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed()">
+  <!-- Mobile Backdrop -->
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-backdrop" (click)="closeMobileMenu()"></div>
+  }
+
+  <!-- Sidebar -->
+  <aside class="cms-sidebar glass" [class.mobile-open]="isMobileMenuOpen()">
+    <!-- Sidebar Header / Logo -->
+    <div class="sidebar-header">
+      <div class="brand-container">
+        <img src="assets/imgs/logo.png" alt="Savana Sushi Logo" class="brand-logo-img" />
+        <div class="brand-info">
+          <span class="brand-name comic-relief-bold text-italic">Savana Sushi</span>
+          <span class="brand-tag">Management & CMS</span>
+        </div>
+      </div>
+      <button type="button" class="close-mobile-btn" (click)="closeMobileMenu()" aria-label="Close menu">
+        <i class="material-symbols-outlined">close</i>
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="sidebar-nav">
+      <a 
+        routerLink="/management/overview" 
+        routerLinkActive="active" 
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        <i class="material-symbols-outlined nav-icon">dashboard</i>
+        <span class="nav-text">Overview</span>
+      </a>
+
+      <a 
+        routerLink="/management/company" 
+        routerLinkActive="active" 
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        <i class="material-symbols-outlined nav-icon">store</i>
+        <span class="nav-text">Company & Settings</span>
+      </a>
+
+      <a 
+        routerLink="/management/branches" 
+        routerLinkActive="active" 
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        <i class="material-symbols-outlined nav-icon">location_on</i>
+        <span class="nav-text">Branch List</span>
+      </a>
+<!-- 
+      <a 
+        routerLink="/management/branches/create" 
+        routerLinkActive="active" 
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        <i class="material-symbols-outlined nav-icon">add_location_alt</i>
+        <span class="nav-text">Add Branch</span>
+      </a> -->
+    </nav>
+
+    <!-- Sidebar Footer / User Info -->
+    <div class="sidebar-footer">
+      <div class="user-card glass">
+        <div class="user-avatar">
+          <i class="material-symbols-outlined">admin_panel_settings</i>
+        </div>
+        <div class="user-details">
+          <span class="user-name">{{ authService.currentUser()?.name || 'Administrator' }}</span>
+          <span class="user-role">{{ authService.currentUser()?.role || 'Admin' }}</span>
+        </div>
+        <button type="button" class="logout-btn" (click)="logout()" title="Log Out">
+          <i class="material-symbols-outlined">logout</i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Container -->
+  <div class="cms-main-container">
+    <!-- Topbar Header -->
+    <header class="cms-topbar glass">
+      <div class="topbar-left">
+        <button type="button" class="mobile-toggle-btn" (click)="toggleMobileMenu()" aria-label="Open Menu">
+          <i class="material-symbols-outlined">menu</i>
+        </button>
+        <button type="button" class="desktop-collapse-btn" (click)="toggleSidebar()" title="Toggle sidebar">
+          <i class="material-symbols-outlined">menu_open</i>
+        </button>
+        <div class="topbar-breadcrumb">
+          <span class="breadcrumb-root">CMS</span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button 
+          type="button" 
+          class="topbar-download-btn" 
+          (click)="managementService.downloadJson()" 
+          title="Download updated branches.json"
+        >
+          <i class="material-symbols-outlined">download</i>
+          <span class="btn-text">Backup Database</span>
+        </button>
+
+        <a routerLink="/" target="_blank" class="topbar-hub-btn" title="Open public portal in new tab">
+          <i class="material-symbols-outlined">visibility</i>
+          <span class="btn-text">View Site</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Global Floating Notification Alert -->
+    @if (managementService.notification(); as notify) {
+      <div class="toast-notification-banner" [class]="'toast-' + notify.type">
+        <div class="toast-content">
+          <i class="material-symbols-outlined toast-icon">
+            @if (notify.type === 'success') { check_circle }
+            @else if (notify.type === 'error') { error }
+            @else { info }
+          </i>
+          <span class="toast-text">{{ notify.message }}</span>
+        </div>
+        <button type="button" class="toast-close" (click)="managementService.clearNotification()">
+          <i class="material-symbols-outlined">close</i>
+        </button>
+      </div>
+    }
+
+    <!-- Outlet Area -->
+    <main class="cms-page-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+

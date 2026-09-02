@@ -1,56 +1,72 @@
-# Dinnertime - A Modern Angular Application
+# Savana Sushi Portal - A Modern Angular Hub Application
 
 ## Overview
 
-Dinnertime is a feature-rich application designed to provide a seamless experience for restaurant customers. It includes functionalities for placing orders, viewing dine-in menus, making reservations, finding restaurant locations, and getting in touch with the restaurant. The application is built with the latest version of Angular, leveraging modern features like standalone components, signals, and native control flow for optimal performance and maintainability.
+Savana Sushi Portal is an interactive, modern portal and redirection hub for restaurant guests. Rather than navigating across multi-page website menus, guests use a streamlined, single-screen hub to quickly book a table, place delivery or pickup orders, view dine-in PDF menus, check branch location and opening hours, contact the restaurant, install the mobile app, and leave reviews. The application is built with Angular v20+, featuring standalone components, reactive Signals, native control flow, and persistent session-based branch selection. In addition, a modern Content Management System (CMS) is integrated under `/management` to configure company info, notice ads, and restaurant branch listings with a companion PHP PoC backend.
 
 ## Style, Design, and Features
 
-### Initial Version
+### Version History & Evolution
 
-*   **Core Structure**: The application is set up with a main navigation component to provide access to all its features.
-*   **Routing**: Routes are defined for each feature page, enabling easy navigation.
-*   **Data Management**: All dynamic data is managed through JSON files, making future integrations with a backend API straightforward.
-*   **Styling**: A consistent and modern design is applied across the application, with a focus on user experience and visual appeal.
-*   **Order Form:** A form to place an order from a list of items.
-*   **Dine-in PDF:** A PDF viewer to display the dine-in menu.
-*   **Booking Form:** A form to book a table.
-*   **Location Map:** A map to show the location of the branches.
-*   **Get App Page:** A page to redirect to the app stores.
-*   **Contact Us Page:** A page with the contact information of the branches.
+#### Initial Version
+*   **Multi-Page Routing**: Independent routes for Order, Dine-In, Booking, Location, App, Contact, and Reviews.
+*   **Forms**: Booking form and item checkout templates.
+*   **Data Structure**: JSON-based branch configuration (`assets/data/branches.json`) containing redirect URLs, opening schedules, phone numbers, and coordinates.
 
-## Current Plan
+#### Modern Hub & Portal Redesign
+*   **Onboarding Setup**: Modal on first visit prompting the user to select a branch (e.g., Amadora or Mem Martins - Sintra), stored securely in `sessionStorage`.
+*   **Persistent TopBar with Branch Indicator**: Real-time display of the currently active branch with a one-touch branch switcher dialog.
+*   **Single-Screen Portal Layout**: Replaces multi-page navigation with an intuitive, clean grid of interactive tiles.
+*   **Interactive Modal System**:
+    *   **Branch Switcher Modal**: Allows fast switching between restaurant branches anytime.
+    *   **Reservation Modal**: Direct link and quick details to reserve a table at the active branch.
+    *   **Delivery & Pickup Modal**: Multi-option access to direct online ordering, Glovo, Uber Eats, and Bolt.
+    *   **Dine-In Menu Modal**: Direct access to view and download À la Carte and Rodízio PDF menus.
+    *   **Location & Hours Modal**: Detailed view of address, Google Maps routing, click-to-call phone, and weekly opening hours timetable.
+    *   **Contact & Socials Modal**: Direct phone dialing with call notes, and links to Instagram and Facebook.
+    *   **App Download Modal**: Apple App Store & Google Play redirect cards.
+    *   **Reviews Modal**: Direct links to Google Reviews (branch-specific), TripAdvisor, and The Fork.
+    *   **Privacy Modal**: Quick access to privacy policy and terms.
+    *   **Notice Carousel Modal**: High-impact promotional popup with multi-slide advertisement carousel.
+*   **Design & Theme**: Glassmorphism with deep burgundy/crimson accents, glowing elements, responsive mobile-first cards, smooth dialog transitions, and accessible backdrop dismiss.
 
-### Phase 1: Core Structure & Navigation
+#### Management CMS & PHP Backend
+*   **Protected Management Routing**: Management portal starting at `/management` with `authGuard`.
+*   **Authentication & Login**: Admin login (`/management/login`) with demo credential helper and mock token session management.
+*   **Company Management (`/management/company`)**: Full form to manage brand name, logos, favicon, social channels, mobile apps, delivery partners, and promotional notice images.
+*   **Branch Management (`/management/branches`)**: Searchable list of branches with placeholder creation, editing, duplicate, status toggling, and delete operations.
+*   **JSON Schema Integrity**: Full synchronization with `src/assets/data/branches.json` schema including live JSON payload inspector and export functionality.
+*   **PHP PoC Backend**: Static mock RESTful endpoints with CORS headers (`api/login.php`, `api/company.php`, `api/branches.php`, `api/data.php`, `api/cors.php`).
 
-*   [x] Set up the main navigation to switch between features.
-*   [x] Define routes for each page.
-*   [x] Create a `blueprint.md` file to document the project.
+#### Individual Section Saving & Branch Placeholder System (Current Version)
+*   **Section-by-Section Saving**: Each form section (General Info, Opening Hours, Redirects & Menus, Review Channels) is saved independently with dedicated validation and API synchronization.
+*   **Default Placeholder Creation**: Elimination of blank "Add Branch" form pages in favor of automatic default placeholder branch creation (`POST api/branches.php?action=create_default`) with immediate edit navigation.
+*   **Separation of Internal ID and Identifier**: Every branch maintains an immutable internal ID (`id`) alongside an editable user-facing unique slug (`identifier`).
+*   **Active / Inactive Status**: Branches have an `isActive` toggle (inactive by default for new placeholders), with status indicators on branch cards and filtering on the public guest portal.
 
-### Phase 2: Order Form
+---
 
-*   [x] Create a JSON file for menu items.
-*   [x] Build a service to fetch menu data.
-*   [x] Develop a component to display items, manage quantities, and proceed to checkout.
+## Current Plan: Section-by-Section Saving, Placeholder Branches & Active Status
 
-### Phase 3: Dine-in PDF Viewer
+### Phase 1: Data Model & Backend API Updates
+*   [x] Update `Branch` DTO interface with `id?: string | number`, `isActive?: boolean`, and multi-language `TimeTable` fields.
+*   [x] Update `src/assets/data/branches.json` with `id` and `isActive: true`.
+*   [x] Enhance `public/api/branches.php` to handle default placeholder creation (`action=create_default`), section-specific updates (`PUT /api/branches.php`), and lookups by `id` or `identifier`.
 
-*   [x] Integrate a PDF viewer.
-*   [x] Create a component to display the dine-in menu PDF.
+### Phase 2: Management Services & Public Filters
+*   [x] Add `createDefaultBranch()`, `saveBranchSection()`, `toggleBranchStatus()`, and `getBranchByIdOrIdentifier()` to `ManagementService`.
+*   [x] Add `activeBranches` computed signal to `BranchService` to filter inactive branches from public guest selection.
 
-### Phase 4: Booking Form
+### Phase 3: Branch List UI & Placeholder Creation
+*   [x] Update `management-branches.html` and `management-branches.component.ts` to replace route link with `createNewBranch()` method.
+*   [x] Add Active/Inactive toggle button and internal ID / slug badge display on branch cards.
 
-*   [x] Design a reactive form for reservations with validation.
+### Phase 4: Individual Section Form Handlers & UI Polish
+*   [x] Update `management-branch-form.component.ts` with `saveGeneralInfo()`, `saveSchedule()`, `saveRedirects()`, and `saveReviews()`.
+*   [x] Fix button actions in `management-branch-form.html` to connect to respective section save methods.
+*   [x] Add Active/Inactive status toggle in the General Info form section and header.
+*   [x] Fix PDF menu input control bindings in Redirects section.
 
-### Phase 5: Location Map
-
-*   [x] Use a mapping library to display branch locations from a JSON file.
-
-### Phase 6: "Get App" & "Contact Us" Pages
-
-*   [x] Create a "Get App" page with app store buttons.
-*   [x] Develop a "Contact Us" page with branch details and social media links.
-
-### Phase 7: Styling & Design
-
-*   [x] Apply a modern and consistent design across the application.
+### Phase 5: Verification & Compilation
+*   [x] Run `npm run build` to ensure clean compilation without errors.
+*   [x] Validate section saving, placeholder creation, and active/inactive toggle behavior.

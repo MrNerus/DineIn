@@ -1,0 +1,121 @@
+<div class="branches-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="header-icon-box">
+        <i class="material-symbols-outlined">location_on</i>
+      </div>
+      <div>
+        <h1 class="page-title">Branches</h1>
+        <p class="page-subtitle">Manage Branch-wise Details.</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="create-btn" (click)="createNewBranch()">
+        <i class="material-symbols-outlined">add_location_alt</i>
+        <span>Add Branch</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Branches Grid -->
+  <div class="branches-grid">
+    @for (branch of filteredBranches(); track (branch.id || branch.identifier)) {
+      <div class="branch-card glass">
+        <!-- Card Top -->
+        <div class="branch-card-header">
+          <div class="branch-identity">
+            <div class="branch-id-badges">
+              <span class="branch-identifier-badge" title="Unique Identifier">{{ branch.identifier }}</span>
+            </div>
+            <h2 class="branch-title">{{ branch.name }}</h2>
+          </div>
+
+          <!-- Active/Inactive Status Toggle -->
+          <button 
+            type="button" 
+            class="status-toggle-btn"
+            [class.active]="branch.isActive !== false"
+            (click)="toggleStatus(branch, $event)"
+            [title]="branch.isActive !== false ? 'Active: Click to mark as inactive' : 'Inactive: Click to mark as active'"
+          >
+            <span class="status-dot" (click)="toggleStatus(branch, $event)"></span>
+          </button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="branch-card-footer">
+          <button 
+            type="button" 
+            class="card-action-btn edit-btn" 
+            (click)="editBranch(branch)"
+            title="Edit branch"
+          >
+            <i class="material-symbols-outlined">edit</i>
+            <span>Edit</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="card-action-btn duplicate-btn" 
+            (click)="duplicateBranch(branch)"
+            title="Duplicate branch"
+          >
+            <i class="material-symbols-outlined">content_copy</i>
+            <span>Duplicate</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="card-action-btn delete-btn" 
+            (click)="openDeleteModal(branch)"
+            title="Delete branch"
+          >
+            <i class="material-symbols-outlined">delete</i>
+            <span>Delete</span>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-branches-card glass">
+        <i class="material-symbols-outlined empty-icon">location_off</i>
+        <h3>No branches found</h3>
+        <p>No branches match your search criteria or are registered in the system.</p>
+        <button type="button" class="create-btn" (click)="createNewBranch()">
+          <i class="material-symbols-outlined">add</i>
+          <span>Create Placeholder Branch</span>
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  @if (isDeleteModalOpen() && branchToDelete(); as targetBranch) {
+    <div class="modal-backdrop" (click)="closeDeleteModal()">
+      <div class="delete-modal glass" (click)="$event.stopPropagation()">
+        <div class="delete-modal-header">
+          <div class="delete-icon-wrapper">
+            <i class="material-symbols-outlined">warning</i>
+          </div>
+          <h3>Confirm Deletion</h3>
+        </div>
+
+        <p class="delete-modal-text">
+          Are you sure you want to delete branch <strong>"{{ targetBranch.name }}"</strong> (<code>{{ targetBranch.identifier }}</code>)?
+        </p>
+        <p class="delete-modal-sub">This action will remove the branch from the public Savana Sushi portal.</p>
+
+        <div class="delete-modal-actions">
+          <button type="button" class="cancel-modal-btn" (click)="closeDeleteModal()">
+            Cancel
+          </button>
+          <button type="button" class="confirm-delete-btn" (click)="confirmDelete()">
+            <i class="material-symbols-outlined">delete_forever</i>
+            <span>Delete Branch</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,449 @@
+<div class="branch-form-container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="header-icon-box">
+        <i class="material-symbols-outlined">edit_location</i>
+      </div>
+      <div>
+        <h1 class="page-title">
+          Edit Branch: {{ branchForm.get('name')?.value || originalIdentifier() || 'New Branch' }}
+        </h1>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a routerLink="/management/branches" class="cancel-btn glass">
+        Back to Branches
+      </a>
+    </div>
+  </div>
+
+  <!-- Form Navigation Tabs -->
+  <div class="form-tabs glass">
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeSection() === 'info'"
+      (click)="setSection('info')"
+    >
+      <i class="material-symbols-outlined">info</i>
+      <span>General Info</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeSection() === 'schedule'"
+      (click)="setSection('schedule')"
+    >
+      <i class="material-symbols-outlined">schedule</i>
+      <span>Opening Hours</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeSection() === 'redirects'"
+      (click)="setSection('redirects')"
+    >
+      <i class="material-symbols-outlined">link</i>
+      <span>Redirects & PDF Menus</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="tab-btn" 
+      [class.active]="activeSection() === 'reviews'"
+      (click)="setSection('reviews')"
+    >
+      <i class="material-symbols-outlined">reviews</i>
+      <span>Review Platforms</span>
+    </button>
+  </div>
+
+  <!-- Form Body -->
+  <form [formGroup]="branchForm" class="branch-main-form">
+    <!-- Section 1: General Info -->
+    @if (activeSection() === 'info') {
+      <div class="form-section glass">
+        <div class="form-grid">
+          <!-- Active Status Banner / Switch -->
+          <div class="form-group full-width status-banner-card">
+            <div class="status-banner-left">
+              <span class="status-banner-title">Branch Visibility & Active Status</span>
+              <span class="status-banner-desc">Inactive branches are kept as drafts and hidden from the public portal.</span>
+            </div>
+            <label class="switch-control">
+              <input type="checkbox" formControlName="isActive" />
+              <span class="slider-round"></span>
+              <span class="switch-text">{{ branchForm.get('isActive')?.value ? 'Active (Live)' : 'Inactive (Draft)' }}</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="branchId" class="form-label">Unique Identifier (Slug) *</label>
+            <div class="input-wrapper" [class.input-error]="branchForm.get('identifier')?.invalid && branchForm.get('identifier')?.touched">
+              <i class="material-symbols-outlined input-icon">tag</i>
+              <input 
+                id="branchId" 
+                type="text" 
+                formControlName="identifier" 
+                placeholder="e.g. Amadora, Sintra, Lisboa-Centro"
+                class="form-input"
+              />
+            </div>
+            <span class="field-hint">Accepted characters: A-Z, a-z, 0-9, hyphens, underscores.</span>
+            @if (branchForm.get('identifier')?.invalid && branchForm.get('identifier')?.touched) {
+              <span class="field-error">A valid identifier is required.</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="branchName" class="form-label">Branch Name *</label>
+            <div class="input-wrapper" [class.input-error]="branchForm.get('name')?.invalid && branchForm.get('name')?.touched">
+              <i class="material-symbols-outlined input-icon">store</i>
+              <input 
+                id="branchName" 
+                type="text" 
+                formControlName="name" 
+                placeholder="e.g. Mem Martins - Sintra"
+                class="form-input"
+              />
+            </div>
+            @if (branchForm.get('name')?.invalid && branchForm.get('name')?.touched) {
+              <span class="field-error">Branch name is required.</span>
+            }
+          </div>
+
+          <div class="form-group full-width">
+            <label for="branchAddress" class="form-label">Address *</label>
+            <div class="input-wrapper" [class.input-error]="branchForm.get('address')?.invalid && branchForm.get('address')?.touched">
+              <i class="material-symbols-outlined input-icon">place</i>
+              <input 
+                id="branchAddress" 
+                type="text" 
+                formControlName="address" 
+                placeholder="e.g. Estr. Algueirão 21, 2725-025 Algueirão-Mem Martins"
+                class="form-input"
+              />
+            </div>
+            @if (branchForm.get('address')?.invalid && branchForm.get('address')?.touched) {
+              <span class="field-error">Address is required.</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="branchPhone" class="form-label">Contact Number *</label>
+            <div class="input-wrapper" [class.input-error]="branchForm.get('phone')?.invalid && branchForm.get('phone')?.touched">
+              <i class="material-symbols-outlined input-icon">phone</i>
+              <input 
+                id="branchPhone" 
+                type="tel" 
+                formControlName="phone" 
+                placeholder="+351214952367"
+                class="form-input"
+              />
+            </div>
+            @if (branchForm.get('phone')?.invalid && branchForm.get('phone')?.touched) {
+              <span class="field-error">Phone number is required.</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="branchLat" class="form-label">GPS Latitude *</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">explore</i>
+              <input 
+                id="branchLat" 
+                type="number" 
+                step="any"
+                formControlName="lat" 
+                placeholder="38.755245"
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="branchLong" class="form-label">GPS Longitude *</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">explore</i>
+              <input 
+                id="branchLong" 
+                type="number" 
+                step="any"
+                formControlName="long" 
+                placeholder="-9.220227"
+                class="form-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="section-add-entry">
+          <button type="button" class="btn save-btn" (click)="saveGeneralInfo()">
+            <i class="material-symbols-outlined">save</i>
+            <span>Save General Info</span>
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Section 2: Opening Hours -->
+    @if (activeSection() === 'schedule') {
+      <div class="form-section glass">
+        <div class="dynamic-rows-list" formArrayName="openingTime">
+          @for (timeItem of openingTimeArray.controls; track $index) {
+            <div class="dynamic-row-card glass" [formGroupName]="$index">
+              <div class="schedule-inputs-grid">
+                <div class="form-group">
+                  <label class="form-label">Day Range in Portuguese *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">calendar_today</i>
+                    <input 
+                      type="text" 
+                      formControlName="dayPt" 
+                      placeholder="e.g. Segunda a domingo"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Day Range in English *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">calendar_today</i>
+                    <input 
+                      type="text" 
+                      formControlName="dayEn" 
+                      placeholder="e.g. Monday to Sunday"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Hours in Portuguese *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">access_time</i>
+                    <input 
+                      type="text" 
+                      formControlName="timePt" 
+                      placeholder="das 11h às 15h30, das 18h às 23h"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Hours in English *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">schedule</i>
+                    <input 
+                      type="text" 
+                      formControlName="timeEn" 
+                      placeholder="11 AM to 3:30 PM, 6 PM to 11 PM"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                type="button" 
+                class="remove-row-btn" 
+                (click)="removeOpeningTime($index)"
+                title="Remove schedule slot"
+              >
+                <i class="material-symbols-outlined">delete</i>
+              </button>
+            </div>
+          } @empty {
+            <div class="empty-rows-box glass">
+              <i class="material-symbols-outlined">timer_off</i>
+              <p>No opening hours configured. Click "Add Schedule Slot".</p>
+            </div>
+          }
+
+          <div class="section-add-entry">
+            <button type="button" class="btn add-row-btn" (click)="addOpeningTime()">
+              <i class="material-symbols-outlined">add</i>
+              <span>Add Schedule Slot</span>
+            </button>
+            <button type="button" class="btn save-btn" (click)="saveSchedule()">
+              <i class="material-symbols-outlined">save</i>
+              <span>Save Schedule Slots</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Section 3: Redirects & PDF Menus -->
+    @if (activeSection() === 'redirects') {
+      <div class="form-section glass" formGroupName="redirects">
+         <div class="form-grid">
+          <div class="form-group">
+            <label for="resUrl" class="form-label">Table Reservation URL (Umai / Booking Platform)</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">table_restaurant</i>
+              <input 
+                id="resUrl" 
+                type="url" 
+                formControlName="reservation" 
+                placeholder="https://reservation.umai.io/..."
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="delUrl" class="form-label">Direct Delivery URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">moped</i>
+              <input 
+                id="delUrl" 
+                type="url" 
+                formControlName="delivery" 
+                placeholder="https://reservation.umai.io/..."
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pickupUrl" class="form-label">Takeaway / Pickup URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">shopping_bag</i>
+              <input 
+                id="pickupUrl" 
+                type="url" 
+                formControlName="pickup" 
+                placeholder="https://reservation.umai.io/..."
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mapsUrl" class="form-label">Google Maps Location URL</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">map</i>
+              <input 
+                id="mapsUrl" 
+                type="url" 
+                formControlName="location" 
+                placeholder="https://maps.app.goo.gl/..."
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="menuPdf1" class="form-label">À La Carte Menu (PDF Path)</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">menu_book</i>
+              <input 
+                id="menuPdf1" 
+                type="text" 
+                formControlName="dinein1" 
+                placeholder="assets/pdfs/Menu.pdf"
+                class="form-input"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="menuPdf2" class="form-label">Rodízio Menu (PDF Path)</label>
+            <div class="input-wrapper">
+              <i class="material-symbols-outlined input-icon">restaurant_menu</i>
+              <input 
+                id="menuPdf2" 
+                type="text" 
+                formControlName="dinein2" 
+                placeholder="assets/pdfs/SavanaSushi_Amadora_Rodizio.pdf"
+                class="form-input"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="section-add-entry">
+          <button type="button" class="btn save-btn" (click)="saveRedirects()">
+            <i class="material-symbols-outlined">save</i>
+            <span>Save Redirection URLs</span>
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Section 4: Review Platforms -->
+    @if (activeSection() === 'reviews') {
+      <div class="form-section glass">
+        <div class="dynamic-rows-list" formArrayName="reviews">
+          @for (revItem of reviewsArray.controls; track $index) {
+            <div class="dynamic-row-card glass" [formGroupName]="$index">
+              <div class="row-num">#{{ $index + 1 }}</div>
+
+              <div class="review-inputs-grid">
+                <div class="form-group">
+                  <label class="form-label">Platform Name *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">badge</i>
+                    <input 
+                      type="text" 
+                      formControlName="name" 
+                      placeholder="e.g. Google, TripAdvisor, The Fork"
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Direct Review URL *</label>
+                  <div class="input-wrapper">
+                    <i class="material-symbols-outlined input-icon">link</i>
+                    <input 
+                      type="url" 
+                      formControlName="url" 
+                      placeholder="https://www.google.com/search?q=..."
+                      class="form-input"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                type="button" 
+                class="remove-row-btn" 
+                (click)="removeReview($index)" 
+                title="Remove review channel"
+              >
+                <i class="material-symbols-outlined">delete</i>
+              </button>
+            </div>
+          } @empty {
+            <div class="empty-rows-box glass">
+              <i class="material-symbols-outlined">rate_review</i>
+              <p>No review platforms configured for this branch.</p>
+            </div>
+          }
+
+          <div class="section-add-entry">
+            <button type="button" class="btn add-row-btn" (click)="addReview()">
+              <i class="material-symbols-outlined">add</i>
+              <span>Add Review Channel</span>
+            </button>
+
+            <button type="button" class="btn save-btn" (click)="saveReviews()">
+              <i class="material-symbols-outlined">save</i>
+              <span>Save Review Channel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </form>
+</div>
+

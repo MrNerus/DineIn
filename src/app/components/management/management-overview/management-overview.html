@@ -1,0 +1,71 @@
+<div class="overview-container">
+  <!-- Welcome Banner -->
+  <div class="welcome-banner glass">
+    <div class="banner-text">
+      <span class="banner-title highlight">
+        {{ managementService.companyInfo()?.name || 'Savana Sushi' }}
+      </span>
+      <span class="banner-subtitle">
+        &nbsp; Management Console
+      </span>
+    </div>
+    <div class="banner-actions">
+      <a routerLink="/management/branches/create" class="action-primary-btn">
+        <i class="material-symbols-outlined">add_location_alt</i>
+        <span>Add Branch</span>
+      </a>
+      <a routerLink="/management/company" class="action-secondary-btn glass">
+        <i class="material-symbols-outlined">settings</i>
+        <span>Company Settings</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Metric Cards Grid -->
+  <div class="kpi-grid">
+    <div class="kpi-card glass">
+      <div class="kpi-icon-box kpi-red">
+        <i class="material-symbols-outlined">storefront</i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ totalBranches() }}</span>
+        <span class="kpi-label">Active Branches</span>
+      </div>
+      <a routerLink="/management/branches" class="kpi-link">Manage Branches &rarr;</a>
+    </div>
+
+    <div class="kpi-card glass">
+      <div class="kpi-icon-box kpi-amber">
+        <i class="material-symbols-outlined">delivery_dining</i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ totalDeliveryPartners() }}</span>
+        <span class="kpi-label">Delivery Partners</span>
+      </div>
+      <a routerLink="/management/company" class="kpi-link">View Partners &rarr;</a>
+    </div>
+
+    <div class="kpi-card glass">
+      <div class="kpi-icon-box kpi-cyan">
+        <i class="material-symbols-outlined">campaign</i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ totalNoticeAds() }}</span>
+        <span class="kpi-label">Carousel Promo Ads</span>
+      </div>
+      <a routerLink="/management/company" class="kpi-link">Edit Ads &rarr;</a>
+    </div>
+
+    <div class="kpi-card glass">
+      <div class="kpi-icon-box kpi-emerald">
+        <i class="material-symbols-outlined">share</i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-value">{{ totalSocials() }} / 2</span>
+        <span class="kpi-label">Active Social Links</span>
+      </div>
+      <a routerLink="/management/company" class="kpi-link">Configure &rarr;</a>
+    </div>
+  </div>
+</div>
+

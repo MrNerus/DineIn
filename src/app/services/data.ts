@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Branch, CategoryItem, Company } from '../interfaces/DTO';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,7 @@ import { Observable } from 'rxjs';
 export class DataService {
   private http = inject(HttpClient);
 
-  getMenu(): Observable<any> {
-    return this.http.get('assets/data/menu.json');
-  }
-
-  getBranches(): Observable<any> {
-    return this.http.get('assets/data/branches.json');
+  getCompany(): Observable<Company> {
+    return this.http.get<Company>('assets/data/branches.json');
   }
 }

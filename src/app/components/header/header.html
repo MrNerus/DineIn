@@ -1,13 +1,30 @@
-<header>
-  <nav class="flex flex-center card-width full-width">
-      <a routerLink="/" class = "logo grid"><h1 class="place-self-center comic-relief-bold text-italic">Savana</h1><img src="/assets/imgs/logo.png" alt="logo" class="place-self-center"><h1 class="place-self-center comic-relief-bold text-italic">Sushi</h1></a>
-    <!-- <ul>
-      <li><a routerLink="/order">Order</a></li>
-      <li><a routerLink="/dine-in">Dine-in</a></li>
-      <li><a routerLink="/booking">Booking</a></li>
-      <li><a routerLink="/location">Location</a></li>
-      <li><a routerLink="/get-app">Get App</a></li>
-      <li><a routerLink="/contact">Contact</a></li>
-    </ul> -->
-  </nav>
+<header class="topbar-header">
+  <div class="topbar-container">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-logo" title="Savana Sushi Hub">
+      <span class="brand-text comic-relief-bold text-italic">Savana</span>
+      <img src="assets/imgs/logo.png" alt="Savana Sushi Logo" class="brand-icon" />
+      <span class="brand-text comic-relief-bold text-italic">Sushi</span>
+    </a>
+
+    <!-- Active Branch Selector Badge / Indicator -->
+    <div class="branch-selector-wrapper">
+      <button 
+        type="button" 
+        class="branch-badge-btn glass" 
+        (click)="openBranchPicker()"
+        [attr.aria-label]="'Restaurante atual: ' + branchService.selectedBranchName() + '. Clique para alterar.'"
+      >
+        <i class="material-symbols-outlined branch-icon">location_on</i>
+        <div class="branch-info-text">
+          <span class="branch-label">Restaurante / Branch</span>
+          <span class="branch-name">{{ branchService.selectedBranchName() }}</span>
+        </div>
+        <span class="branch-change-chip">
+          <span>Alterar</span>
+          <i class="material-symbols-outlined switch-icon">swap_horiz</i>
+        </span>
+      </button>
+    </div>
+  </div>
 </header>

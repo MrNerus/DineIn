@@ -1,82 +1,122 @@
-[
-  {
-    "identifier": "Amadora",
-    "name": "Amadora",
-    "address": "1R. Dr. António José de Almeida 10A, 2700-269 Amadora",
-    "phone": "+351214952367",
-    "lat": 38.755245291772184,
-    "long": -9.220227233102092,
-    "socials": [
+{
+  "companyInfo": {
+    "name": "Savana Sushi",
+    "logo": "assets/imgs/logo.png",
+    "favicon": "assets/imgs/logo.png",
+    "apps": {
+      "googlePlayStore": "https://play.google.com/",
+      "appleAppStore": "https://apps.apple.com/"
+    },
+    "socials": {
+      "facebook": "https://www.facebook.com/savanasushi",
+      "instagram": "https://www.instagram.com/savana.sushi"
+    },
+    "deliveryPartners": [
       {
-        "name": "Facebook",
-        "url": "https://www.facebook.com/savanasushi",
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M80 299.3l0 212.7 116 0 0-212.7 86.5 0 18-97.8-104.5 0 0-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 .4 37 1.2l0-88.7C291.4 4 256.4 0 236.2 0 129.3 0 80 50.5 80 159.4l0 42.1-66 0 0 97.8 66 0z\" class=\"glowText\"/></svg>",
-        "image": null
+        "name": "Uber Eats",
+        "url": "https://www.ubereats.com/store/savana-sushi-amadora/cwzXn1P5RNODeKdRpNeZig?diningMode=DELIVERY"
       },
       {
-        "name": "Instagram",
-        "url": "https://www.facebook.com/savanasushi",
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path d=\"M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z\"/></svg>",
-        "image": null
-      }
-    ],
-    "openingTime": [
+        "name": "Glovo",
+        "url": "https://glovoapp.com/pt/pt/lisboa/savana-sushi-amadora-lis/"
+      },
       {
-        "day": "Segunda a domingo (Monday to Sunday)",
-        "timePt": "das 11h às 15h30, das 18h às 23h",
-        "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
+        "name": "Bolt Food",
+        "url": "https://food.bolt.eu/"
       }
     ],
-    "redirects": {
-      "reservation": "https://reservation.umai.io/en/widget/savana-sushi-amadora",
-      "delivery": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
-      "pickup": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
-      "googleReview": "https://www.google.com/search?q=savana+sushi+amadora",
-      "location": "https://maps.app.goo.gl/XmMZ91ucpEXyWpZg9?g_st=ipc",
-      "pdf": {
-        "dinein1": "assets/pdfs/Menu.pdf",
-        "dinein2": "assets/pdfs/SavanaSushi_Amadora_Rodizio.pdf"
-      }
-    }
+    "notice": [
+      "assets/imgs/Ads1.jpg",
+      "assets/imgs/Ads2.png",
+      "assets/imgs/Ads3.jpg"
+    ] 
   },
-  {
-    "identifier": "Sintra",
-    "name": "Mem Martins - Sintra",
-    "address": "Estr. Algueirão 21, 2725-025 Algueirão-Mem Martins",
-    "phone": "+351210133261",
-    "lat": 38.79846169317772,
-    "long": -9.341457822088252,
-    "socials": [
-      {
-        "name": "Facebook",
-        "url": "https://www.facebook.com/savanasushi",
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M80 299.3l0 212.7 116 0 0-212.7 86.5 0 18-97.8-104.5 0 0-34.6c0-51.7 20.3-71.5 72.7-71.5 16.3 0 29.4 .4 37 1.2l0-88.7C291.4 4 256.4 0 236.2 0 129.3 0 80 50.5 80 159.4l0 42.1-66 0 0 97.8 66 0z\" class=\"glowText\"/></svg>",
-        "image": null
+  "branchInfo": [
+    {
+      "id": "branch_amadora",
+      "identifier": "Amadora",
+      "name": "Amadora",
+      "address": "1R. Dr. António José de Almeida 10A, 2700-269 Amadora",
+      "phone": "+351214952367",
+      "lat": 38.755245291772184,
+      "long": -9.220227233102092,
+      "isActive": true,
+      "openingTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "dayPt": "Segunda a domingo",
+          "dayEn": "Monday to Sunday",
+          "timePt": "das 11h às 15h30, das 18h às 23h",
+          "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
+        }
+      ],
+      "redirects": {
+        "reservation": "https://reservation.umai.io/en/widget/savana-sushi-amadora",
+        "delivery": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
+        "pickup": "https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2",
+        "location": "https://maps.app.goo.gl/XmMZ91ucpEXyWpZg9?g_st=ipc",
+        "pdf": {
+          "dinein1": "assets/pdfs/Menu.pdf",
+          "dinein2": "assets/pdfs/SavanaSushi_Amadora_Rodizio.pdf"
+        }
       },
-      {
-        "name": "Instagram",
-        "url": "https://www.facebook.com/savanasushi",
-        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path d=\"M224.3 141a115 115 0 1 0 -.6 230 115 115 0 1 0 .6-230zm-.6 40.4a74.6 74.6 0 1 1 .6 149.2 74.6 74.6 0 1 1 -.6-149.2zm93.4-45.1a26.8 26.8 0 1 1 53.6 0 26.8 26.8 0 1 1 -53.6 0zm129.7 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM399 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z\"/></svg>",
-        "image": null
-      }
-    ],
-    "openingTime": [
-      {
-        "day": "Segunda a domingo (Monday to Sunday)",
-        "timePt": "das 11h às 15h30, das 18h às 23h",
-        "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
-      }
-    ],
-    "redirects": {
-      "reservation": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins",
-      "delivery": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
-      "pickup": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
-      "googleReview": "https://www.google.com/search?q=savana+sushi+mem+martins",
-      "location": "https://maps.app.goo.gl/gRD6ZAo21mNFAn3N6?g_st=iwb",
-      "pdf": {
-        "dinein1": "assets/pdfs/Menu.pdf",
-        "dinein2": "assets/pdfs/SavanaSushi_MemMartins_Rodizio.pdf"
-      }
+      "reviews": [
+        {
+          "name": "Google",
+          "url": "https://www.google.com/search?q=savana+sushi+amadora"
+        },
+        {
+          "name": "Tripadvisor",
+          "url": "https://www.tripadvisor.com/Restaurant_Review-g189158-d25118790-Reviews-Savana_Sushi-Lisbon_Lisbon_District_Central_Portugal.html"
+        },
+        {
+          "name": "The Fork",
+          "url": "https://www.zomato.com/pt/lisboa/savana-sushi-alvalade"
+        }
+      ]
+    },
+    {
+      "id": "branch_sintra",
+      "identifier": "Sintra",
+      "name": "Mem Martins - Sintra",
+      "address": "Estr. Algueirão 21, 2725-025 Algueirão-Mem Martins",
+      "phone": "+351210133261",
+      "lat": 38.79846169317772,
+      "long": -9.341457822088252,
+      "isActive": true,
+      "openingTime": [
+        {
+          "day": "Segunda a domingo (Monday to Sunday)",
+          "dayPt": "Segunda a domingo",
+          "dayEn": "Monday to Sunday",
+          "timePt": "das 11h às 15h30, das 18h às 23h",
+          "timeEn": "11 AM to 3:30 PM, 6 PM to 11 PM"
+        }
+      ],
+      "redirects": {
+        "reservation": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins",
+        "delivery": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
+        "pickup": "https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2",
+        "location": "https://maps.app.goo.gl/gRD6ZAo21mNFAn3N6?g_st=iwb",
+        "pdf": {
+          "dinein1": "assets/pdfs/Menu.pdf",
+          "dinein2": "assets/pdfs/SavanaSushi_MemMartins_Rodizio.pdf"
+        }
+      },
+      "reviews": [
+        {
+          "name": "Google",
+          "url": "https://www.google.com/search?q=savana+sushi+mem+martins"
+        },
+        {
+          "name": "Tripadvisor",
+          "url": "https://www.tripadvisor.com/Restaurant_Review-g189158-d25118790-Reviews-Savana_Sushi-Lisbon_Lisbon_District_Central_Portugal.html"
+        },
+        {
+          "name": "The Fork",
+          "url": "https://www.zomato.com/pt/lisboa/savana-sushi-alvalade"
+        }
+      ]
     }
-  }
-]
+  ]
+}
