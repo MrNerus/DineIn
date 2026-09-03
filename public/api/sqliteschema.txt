@@ -1,0 +1,159 @@
+-- Enable Foreign Key enforcement in SQLite
+PRAGMA foreign_keys = ON;
+
+-- ==========================================================
+-- 1. USERS TABLE (Auth & Admin CMS)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    name TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'admin',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================================
+-- 2. COMPANY TABLE (Singleton / Brand Info)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS company (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    logo TEXT,
+    favicon TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS socials (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    profile TEXT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS apps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,                                -- google_play_store || apple_app_store
+    url TEXT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================================
+-- 3. COMPANY DELIVERY PARTNERS TABLE
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS company_delivery_partners (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    url TEXT NULL,
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1 CHECK(is_active IN (0, 1)),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================================
+-- 4. COMPANY NOTICES / ADS TABLE (Promotional Carousel)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS company_notices (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    image_url TEXT NOT NULL,
+    title TEXT,
+    target_url TEXT,
+    display_order INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1 CHECK(is_active IN (0, 1)),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================================
+-- 5. BRANCHES TABLE
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS branches (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    identifier TEXT NOT NULL UNIQUE,           -- Unique slug e.g. 'Amadora', 'Sintra'
+    name TEXT NOT NULL,                        -- Display name e.g. 'Mem Martins - Sintra'
+    address TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    lat REAL,
+    long REAL,
+    is_active INTEGER NOT NULL DEFAULT 1 CHECK(is_active IN (0, 1)),
+    
+    -- Redirects
+    reservation_url TEXT,
+    delivery_url TEXT,
+    pickup_url TEXT,
+    location_url TEXT,
+    
+    -- PDF Menus
+    pdf_dinein1 TEXT,
+    pdf_dinein2 TEXT,
+    
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================================================
+-- 6. BRANCH SCHEDULES TABLE (Opening, Delivery, Pickup Hours)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS branch_schedules (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    branch_id INTEGER NOT NULL,
+    schedule_type TEXT NOT NULL DEFAULT 'opening' CHECK(schedule_type IN ('opening', 'delivery', 'pickup')),
+    day_pt TEXT,                               -- e.g. 'Segunda a domingo'
+    day_en TEXT,                               -- e.g. 'Monday to Sunday'
+    time_pt TEXT NOT NULL,                     -- e.g. 'das 11h às 15h30, das 18h às 23h'
+    time_en TEXT NOT NULL,                     -- e.g. '11 AM to 3:30 PM, 6 PM to 11 PM'
+    display_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
+);
+
+-- ==========================================================
+-- 7. BRANCH REVIEWS TABLE (Review Platforms & URLs)
+-- ==========================================================
+CREATE TABLE IF NOT EXISTS branch_reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    branch_id INTEGER NOT NULL,
+    name TEXT NOT NULL,                        -- e.g. 'Google', 'Tripadvisor', 'The Fork'
+    url TEXT NOT NULL,
+    display_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
+);
+
+-- ==========================================================
+-- 8. MENU CATEGORIES & ITEMS (Optional for Full Restaurant Catalog)
+-- ==========================================================
+-- CREATE TABLE IF NOT EXISTS menu_categories (
+--     id INTEGER PRIMARY KEY,
+--     name TEXT NOT NULL,
+--     description TEXT,
+--     display_order INTEGER DEFAULT 0
+-- );
+
+-- CREATE TABLE IF NOT EXISTS menu_items (
+--     id INTEGER PRIMARY KEY,
+--     category_id INTEGER NOT NULL,
+--     name TEXT NOT NULL,
+--     description TEXT,
+--     price REAL NOT NULL DEFAULT 0.0,
+--     image_url TEXT,
+--     is_active INTEGER DEFAULT 1 CHECK(is_active IN (0, 1)),
+--     FOREIGN KEY (category_id) REFERENCES menu_categories(id) ON DELETE CASCADE
+-- );
+
+-- ==========================================================
+-- INDEXES FOR PERFORMANCE
+-- ==========================================================
+CREATE INDEX IF NOT EXISTS idx_branches_identifier ON branches(identifier);
+CREATE INDEX IF NOT EXISTS idx_branches_is_active ON branches(is_active);
+CREATE INDEX IF NOT EXISTS idx_branch_schedules_branch_id ON branch_schedules(branch_id);
+CREATE INDEX IF NOT EXISTS idx_branch_reviews_branch_id ON branch_reviews(branch_id);
+-- CREATE INDEX IF NOT EXISTS idx_delivery_partners_company ON company_delivery_partners(company_id);
+-- CREATE INDEX IF NOT EXISTS idx_menu_items_category ON menu_items(category_id);
