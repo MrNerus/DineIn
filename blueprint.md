@@ -43,30 +43,27 @@ Savana Sushi Portal is an interactive, modern portal and redirection hub for res
 *   **Default Placeholder Creation**: Elimination of blank "Add Branch" form pages in favor of automatic default placeholder branch creation (`POST api/branches.php?action=create_default`) with immediate edit navigation.
 *   **Separation of Internal ID and Identifier**: Every branch maintains an immutable internal ID (`id`) alongside an editable user-facing unique slug (`identifier`).
 *   **Active / Inactive Status**: Branches have an `isActive` toggle (inactive by default for new placeholders), with status indicators on branch cards and filtering on the public guest portal.
+*   **100% Backend-Driven Architecture**: Complete removal of `localStorage` draft caching and fake offline fallbacks. Management components communicate directly with SQLite backend endpoints (`api/data.php`, `api/branches.php`, `api/company.php`), with responsive loading states and backend error handling.
 
 ---
 
-## Current Plan: Section-by-Section Saving, Placeholder Branches & Active Status
+## Current Plan: Dynamic Backend URL Integration via ConfigService
 
-### Phase 1: Data Model & Backend API Updates
-*   [x] Update `Branch` DTO interface with `id?: string | number`, `isActive?: boolean`, and multi-language `TimeTable` fields.
-*   [x] Update `src/assets/data/branches.json` with `id` and `isActive: true`.
-*   [x] Enhance `public/api/branches.php` to handle default placeholder creation (`action=create_default`), section-specific updates (`PUT /api/branches.php`), and lookups by `id` or `identifier`.
+### Phase 1: ConfigService Refinements
+*   [x] Enhance `ConfigService` with `backend_url` property alias and safe URL builder helper (`apiUrl(endpoint)`).
+*   [x] Guarantee trailing slash normalization so paths like `api/login.php` or `/api/login.php` join seamlessly.
 
-### Phase 2: Management Services & Public Filters
-*   [x] Add `createDefaultBranch()`, `saveBranchSection()`, `toggleBranchStatus()`, and `getBranchByIdOrIdentifier()` to `ManagementService`.
-*   [x] Add `activeBranches` computed signal to `BranchService` to filter inactive branches from public guest selection.
+### Phase 2: AuthService Integration
+*   [x] Inject `ConfigService` into `AuthService`.
+*   [x] Update `login()` to send requests to `${this.configService.backend_url}/api/login.php`.
 
-### Phase 3: Branch List UI & Placeholder Creation
-*   [x] Update `management-branches.html` and `management-branches.component.ts` to replace route link with `createNewBranch()` method.
-*   [x] Add Active/Inactive toggle button and internal ID / slug badge display on branch cards.
+### Phase 3: ManagementService Integration
+*   [x] Inject `ConfigService` into `ManagementService`.
+*   [x] Update all endpoints (`api/data.php`, `api/branches.php`, `api/company.php`) to use `backend_url`.
 
-### Phase 4: Individual Section Form Handlers & UI Polish
-*   [x] Update `management-branch-form.component.ts` with `saveGeneralInfo()`, `saveSchedule()`, `saveRedirects()`, and `saveReviews()`.
-*   [x] Fix button actions in `management-branch-form.html` to connect to respective section save methods.
-*   [x] Add Active/Inactive status toggle in the General Info form section and header.
-*   [x] Fix PDF menu input control bindings in Redirects section.
+### Phase 4: Verification & Build Check
+*   [x] Run `ng build` to verify clean compilation.
+*   [x] Confirm zero breaking changes across services.
 
-### Phase 5: Verification & Compilation
-*   [x] Run `npm run build` to ensure clean compilation without errors.
-*   [x] Validate section saving, placeholder creation, and active/inactive toggle behavior.
+
+

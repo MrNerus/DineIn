@@ -12,29 +12,7 @@
           <span class="comic-relief-bold text-italic">Savana</span>
           <span class="brand-highlight comic-relief-bold text-italic">Sushi</span>
         </h1>
-        <p class="login-subtitle">Área de Administração & CMS</p>
-      </div>
-
-      <!-- Demo Credentials Notice Box -->
-      <div class="demo-box glass">
-        <div class="demo-box-header">
-          <i class="material-symbols-outlined demo-icon">info</i>
-          <span>Acesso de Demonstração (PoC)</span>
-        </div>
-        <div class="demo-credentials">
-          <div class="demo-item">
-            <span class="demo-label">Utilizador:</span>
-            <code class="demo-code">admin</code>
-          </div>
-          <div class="demo-item">
-            <span class="demo-label">Palavra-passe:</span>
-            <code class="demo-code">admin123</code>
-          </div>
-        </div>
-        <button type="button" class="quick-fill-btn" (click)="fillDemoCredentials()">
-          <i class="material-symbols-outlined">bolt</i>
-          <span>Preencher Dados de Teste</span>
-        </button>
+        <p class="login-subtitle">Management Console</p>
       </div>
 
       <!-- Error Message Banner -->
@@ -48,7 +26,7 @@
       <!-- Form -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
         <div class="form-group">
-          <label for="username" class="form-label">Nome de Utilizador</label>
+          <label for="username" class="form-label">Username</label>
           <div class="input-wrapper" [class.input-error]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
             <i class="material-symbols-outlined input-icon">person</i>
             <input 
@@ -61,12 +39,12 @@
             />
           </div>
           @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
-            <span class="field-error">Por favor insira o nome de utilizador.</span>
+            <span class="field-error">Please enter a username.</span>
           }
         </div>
 
         <div class="form-group">
-          <label for="password" class="form-label">Palavra-passe</label>
+          <label for="password" class="form-label">Password</label>
           <div class="input-wrapper" [class.input-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
             <i class="material-symbols-outlined input-icon">lock</i>
             <input 
@@ -79,7 +57,7 @@
             />
           </div>
           @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <span class="field-error">Por favor insira a palavra-passe.</span>
+            <span class="field-error">Please enter a password.</span>
           }
         </div>
 
@@ -90,9 +68,9 @@
         >
           @if (authService.isLoading()) {
             <span class="btn-spinner"></span>
-            <span>A autenticar...</span>
+            <span>Authenticating...</span>
           } @else {
-            <span>Iniciar Sessão</span>
+            <span>Sign In</span>
             <i class="material-symbols-outlined">arrow_forward</i>
           }
         </button>
@@ -102,7 +80,7 @@
       <div class="login-footer">
         <a routerLink="/" class="back-link">
           <i class="material-symbols-outlined">arrow_back</i>
-          <span>Voltar ao Portal Savana Sushi</span>
+          <span>Back to Website</span>
         </a>
       </div>
     </div>

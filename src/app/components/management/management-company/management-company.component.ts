@@ -144,7 +144,7 @@ export class ManagementCompanyComponent implements OnInit {
       notice: formValue.notice && formValue.notice.length > 0 ? formValue.notice : null
     };
 
-    this.managementService.updateCompanyInfo(updatedCompanyInfo);
+    this.managementService.updateCompanyInfo(updatedCompanyInfo).subscribe();
   }
 }
 

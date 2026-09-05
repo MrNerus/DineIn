@@ -62,10 +62,17 @@
     </button>
   </div>
 
-  <!-- Form Body -->
-  <form [formGroup]="branchForm" class="branch-main-form">
-    <!-- Section 1: General Info -->
-    @if (activeSection() === 'info') {
+  <!-- Backend Loading State -->
+  @if (isFormLoading()) {
+    <div class="loading-branch-card glass">
+      <i class="material-symbols-outlined spin-icon">sync</i>
+      <span>A carregar detalhes do restaurante diretamente da base de dados SQLite...</span>
+    </div>
+  } @else {
+    <!-- Form Body -->
+    <form [formGroup]="branchForm" class="branch-main-form">
+      <!-- Section 1: General Info -->
+      @if (activeSection() === 'info') {
       <div class="form-section glass">
         <div class="form-grid">
           <!-- Active Status Banner / Switch -->
@@ -182,9 +189,14 @@
         </div>
 
         <div class="section-add-entry">
-          <button type="button" class="btn save-btn" (click)="saveGeneralInfo()">
-            <i class="material-symbols-outlined">save</i>
-            <span>Save General Info</span>
+          <button type="button" class="btn save-btn" (click)="saveGeneralInfo()" [disabled]="savingSection() === 'info' || managementService.isSaving()">
+            @if (savingSection() === 'info') {
+              <i class="material-symbols-outlined spin-icon">sync</i>
+              <span>Saving in Database...</span>
+            } @else {
+              <i class="material-symbols-outlined">save</i>
+              <span>Save General Info</span>
+            }
           </button>
         </div>
       </div>
@@ -271,9 +283,14 @@
               <i class="material-symbols-outlined">add</i>
               <span>Add Schedule Slot</span>
             </button>
-            <button type="button" class="btn save-btn" (click)="saveSchedule()">
-              <i class="material-symbols-outlined">save</i>
-              <span>Save Schedule Slots</span>
+            <button type="button" class="btn save-btn" (click)="saveSchedule()" [disabled]="savingSection() === 'schedule' || managementService.isSaving()">
+              @if (savingSection() === 'schedule') {
+                <i class="material-symbols-outlined spin-icon">sync</i>
+                <span>Saving in Database...</span>
+              } @else {
+                <i class="material-symbols-outlined">save</i>
+                <span>Save Schedule Slots</span>
+              }
             </button>
           </div>
         </div>
@@ -370,9 +387,14 @@
         </div>
 
         <div class="section-add-entry">
-          <button type="button" class="btn save-btn" (click)="saveRedirects()">
-            <i class="material-symbols-outlined">save</i>
-            <span>Save Redirection URLs</span>
+          <button type="button" class="btn save-btn" (click)="saveRedirects()" [disabled]="savingSection() === 'redirects' || managementService.isSaving()">
+            @if (savingSection() === 'redirects') {
+              <i class="material-symbols-outlined spin-icon">sync</i>
+              <span>Saving in Database...</span>
+            } @else {
+              <i class="material-symbols-outlined">save</i>
+              <span>Save Redirection URLs</span>
+            }
           </button>
         </div>
       </div>
@@ -436,14 +458,20 @@
               <span>Add Review Channel</span>
             </button>
 
-            <button type="button" class="btn save-btn" (click)="saveReviews()">
-              <i class="material-symbols-outlined">save</i>
-              <span>Save Review Channel</span>
+            <button type="button" class="btn save-btn" (click)="saveReviews()" [disabled]="savingSection() === 'reviews' || managementService.isSaving()">
+              @if (savingSection() === 'reviews') {
+                <i class="material-symbols-outlined spin-icon">sync</i>
+                <span>Saving in Database...</span>
+              } @else {
+                <i class="material-symbols-outlined">save</i>
+                <span>Save Review Channel</span>
+              }
             </button>
           </div>
         </div>
       </div>
     }
   </form>
+  }
 </div>
 

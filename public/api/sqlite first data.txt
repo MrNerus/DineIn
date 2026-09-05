@@ -1,0 +1,106 @@
+-- ==========================================================
+-- 1. Insert Default Administrator (from api/login.php)
+-- ==========================================================
+INSERT INTO users (id, username, password, name, role) 
+VALUES (1, 'admin', 'admin123', 'Savana Administrator', 'admin');
+
+-- ==========================================================
+-- 2. Insert Company Information (from api/company.php)
+-- ==========================================================
+INSERT INTO company (id, name, logo, favicon)
+VALUES (
+    1,
+    'Savana Sushi',
+    'assets/imgs/logo.png',
+    'assets/imgs/logo.png'
+);
+
+-- ==========================================================
+-- 3. Insert Social Channels
+-- ==========================================================
+INSERT INTO socials (name, profile) VALUES
+('facebook', 'https://www.facebook.com/savanasushi'),
+('instagram', 'https://www.instagram.com/savana.sushi');
+
+-- ==========================================================
+-- 4. Insert Mobile Store Apps
+-- ==========================================================
+INSERT INTO apps (name, url) VALUES
+('google_play_store', 'https://play.google.com/'),
+('apple_app_store', 'https://apps.apple.com/');
+
+-- ==========================================================
+-- 5. Insert Company Delivery Partners
+-- ==========================================================
+INSERT INTO company_delivery_partners (name, url, display_order, is_active) VALUES
+('Uber Eats', 'https://www.ubereats.com/store/savana-sushi-amadora/cwzXn1P5RNODeKdRpNeZig?diningMode=DELIVERY', 1, 1),
+('Glovo', 'https://glovoapp.com/pt/pt/lisboa/savana-sushi-amadora-lis/', 2, 1),
+('Bolt Food', 'https://food.bolt.eu/', 3, 1);
+
+-- ==========================================================
+-- 6. Insert Promotional Notice Images
+-- ==========================================================
+INSERT INTO company_notices (image_url, display_order, is_active) VALUES
+('assets/imgs/Ads1.jpg', 1, 1),
+('assets/imgs/Ads2.png', 2, 1),
+('assets/imgs/Ads3.jpg', 3, 1);
+
+-- ==========================================================
+-- 7. Insert Branches (from api/branches.php)
+-- ==========================================================
+INSERT INTO branches (
+    id, identifier, name, address, phone, lat, long, is_active,
+    reservation_url, delivery_url, pickup_url, location_url,
+    pdf_dinein1, pdf_dinein2
+) VALUES
+(
+    1,
+    'Amadora',
+    'Amadora',
+    '1R. Dr. António José de Almeida 10A, 2700-269 Amadora',
+    '+351214952367',
+    38.755245291772184,
+    -9.220227233102092,
+    1,
+    'https://reservation.umai.io/en/widget/savana-sushi-amadora',
+    'https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2',
+    'https://reservation.umai.io/en/widget/savana-sushi-amadora?party_size=2',
+    'https://maps.app.goo.gl/XmMZ91ucpEXyWpZg9?g_st=ipc',
+    'assets/pdfs/Menu.pdf',
+    'assets/pdfs/SavanaSushi_Amadora_Rodizio.pdf'
+),
+(
+    2,
+    'Sintra',
+    'Mem Martins - Sintra',
+    'Estr. Algueirão 21, 2725-025 Algueirão-Mem Martins',
+    '+351210133261',
+    38.79846169317772,
+    -9.341457822088252,
+    1,
+    'https://reservation.umai.io/en/widget/savana-sushi-mem-martins',
+    'https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2',
+    'https://reservation.umai.io/en/widget/savana-sushi-mem-martins?party_size=2',
+    'https://maps.app.goo.gl/gRD6ZAo21mNFAn3N6?g_st=iwb',
+    'assets/pdfs/Menu.pdf',
+    'assets/pdfs/SavanaSushi_MemMartins_Rodizio.pdf'
+);
+
+-- ==========================================================
+-- 8. Insert Opening Times
+-- ==========================================================
+INSERT INTO branch_schedules (branch_id, schedule_type, day_pt, day_en, time_pt, time_en, display_order) VALUES
+(1, 'opening', 'Segunda a domingo', 'Monday to Sunday', 'das 11h às 15h30, das 18h às 23h', '11 AM to 3:30 PM, 6 PM to 11 PM', 1),
+(2, 'opening', 'Segunda a domingo', 'Monday to Sunday', 'das 11h às 15h30, das 18h às 23h', '11 AM to 3:30 PM, 6 PM to 11 PM', 1);
+
+-- ==========================================================
+-- 9. Insert Branch Reviews
+-- ==========================================================
+INSERT INTO branch_reviews (branch_id, name, url, display_order) VALUES
+(1, 'Google', 'https://www.google.com/search?q=savana+sushi+amadora', 1),
+(1, 'Tripadvisor', 'https://www.tripadvisor.com/Restaurant_Review-g189158-d25118790-Reviews-Savana_Sushi-Lisbon_Lisbon_District_Central_Portugal.html', 2),
+(1, 'The Fork', 'https://www.zomato.com/pt/lisboa/savana-sushi-alvalade', 3),
+
+(2, 'Google', 'https://www.google.com/search?q=savana+sushi+mem+martins', 1),
+(2, 'Tripadvisor', 'https://www.tripadvisor.com/Restaurant_Review-g189158-d25118790-Reviews-Savana_Sushi-Lisbon_Lisbon_District_Central_Portugal.html', 2),
+(2, 'The Fork', 'https://www.zomato.com/pt/lisboa/savana-sushi-alvalade', 3);

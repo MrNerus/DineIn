@@ -38,10 +38,8 @@ export class ManagementOverviewComponent {
     });
   }
 
-  public onResetDefaults(): void {
-    if (confirm('Tem a certeza de que deseja restaurar as configurações padrão de branches.json? Todas as alterações não salvas serão revertidas.')) {
-      this.managementService.resetToDefault();
-    }
+  public onRefreshData(): void {
+    this.managementService.loadData().subscribe();
   }
 }
 

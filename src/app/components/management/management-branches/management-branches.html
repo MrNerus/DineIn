@@ -12,13 +12,26 @@
     </div>
 
     <div class="header-actions">
-      <button type="button" class="create-btn" (click)="createNewBranch()">
-        <i class="material-symbols-outlined">add_location_alt</i>
-        <span>Add Branch</span>
+      <button type="button" class="create-btn" (click)="createNewBranch()" [disabled]="isCreating() || managementService.isSaving()">
+        @if (isCreating()) {
+          <i class="material-symbols-outlined spin-icon">sync</i>
+          <span>Criando no Servidor...</span>
+        } @else {
+          <i class="material-symbols-outlined">add_location_alt</i>
+          <span>Add Branch</span>
+        }
       </button>
     </div>
   </div>
   
+  <!-- Loading state from backend -->
+  @if (managementService.isLoading()) {
+    <div class="loading-backend-card glass">
+      <i class="material-symbols-outlined spin-icon">sync</i>
+      <span>A carregar restaurantes do servidor SQLite...</span>
+    </div>
+  }
+
   <!-- Branches Grid -->
   <div class="branches-grid">
     @for (branch of filteredBranches(); track (branch.id || branch.identifier)) {

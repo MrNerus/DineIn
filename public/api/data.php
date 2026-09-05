@@ -1,41 +1,43 @@
 <?php
 require_once __DIR__ . '/cors.php';
+require_once __DIR__ . '/db.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-// Load full branches.json as reference if available
-$jsonFilePath = __DIR__ . '/../src/assets/data/branches.json';
-$fullData = null;
+try {
+    $db = getDb();
 
-if (file_exists($jsonFilePath)) {
-    $content = file_get_contents($jsonFilePath);
-    $fullData = json_decode($content, true);
-}
+    if ($method === 'GET') {
+        $companyInfo = fetchCompanyData($db);
+        $branchInfo = fetchBranchesData($db);
+        error_log("Fetched company info: " . json_encode($companyInfo));
+        error_log("Fetched branch info: " . json_encode($branchInfo));
 
-if ($method === 'GET') {
-    http_response_code(200);
-    echo json_encode($fullData ?? [
-        'companyInfo' => [
-            'name' => 'Savana Sushi',
-            'logo' => 'assets/imgs/logo.png',
-            'favicon' => 'assets/imgs/logo.png',
-            'apps' => ['googlePlayStore' => '', 'appleAppStore' => ''],
-            'socials' => ['facebook' => '', 'instagram' => ''],
-            'deliveryPartners' => [],
-            'notice' => []
-        ],
-        'branchInfo' => []
-    ]);
-} elseif ($method === 'POST' || $method === 'PUT') {
-    $input = getJsonInput();
-    http_response_code(200);
+        http_response_code(200);
+        echo json_encode([
+            'companyInfo' => $companyInfo,
+            'branchInfo' => $branchInfo
+        ]);
+    } elseif ($method === 'POST' || $method === 'PUT') {
+        $input = getJsonInput();
+        if (isset($input['companyInfo']) && is_array($input['companyInfo'])) {
+            updateCompanyData($db, $input['companyInfo']);
+        }
+
+        http_response_code(200);
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Complete data saved successfully',
+            'savedAt' => date('Y-m-d H:i:s')
+        ]);
+    } else {
+        http_response_code(405);
+        echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
+    }
+} catch (Exception $e) {
+    http_response_code(500);
     echo json_encode([
-        'status' => 'success',
-        'message' => 'Complete data saved successfully (PoC Mode)',
-        'data' => $input,
-        'savedAt' => date('Y-m-d H:i:s')
+        'status' => 'error',
+        'message' => 'Database error: ' . $e->getMessage()
     ]);
-} else {
-    http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
 }

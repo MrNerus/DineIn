@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Branch } from '../../../interfaces/DTO';
 import { ManagementService } from '../../../services/management.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class ManagementBranchFormComponent implements OnInit {
   public readonly branchId = signal<string | number | null>(null);
   public readonly originalIdentifier = signal<string | null>(null);
   public readonly isEditMode = signal<boolean>(true);
+  public readonly isFormLoading = signal<boolean>(true);
+  public readonly savingSection = signal<string | null>(null);
   public readonly activeSection = signal<'info' | 'schedule' | 'redirects' | 'reviews'>('info');
 
   public branchForm: FormGroup = this.fb.group({
@@ -44,13 +47,21 @@ export class ManagementBranchFormComponent implements OnInit {
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('identifier');
-    if (idParam) {
+    if (idParam && idParam !== 'create') {
       this.loadBranchData(idParam);
     } else {
-      // Fallback: If accessed directly without ID, create placeholder or redirect
-      const newBranch = this.managementService.createDefaultBranch();
-      const targetKey = newBranch.id || newBranch.identifier;
-      this.router.navigate(['/management/branches/edit', targetKey]);
+      // Direct access to create: initiate default placeholder on backend
+      this.isFormLoading.set(true);
+      this.managementService.createDefaultBranch().subscribe({
+        next: (newBranch) => {
+          const targetKey = newBranch.id ? String(newBranch.id) : newBranch.identifier;
+          this.router.navigate(['/management/branches/edit', targetKey], { replaceUrl: true });
+        },
+        error: () => {
+          this.isFormLoading.set(false);
+          this.router.navigate(['/management/branches']);
+        }
+      });
     }
   }
 
@@ -67,13 +78,23 @@ export class ManagementBranchFormComponent implements OnInit {
   }
 
   private loadBranchData(idOrIdentifier: string): void {
-    const branch = this.managementService.getBranchByIdentifier(idOrIdentifier);
-    if (!branch) {
-      this.managementService.showNotification(`Branch "${idOrIdentifier}" not found.`, 'error');
-      this.router.navigate(['/management/branches']);
-      return;
-    }
+    this.isFormLoading.set(true);
 
+    this.managementService.getBranchFromBackend(idOrIdentifier).subscribe({
+      next: (branch) => {
+        this.populateFormData(branch);
+        this.isFormLoading.set(false);
+      },
+      error: (err) => {
+        this.isFormLoading.set(false);
+        console.error('Failed to load branch from backend:', err);
+        this.managementService.showNotification(`Restaurante "${idOrIdentifier}" não encontrado no servidor.`, 'error');
+        this.router.navigate(['/management/branches']);
+      }
+    });
+  }
+
+  private populateFormData(branch: Branch): void {
     this.branchId.set(branch.id || null);
     this.originalIdentifier.set(branch.identifier);
 
@@ -185,10 +206,18 @@ export class ManagementBranchFormComponent implements OnInit {
       isActive: Boolean(this.branchForm.get('isActive')?.value)
     };
 
-    const success = this.managementService.saveBranchSection(targetKey, 'info', infoData);
-    if (success) {
-      this.originalIdentifier.set(infoData.identifier);
-    }
+    this.savingSection.set('info');
+    this.managementService.saveBranchSection(targetKey, 'info', infoData).subscribe({
+      next: (updatedBranch) => {
+        this.savingSection.set(null);
+        if (updatedBranch && updatedBranch.identifier) {
+          this.originalIdentifier.set(updatedBranch.identifier);
+        }
+      },
+      error: () => {
+        this.savingSection.set(null);
+      }
+    });
   }
 
   public saveSchedule(): void {
@@ -209,7 +238,15 @@ export class ManagementBranchFormComponent implements OnInit {
       timeEn: item.timeEn?.trim() || ''
     }));
 
-    this.managementService.saveBranchSection(targetKey, 'schedule', scheduleData);
+    this.savingSection.set('schedule');
+    this.managementService.saveBranchSection(targetKey, 'schedule', scheduleData).subscribe({
+      next: () => {
+        this.savingSection.set(null);
+      },
+      error: () => {
+        this.savingSection.set(null);
+      }
+    });
   }
 
   public saveRedirects(): void {
@@ -235,7 +272,15 @@ export class ManagementBranchFormComponent implements OnInit {
       }
     };
 
-    this.managementService.saveBranchSection(targetKey, 'redirects', redirectsData);
+    this.savingSection.set('redirects');
+    this.managementService.saveBranchSection(targetKey, 'redirects', redirectsData).subscribe({
+      next: () => {
+        this.savingSection.set(null);
+      },
+      error: () => {
+        this.savingSection.set(null);
+      }
+    });
   }
 
   public saveReviews(): void {
@@ -253,13 +298,28 @@ export class ManagementBranchFormComponent implements OnInit {
       url: r.url?.trim() || ''
     }));
 
-    this.managementService.saveBranchSection(targetKey, 'reviews', reviewsData);
+    this.savingSection.set('reviews');
+    this.managementService.saveBranchSection(targetKey, 'reviews', reviewsData).subscribe({
+      next: () => {
+        this.savingSection.set(null);
+      },
+      error: () => {
+        this.savingSection.set(null);
+      }
+    });
   }
 
   public toggleActiveDirectly(): void {
-    const current = this.branchForm.get('isActive')?.value;
-    const updated = !current;
-    this.branchForm.get('isActive')?.setValue(updated);
-    this.saveGeneralInfo();
+    const targetKey = this.branchId() ? String(this.branchId()) : this.originalIdentifier();
+    if (!targetKey) return;
+
+    this.managementService.toggleBranchStatus(targetKey).subscribe({
+      next: (success) => {
+        if (success) {
+          const current = this.branchForm.get('isActive')?.value;
+          this.branchForm.get('isActive')?.setValue(!current);
+        }
+      }
+    });
   }
 }

@@ -18,6 +18,7 @@ export class ManagementBranchesComponent {
   public readonly searchQuery = signal<string>('');
   public readonly branchToDelete = signal<Branch | null>(null);
   public readonly isDeleteModalOpen = signal<boolean>(false);
+  public readonly isCreating = signal<boolean>(false);
 
   public readonly filteredBranches = computed<Branch[]>(() => {
     const list = this.managementService.branches();
@@ -38,9 +39,19 @@ export class ManagementBranchesComponent {
   }
 
   public createNewBranch(): void {
-    const placeholder = this.managementService.createDefaultBranch();
-    const targetKey = placeholder.id || placeholder.identifier;
-    this.router.navigate(['/management/branches/edit', targetKey]);
+    if (this.isCreating()) return;
+    this.isCreating.set(true);
+
+    this.managementService.createDefaultBranch().subscribe({
+      next: (newBranch) => {
+        this.isCreating.set(false);
+        const targetKey = newBranch.id ? String(newBranch.id) : newBranch.identifier;
+        this.router.navigate(['/management/branches/edit', targetKey]);
+      },
+      error: () => {
+        this.isCreating.set(false);
+      }
+    });
   }
 
   public toggleStatus(branch: Branch, event?: Event): void {
@@ -48,7 +59,7 @@ export class ManagementBranchesComponent {
       event.stopPropagation();
     }
     const targetKey = branch.id ? String(branch.id) : branch.identifier;
-    this.managementService.toggleBranchStatus(targetKey);
+    this.managementService.toggleBranchStatus(targetKey).subscribe();
   }
 
   public editBranch(branch: Branch): void {
@@ -58,7 +69,7 @@ export class ManagementBranchesComponent {
 
   public duplicateBranch(branch: Branch): void {
     const targetKey = branch.id ? String(branch.id) : branch.identifier;
-    this.managementService.duplicateBranch(targetKey);
+    this.managementService.duplicateBranch(targetKey).subscribe();
   }
 
   public openDeleteModal(branch: Branch): void {
@@ -75,8 +86,14 @@ export class ManagementBranchesComponent {
     const target = this.branchToDelete();
     if (target) {
       const targetKey = target.id ? String(target.id) : target.identifier;
-      this.managementService.deleteBranch(targetKey);
-      this.closeDeleteModal();
+      this.managementService.deleteBranch(targetKey).subscribe({
+        next: () => {
+          this.closeDeleteModal();
+        },
+        error: () => {
+          this.closeDeleteModal();
+        }
+      });
     }
   }
 }

@@ -13,5 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 function getJsonInput() {
     $rawInput = file_get_contents("php://input");
+    if (empty($rawInput) && php_sapi_name() === 'cli' && defined('STDIN')) {
+        $rawInput = file_get_contents("php://stdin");
+    }
     return json_decode($rawInput, true) ?? [];
 }

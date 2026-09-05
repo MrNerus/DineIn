@@ -2,6 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
+import { ConfigService } from './config.service';
 
 export interface UserProfile {
   id: number;
@@ -33,6 +34,7 @@ const USER_STORAGE_KEY = 'savana_cms_user';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private configService = inject(ConfigService);
 
   public readonly currentUser = signal<UserProfile | null>(this.getStoredUser());
   public readonly isAuthenticated = computed(() => !!this.currentUser());
@@ -54,7 +56,7 @@ export class AuthService {
     const payload = { username: username.trim(), password: password.trim() };
 
     // Try hitting PHP endpoint, with graceful fallback to hardcoded mock for standalone dev
-    this.http.post<LoginResponse>('api/login.php', payload).pipe(
+    this.http.post<LoginResponse>(`${this.configService.backend_url}/api/login.php`, payload).pipe(
       catchError((error) => {
         console.warn('Backend endpoint unavailable, evaluating client-side fallback:', error);
         
@@ -108,7 +110,7 @@ export class AuthService {
 
   private getStoredUser(): UserProfile | null {
     try {
-      const stored = sessionStorage.getItem(USER_STORAGE_KEY) || localStorage.getItem(USER_STORAGE_KEY);
+      const stored = sessionStorage.getItem(USER_STORAGE_KEY);
       return stored ? JSON.parse(stored) : null;
     } catch {
       return null;
@@ -118,7 +120,7 @@ export class AuthService {
   private setStoredUser(user: UserProfile): void {
     try {
       sessionStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+      localStorage.removeItem(USER_STORAGE_KEY);
     } catch {
       // Ignore storage restrictions
     }
