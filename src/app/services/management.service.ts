@@ -32,7 +32,10 @@ export class ManagementService {
   private notificationTimer: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
-    this.loadData();
+    this.loadData().subscribe({
+      next: data => console.log('loadData result:', data),
+      error: err => console.error('loadData error:', err),
+    });
   }
 
   /**

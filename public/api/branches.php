@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 try {
     $db = getDb();
+    $currentUser = requireAuth($db);
 
     if ($method === 'GET') {
         $identifier = isset($_GET['identifier']) ? trim($_GET['identifier']) : null;

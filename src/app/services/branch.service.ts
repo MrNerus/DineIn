@@ -38,12 +38,13 @@ export class BranchService {
   public loadCompany(): void {
     this.dataService.getCompany().subscribe({
       next: (company: Company) => {
-        this.branches.set(company.branchInfo);
-        this.companyInfo.set(company.companyInfo);
+        const activeBranches = (company?.branchInfo || []).filter(b => b.isActive !== false);
+        this.branches.set(activeBranches);
+        this.companyInfo.set(company?.companyInfo || null);
         this.isLoaded.set(true);
-        this.restoreBranchSelection(company.branchInfo);
+        this.restoreBranchSelection(activeBranches);
 
-        if (company.companyInfo?.notice && company.companyInfo.notice.length > 0) {
+        if (company?.companyInfo?.notice && company.companyInfo.notice.length > 0) {
           this.isNoticeOpen.set(true);
         }
       },

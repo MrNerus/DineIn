@@ -47,23 +47,21 @@ Savana Sushi Portal is an interactive, modern portal and redirection hub for res
 
 ---
 
-## Current Plan: Dynamic Backend URL Integration via ConfigService
+## Current Plan: Public Active Company & Branch Data API Integration
 
-### Phase 1: ConfigService Refinements
-*   [x] Enhance `ConfigService` with `backend_url` property alias and safe URL builder helper (`apiUrl(endpoint)`).
-*   [x] Guarantee trailing slash normalization so paths like `api/login.php` or `/api/login.php` join seamlessly.
+### Phase 1: Backend Public Endpoint & Active Data Filtering
+*   [x] Update `fetchBranchesData()` in `public/api/db.php` to filter `is_active = 1` when `$onlyActive = true`.
+*   [x] Update `fetchCompanyData()` in `public/api/db.php` to filter active socials, apps, delivery partners, and notices when `$onlyActive = true`.
+*   [x] Update `public/api/data.php` GET handler to allow unauthenticated public access returning only active items, while continuing to return full data for authenticated admins and protecting mutations with `requireAuth()`.
 
-### Phase 2: AuthService Integration
-*   [x] Inject `ConfigService` into `AuthService`.
-*   [x] Update `login()` to send requests to `${this.configService.backend_url}/api/login.php`.
+### Phase 2: Angular Public Data Service & Branch Service
+*   [x] Update `DataService.getCompany()` in `src/app/services/data.ts` to call backend `${this.configService.backend_url}/api/data.php` with static fallback.
+*   [x] Verify `BranchService.loadCompany()` in `src/app/services/branch.service.ts` reactively consumes the company payload and sets active branches.
 
-### Phase 3: ManagementService Integration
-*   [x] Inject `ConfigService` into `ManagementService`.
-*   [x] Update all endpoints (`api/data.php`, `api/branches.php`, `api/company.php`) to use `backend_url`.
+### Phase 3: Verification & Build Check
+*   [x] Run `npx ng build` to confirm clean Angular compilation.
+*   [x] Public API returns active data without authentication; management mutations require auth.
 
-### Phase 4: Verification & Build Check
-*   [x] Run `ng build` to verify clean compilation.
-*   [x] Confirm zero breaking changes across services.
 
 
 

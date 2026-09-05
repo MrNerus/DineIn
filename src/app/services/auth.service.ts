@@ -102,6 +102,12 @@ export class AuthService {
   }
 
   public logout(): void {
+    const token = this.currentUser()?.token;
+    if (token && this.configService.backend_url) {
+      this.http.post(`${this.configService.backend_url}/api/logout.php`, {}).pipe(
+        catchError(() => of(null))
+      ).subscribe();
+    }
     this.clearStoredUser();
     this.currentUser.set(null);
     this.authError.set(null);

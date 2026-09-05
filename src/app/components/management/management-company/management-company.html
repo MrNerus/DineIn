@@ -325,21 +325,6 @@
         </div>
       </div>
     }
-
-    <!-- Bottom Save Trigger -->
-    <div class="form-bottom-actions">
-      <button 
-        type="submit" 
-        class="save-btn large" 
-        [disabled]="managementService.isSaving()"
-      >
-        <i class="material-symbols-outlined">
-          @if (managementService.isSaving()) { sync }
-          @else { save }
-        </i>
-        <span>{{ managementService.isSaving() ? 'Saving...' : 'Save All Changes' }}</span>
-      </button>
-    </div>
   </form>
 </div>
 

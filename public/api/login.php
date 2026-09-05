@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
 
 $input = getJsonInput();
 $username = isset($input['username']) ? trim($input['username']) : (isset($_POST['username']) ? trim($_POST['username']) : '');
@@ -30,7 +31,7 @@ try {
     }
 
     if ($isAuthenticated) {
-        $token = 'jwt-' . bin2hex(random_bytes(16));
+        $token = createSession($db, (int)$user['id']);
         http_response_code(200);
         echo json_encode([
             'status' => 'success',

@@ -132,10 +132,21 @@ function initSchema(PDO $db): void {
             FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
         );
 
+        CREATE TABLE IF NOT EXISTS sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            token TEXT NOT NULL UNIQUE,
+            user_id INTEGER NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            expires_at DATETIME NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        );
+
         CREATE INDEX IF NOT EXISTS idx_branches_identifier ON branches(identifier);
         CREATE INDEX IF NOT EXISTS idx_branches_is_active ON branches(is_active);
         CREATE INDEX IF NOT EXISTS idx_branch_schedules_branch_id ON branch_schedules(branch_id);
         CREATE INDEX IF NOT EXISTS idx_branch_reviews_branch_id ON branch_reviews(branch_id);
+        CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);
+        CREATE INDEX IF NOT EXISTS idx_sessions_expires_at ON sessions(expires_at);
     ");
 }
 
@@ -278,51 +289,57 @@ function ensureInitialData(PDO $db): void {
 /**
  * Maps relational tables to the expected CompanyInfo JSON structure
  */
-function fetchCompanyData(PDO $db): array {
+function fetchCompanyData(PDO $db, bool $onlyActive = false): array {
     $stmt = $db->query("SELECT * FROM company ORDER BY id ASC LIMIT 1");
     $company = $stmt->fetch();
-    if (!$company) {
-        $company = [
-            'name' => 'Savana Sushi',
-            'logo' => 'assets/imgs/logo.png',
-            'favicon' => 'assets/imgs/logo.png'
-        ];
-    }
 
     // Apps
-    $appsStmt = $db->query("SELECT name, url FROM apps");
+    $appQuery = "SELECT name, TRIM(url) as url FROM apps";
+    if ($onlyActive) {
+        $appQuery .= " WHERE url IS NOT NULL AND TRIM(url) != ''";
+    }
+    $appsStmt = $db->query($appQuery);
     $appsRows = $appsStmt->fetchAll();
     $apps = [
         'googlePlayStore' => null,
         'appleAppStore' => null
     ];
     foreach ($appsRows as $row) {
-        $n = strtolower(str_replace(['_', '-'], '', $row['name']));
-        if ($n === 'googleplaystore' || $n === 'googleplay') {
-            $apps['googlePlayStore'] = $row['url'];
-        } elseif ($n === 'appleappstore' || $n === 'applestore' || $n === 'ios') {
-            $apps['appleAppStore'] = $row['url'];
+        $rawUrl = !empty($row['url']) ? $row['url'] : null;
+        if ($row['name'] === 'googlePlayStore') {
+            $apps['googlePlayStore'] = $rawUrl;
+        } elseif ($row['name'] === 'appleAppStore') {
+            $apps['appleAppStore'] = $rawUrl;
         }
     }
 
     // Socials
-    $socialsStmt = $db->query("SELECT name, profile FROM socials");
+    $socialsQuery = "SELECT name, TRIM(profile) as profile FROM socials";
+    if ($onlyActive) {
+        $socialsQuery .= " WHERE profile IS NOT NULL AND TRIM(profile) != ''";
+    }
+    $socialsStmt = $db->query($socialsQuery);
     $socialsRows = $socialsStmt->fetchAll();
     $socials = [
         'facebook' => null,
         'instagram' => null
     ];
     foreach ($socialsRows as $row) {
-        $n = strtolower(trim($row['name']));
-        if ($n === 'facebook') {
-            $socials['facebook'] = $row['profile'];
-        } elseif ($n === 'instagram') {
-            $socials['instagram'] = $row['profile'];
+        $rawProfile = !empty($row['profile']) ? $row['profile'] : null;
+        if ($row['name'] === 'facebook') {
+            $socials['facebook'] = $rawProfile;
+        } elseif ($row['name'] === 'instagram') {
+            $socials['instagram'] = $rawProfile;
         }
     }
 
     // Delivery Partners
-    $dpStmt = $db->query("SELECT name, url FROM company_delivery_partners WHERE is_active = 1 ORDER BY display_order ASC, id ASC");
+    $dpSql = "SELECT name, url FROM company_delivery_partners WHERE is_active = 1";
+    if ($onlyActive) {
+        $dpSql .= " AND url IS NOT NULL AND TRIM(url) != ''";
+    }
+    $dpSql .= " ORDER BY display_order ASC, id ASC";
+    $dpStmt = $db->query($dpSql);
     $deliveryPartners = [];
     while ($row = $dpStmt->fetch()) {
         $deliveryPartners[] = [
@@ -332,7 +349,12 @@ function fetchCompanyData(PDO $db): array {
     }
 
     // Notices
-    $noticesStmt = $db->query("SELECT image_url FROM company_notices WHERE is_active = 1 ORDER BY display_order ASC, id ASC");
+    $noticesSql = "SELECT image_url FROM company_notices WHERE is_active = 1";
+    if ($onlyActive) {
+        $noticesSql .= " AND image_url IS NOT NULL AND TRIM(image_url) != ''";
+    }
+    $noticesSql .= " ORDER BY display_order ASC, id ASC";
+    $noticesStmt = $db->query($noticesSql);
     $notices = $noticesStmt->fetchAll(PDO::FETCH_COLUMN);
 
     return [
@@ -442,20 +464,30 @@ function updateCompanyData(PDO $db, array $data): array {
 /**
  * Maps relational tables to Branch[] or Branch JSON structure
  */
-function fetchBranchesData(PDO $db, $idOrIdentifier = null) {
+function fetchBranchesData(PDO $db, $idOrIdentifier = null, bool $onlyActive = false) {
     $sql = "SELECT * FROM branches";
+    $conditions = [];
     $params = [];
 
+    if ($onlyActive) {
+        $conditions[] = "is_active = 1";
+    }
+
     if ($idOrIdentifier !== null) {
-        $sql .= " WHERE (identifier = :ident OR CAST(id AS TEXT) = :ident_str";
+        $idCond = "(identifier = :ident OR CAST(id AS TEXT) = :ident_str";
         $params['ident'] = $idOrIdentifier;
         $params['ident_str'] = (string)$idOrIdentifier;
 
         if (preg_match('/^branch_(\d+)$/i', (string)$idOrIdentifier, $matches)) {
-            $sql .= " OR id = :numeric_id";
+            $idCond .= " OR id = :numeric_id";
             $params['numeric_id'] = (int)$matches[1];
         }
-        $sql .= ")";
+        $idCond .= ")";
+        $conditions[] = $idCond;
+    }
+
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
     }
 
     $sql .= " ORDER BY id ASC";
