@@ -18,7 +18,6 @@ export class ManagementBranchesComponent {
   public readonly searchQuery = signal<string>('');
   public readonly branchToDelete = signal<Branch | null>(null);
   public readonly isDeleteModalOpen = signal<boolean>(false);
-  public readonly isCreating = signal<boolean>(false);
 
   public readonly filteredBranches = computed<Branch[]>(() => {
     const list = this.managementService.branches();
@@ -39,19 +38,7 @@ export class ManagementBranchesComponent {
   }
 
   public createNewBranch(): void {
-    if (this.isCreating()) return;
-    this.isCreating.set(true);
-
-    this.managementService.createDefaultBranch().subscribe({
-      next: (newBranch) => {
-        this.isCreating.set(false);
-        const targetKey = newBranch.id ? String(newBranch.id) : newBranch.identifier;
-        this.router.navigate(['/management/branches/edit', targetKey]);
-      },
-      error: () => {
-        this.isCreating.set(false);
-      }
-    });
+    this.router.navigate(['/management/branches/create']);
   }
 
   public toggleStatus(branch: Branch, event?: Event): void {

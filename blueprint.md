@@ -38,30 +38,32 @@ Savana Sushi Portal is an interactive, modern portal and redirection hub for res
 *   **JSON Schema Integrity**: Full synchronization with `src/assets/data/branches.json` schema including live JSON payload inspector and export functionality.
 *   **PHP PoC Backend**: Static mock RESTful endpoints with CORS headers (`api/login.php`, `api/company.php`, `api/branches.php`, `api/data.php`, `api/cors.php`).
 
-#### Individual Section Saving & Branch Placeholder System (Current Version)
-*   **Section-by-Section Saving**: Each form section (General Info, Opening Hours, Redirects & Menus, Review Channels) is saved independently with dedicated validation and API synchronization.
-*   **Default Placeholder Creation**: Elimination of blank "Add Branch" form pages in favor of automatic default placeholder branch creation (`POST api/branches.php?action=create_default`) with immediate edit navigation.
-*   **Separation of Internal ID and Identifier**: Every branch maintains an immutable internal ID (`id`) alongside an editable user-facing unique slug (`identifier`).
-*   **Active / Inactive Status**: Branches have an `isActive` toggle (inactive by default for new placeholders), with status indicators on branch cards and filtering on the public guest portal.
-*   **100% Backend-Driven Architecture**: Complete removal of `localStorage` draft caching and fake offline fallbacks. Management components communicate directly with SQLite backend endpoints (`api/data.php`, `api/branches.php`, `api/company.php`), with responsive loading states and backend error handling.
+#### Form-First Branch Creation & Unified Full Branch Saving (Current Version)
+*   **Direct Form-First Branch Creation**: Clicking "Add Branch" (`createNewBranch()`) directly navigates to `/management/branches/create` with a clean, unpopulated form instead of immediately creating a draft placeholder record via API.
+*   **Backend 'id: null' Handled as New**: In `public/api/branches.php`, both POST requests and PUT requests where `id` is null (or omitted) are treated as new branch creation, assigning a database auto-increment ID and returning the created branch entity.
+*   **Enforced Unique Branch Identifiers**: Branch slugs/identifiers (`identifier`) are strictly unique across all records using case-insensitive validation (`LOWER(identifier) = LOWER(:ident)`). Conflicting creation or rename attempts trigger an HTTP 400 response with a clear error message.
+*   **Unified Full Branch Saving**: Form submissions are handled uniformly via `saveFullBranch()` through the header action button, eliminating cluttered section-by-section save buttons and ensuring atomic synchronization of info, schedules, redirects, and reviews.
+*   **Seamless Transition to Edit Mode**: Upon saving the newly created branch, the frontend updates its state with the returned entity and silently transitions the URL to `/management/branches/edit/:id`.
 
 ---
 
-## Current Plan: Public Active Company & Branch Data API Integration
+## Current Plan: Unified Full Branch Saving & Cleanup of Section-by-Section Saves
 
-### Phase 1: Backend Public Endpoint & Active Data Filtering
-*   [x] Update `fetchBranchesData()` in `public/api/db.php` to filter `is_active = 1` when `$onlyActive = true`.
-*   [x] Update `fetchCompanyData()` in `public/api/db.php` to filter active socials, apps, delivery partners, and notices when `$onlyActive = true`.
-*   [x] Update `public/api/data.php` GET handler to allow unauthenticated public access returning only active items, while continuing to return full data for authenticated admins and protecting mutations with `requireAuth()`.
+### Phase 1: Angular Template Cleanup (`management-branch-form.html`)
+*   [x] Remove redundant duplicate headers and icons.
+*   [x] Remove individual save buttons from Section 1 (General Info), Section 2 (Opening Hours), Section 3 (Redirects & PDF Menus), and Section 4 (Review Platforms).
+*   [x] Maintain only adding/removing list controls for dynamic schedules and reviews.
+*   [x] Keep single, unified "Save Branch" / "Create Branch" button in the form header.
 
-### Phase 2: Angular Public Data Service & Branch Service
-*   [x] Update `DataService.getCompany()` in `src/app/services/data.ts` to call backend `${this.configService.backend_url}/api/data.php` with static fallback.
-*   [x] Verify `BranchService.loadCompany()` in `src/app/services/branch.service.ts` reactively consumes the company payload and sets active branches.
+### Phase 2: Angular Component Cleanup (`management-branch-form.component.ts`)
+*   [x] Remove `saveGeneralInfo()`, `saveSchedule()`, `saveRedirects()`, and `saveReviews()`.
+*   [x] Retain `saveFullBranch()` to validate all sections and submit the full branch payload via `managementService.saveBranch()`.
+*   [x] Replace `savingSection` with unified `isSavingBranch` signal.
+*   [x] Clean up `ngOnInit()` initialization.
 
-### Phase 3: Verification & Build Check
-*   [x] Run `npx ng build` to confirm clean Angular compilation.
-*   [x] Public API returns active data without authentication; management mutations require auth.
+### Phase 3: Verification & Compilation
+*   [x] Run `npx ng build` to confirm zero compiler/template errors.
 
 
 
-
+

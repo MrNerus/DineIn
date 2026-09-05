@@ -21,7 +21,7 @@ export class ManagementBranchFormComponent implements OnInit {
   public readonly originalIdentifier = signal<string | null>(null);
   public readonly isEditMode = signal<boolean>(true);
   public readonly isFormLoading = signal<boolean>(true);
-  public readonly savingSection = signal<string | null>(null);
+  public readonly isSavingBranch = signal<boolean>(false);
   public readonly activeSection = signal<'info' | 'schedule' | 'redirects' | 'reviews'>('info');
 
   public branchForm: FormGroup = this.fb.group({
@@ -48,21 +48,41 @@ export class ManagementBranchFormComponent implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('identifier');
     if (idParam && idParam !== 'create') {
+      this.isEditMode.set(true);
       this.loadBranchData(idParam);
     } else {
-      // Direct access to create: initiate default placeholder on backend
-      this.isFormLoading.set(true);
-      this.managementService.createDefaultBranch().subscribe({
-        next: (newBranch) => {
-          const targetKey = newBranch.id ? String(newBranch.id) : newBranch.identifier;
-          this.router.navigate(['/management/branches/edit', targetKey], { replaceUrl: true });
-        },
-        error: () => {
-          this.isFormLoading.set(false);
-          this.router.navigate(['/management/branches']);
-        }
-      });
+      this.isEditMode.set(false);
+      this.branchId.set(null);
+      this.originalIdentifier.set(null);
+      this.isFormLoading.set(false);
+      this.initEmptyForm();
     }
+  }
+
+  private initEmptyForm(): void {
+    this.branchForm.reset({
+      id: null,
+      isActive: true,
+      identifier: '',
+      name: '',
+      address: '',
+      phone: '',
+      lat: 38.7552,
+      long: -9.2202,
+      redirects: {
+        reservation: '',
+        delivery: '',
+        pickup: '',
+        location: '',
+        dinein1: 'assets/pdfs/Menu.pdf',
+        dinein2: ''
+      }
+    });
+
+    this.openingTimeArray.clear();
+    this.addOpeningTime();
+
+    this.reviewsArray.clear();
   }
 
   public get openingTimeArray(): FormArray {
@@ -176,8 +196,8 @@ export class ManagementBranchFormComponent implements OnInit {
     this.reviewsArray.removeAt(index);
   }
 
-  public saveGeneralInfo(): void {
-    const infoControls = ['identifier', 'name', 'address', 'phone', 'lat', 'long', 'isActive'];
+  public saveFullBranch(): void {
+    const infoControls = ['identifier', 'name', 'address', 'phone', 'lat', 'long'];
     let hasError = false;
 
     for (const ctrl of infoControls) {
@@ -189,122 +209,82 @@ export class ManagementBranchFormComponent implements OnInit {
     }
 
     if (hasError) {
-      this.managementService.showNotification('Please fill in all required General Info fields correctly.', 'error');
+      this.activeSection.set('info');
+      this.managementService.showNotification('Please fill in all required General Info fields (Identifier, Name, Address, Phone).', 'error');
       return;
     }
 
-    const targetKey = this.branchId() ? String(this.branchId()) : this.originalIdentifier();
-    if (!targetKey) return;
+    if (this.openingTimeArray.invalid) {
+      this.activeSection.set('schedule');
+      this.openingTimeArray.markAllAsTouched();
+      this.managementService.showNotification('Please fill in all opening hours fields correctly.', 'error');
+      return;
+    }
 
-    const infoData = {
+    const redirectsGroup = this.branchForm.get('redirects');
+    if (redirectsGroup && redirectsGroup.invalid) {
+      this.activeSection.set('redirects');
+      redirectsGroup.markAllAsTouched();
+      this.managementService.showNotification('Please check URL formatting in Redirects.', 'error');
+      return;
+    }
+
+    if (this.reviewsArray.invalid) {
+      this.activeSection.set('reviews');
+      this.reviewsArray.markAllAsTouched();
+      this.managementService.showNotification('Please fill in all platform names and URLs.', 'error');
+      return;
+    }
+
+    const val = redirectsGroup?.value || {};
+    const payload: Partial<Branch> = {
+      id: this.branchId() ? Number(this.branchId()) : (null as any),
       identifier: this.branchForm.get('identifier')?.value?.trim(),
       name: this.branchForm.get('name')?.value?.trim(),
       address: this.branchForm.get('address')?.value?.trim(),
       phone: this.branchForm.get('phone')?.value?.trim(),
       lat: Number(this.branchForm.get('lat')?.value),
       long: Number(this.branchForm.get('long')?.value),
-      isActive: Boolean(this.branchForm.get('isActive')?.value)
+      isActive: Boolean(this.branchForm.get('isActive')?.value),
+      openingTime: this.openingTimeArray.value.map((item: any) => ({
+        dayPt: item.dayPt?.trim() || '',
+        dayEn: item.dayEn?.trim() || '',
+        day: `${item.dayPt?.trim() || ''} (${item.dayEn?.trim() || ''})`,
+        timePt: item.timePt?.trim() || '',
+        timeEn: item.timeEn?.trim() || ''
+      })),
+      redirects: {
+        reservation: val.reservation?.trim() || '',
+        delivery: val.delivery?.trim() || '',
+        pickup: val.pickup?.trim() || '',
+        location: val.location?.trim() || '',
+        googleReview: null,
+        pdf: {
+          dinein1: val.dinein1?.trim() || '',
+          dinein2: val.dinein2?.trim() || ''
+        }
+      },
+      reviews: this.reviewsArray.value.map((r: any) => ({
+        name: r.name?.trim() || '',
+        url: r.url?.trim() || ''
+      }))
     };
 
-    this.savingSection.set('info');
-    this.managementService.saveBranchSection(targetKey, 'info', infoData).subscribe({
-      next: (updatedBranch) => {
-        this.savingSection.set(null);
-        if (updatedBranch && updatedBranch.identifier) {
-          this.originalIdentifier.set(updatedBranch.identifier);
+    this.isSavingBranch.set(true);
+    this.managementService.saveBranch(payload).subscribe({
+      next: (savedBranch) => {
+        this.isSavingBranch.set(false);
+        if (savedBranch) {
+          this.branchId.set(savedBranch.id || null);
+          this.originalIdentifier.set(savedBranch.identifier);
+          this.isEditMode.set(true);
+          this.branchForm.patchValue({ id: savedBranch.id });
+          const targetKey = savedBranch.id ? String(savedBranch.id) : savedBranch.identifier;
+          this.router.navigate(['/management/branches/edit', targetKey], { replaceUrl: true });
         }
       },
       error: () => {
-        this.savingSection.set(null);
-      }
-    });
-  }
-
-  public saveSchedule(): void {
-    if (this.openingTimeArray.invalid) {
-      this.openingTimeArray.markAllAsTouched();
-      this.managementService.showNotification('Please fill in all opening hours fields correctly.', 'error');
-      return;
-    }
-
-    const targetKey = this.branchId() ? String(this.branchId()) : this.originalIdentifier();
-    if (!targetKey) return;
-
-    const scheduleData = this.openingTimeArray.value.map((item: any) => ({
-      dayPt: item.dayPt?.trim() || '',
-      dayEn: item.dayEn?.trim() || '',
-      day: `${item.dayPt?.trim() || ''} (${item.dayEn?.trim() || ''})`,
-      timePt: item.timePt?.trim() || '',
-      timeEn: item.timeEn?.trim() || ''
-    }));
-
-    this.savingSection.set('schedule');
-    this.managementService.saveBranchSection(targetKey, 'schedule', scheduleData).subscribe({
-      next: () => {
-        this.savingSection.set(null);
-      },
-      error: () => {
-        this.savingSection.set(null);
-      }
-    });
-  }
-
-  public saveRedirects(): void {
-    const redirectsGroup = this.branchForm.get('redirects');
-    if (redirectsGroup && redirectsGroup.invalid) {
-      redirectsGroup.markAllAsTouched();
-      this.managementService.showNotification('Please check URL formatting in Redirects.', 'error');
-      return;
-    }
-
-    const targetKey = this.branchId() ? String(this.branchId()) : this.originalIdentifier();
-    if (!targetKey) return;
-
-    const val = redirectsGroup?.value || {};
-    const redirectsData = {
-      reservation: val.reservation?.trim() || '',
-      delivery: val.delivery?.trim() || '',
-      pickup: val.pickup?.trim() || '',
-      location: val.location?.trim() || '',
-      pdf: {
-        dinein1: val.dinein1?.trim() || '',
-        dinein2: val.dinein2?.trim() || ''
-      }
-    };
-
-    this.savingSection.set('redirects');
-    this.managementService.saveBranchSection(targetKey, 'redirects', redirectsData).subscribe({
-      next: () => {
-        this.savingSection.set(null);
-      },
-      error: () => {
-        this.savingSection.set(null);
-      }
-    });
-  }
-
-  public saveReviews(): void {
-    if (this.reviewsArray.invalid) {
-      this.reviewsArray.markAllAsTouched();
-      this.managementService.showNotification('Please fill in all platform names and URLs.', 'error');
-      return;
-    }
-
-    const targetKey = this.branchId() ? String(this.branchId()) : this.originalIdentifier();
-    if (!targetKey) return;
-
-    const reviewsData = this.reviewsArray.value.map((r: any) => ({
-      name: r.name?.trim() || '',
-      url: r.url?.trim() || ''
-    }));
-
-    this.savingSection.set('reviews');
-    this.managementService.saveBranchSection(targetKey, 'reviews', reviewsData).subscribe({
-      next: () => {
-        this.savingSection.set(null);
-      },
-      error: () => {
-        this.savingSection.set(null);
+        this.isSavingBranch.set(false);
       }
     });
   }

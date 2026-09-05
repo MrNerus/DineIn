@@ -3,22 +3,17 @@ require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/auth.php';
 
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+$method = $_SERVER['REQUEST_METHOD'];
 
 try {
     $db = getDb();
+    $currentUser = requireAuth($db);
 
     if ($method === 'GET') {
-        $user = validateSession($db);
-        $isPublicOnly = isset($_GET['public']) || ($user === null);
-
-        if ($isPublicOnly) {
-            $companyInfo = fetchCompanyData($db, true);
-            $branchInfo = fetchBranchesData($db, null, true);
-        } else {
-            $companyInfo = fetchCompanyData($db, false);
-            $branchInfo = fetchBranchesData($db, null, false);
-        }
+        $companyInfo = fetchCompanyData($db);
+        $branchInfo = fetchBranchesData($db);
+        error_log("Fetched company info: " . json_encode($companyInfo));
+        error_log("Fetched branch info: " . json_encode($branchInfo));
 
         http_response_code(200);
         echo json_encode([
@@ -26,7 +21,6 @@ try {
             'branchInfo' => $branchInfo
         ]);
     } elseif ($method === 'POST' || $method === 'PUT') {
-        $currentUser = requireAuth($db);
         $input = getJsonInput();
         if (isset($input['companyInfo']) && is_array($input['companyInfo'])) {
             updateCompanyData($db, $input['companyInfo']);

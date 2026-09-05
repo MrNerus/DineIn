@@ -3,6 +3,106 @@ require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/auth.php';
 
+/**
+ * Helper to create a new branch in the database with strict identifier uniqueness.
+ */
+function createBranchRecord(PDO $db, array $input): array {
+    $identifier = !empty($input['identifier']) ? trim($input['identifier']) : '';
+    if ($identifier === '') {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Branch identifier is required.'
+        ]);
+        exit();
+    }
+
+    // Branch identifier name must be unique (case-insensitive check)
+    $stmtCheck = $db->prepare("SELECT id FROM branches WHERE LOWER(identifier) = LOWER(:ident) LIMIT 1");
+    $stmtCheck->execute(['ident' => $identifier]);
+    if ($stmtCheck->fetchColumn() !== false) {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => "Branch identifier '{$identifier}' already exists. Branch identifier must be unique."
+        ]);
+        exit();
+    }
+
+    $db->beginTransaction();
+    try {
+        $stmt = $db->prepare("INSERT INTO branches (
+            identifier, name, address, phone, lat, long, is_active,
+            reservation_url, delivery_url, pickup_url, location_url, pdf_dinein1, pdf_dinein2
+        ) VALUES (
+            :identifier, :name, :address, :phone, :lat, :long, :is_active,
+            :reservation_url, :delivery_url, :pickup_url, :location_url, :pdf_dinein1, :pdf_dinein2
+        )");
+
+        $redirects = isset($input['redirects']) && is_array($input['redirects']) ? $input['redirects'] : [];
+        $pdf1 = isset($redirects['pdf']['dinein1']) ? $redirects['pdf']['dinein1'] : ($redirects['dinein1'] ?? 'assets/pdfs/Menu.pdf');
+        $pdf2 = isset($redirects['pdf']['dinein2']) ? $redirects['pdf']['dinein2'] : ($redirects['dinein2'] ?? '');
+
+        $stmt->execute([
+            'identifier' => $identifier,
+            'name' => !empty($input['name']) ? trim($input['name']) : 'Nova Filial',
+            'address' => $input['address'] ?? '',
+            'phone' => $input['phone'] ?? '',
+            'lat' => isset($input['lat']) ? (float)$input['lat'] : 38.7552,
+            'long' => isset($input['long']) ? (float)$input['long'] : -9.2202,
+            'is_active' => isset($input['isActive']) ? ($input['isActive'] ? 1 : 0) : 1,
+            'reservation_url' => $redirects['reservation'] ?? '',
+            'delivery_url' => $redirects['delivery'] ?? '',
+            'pickup_url' => $redirects['pickup'] ?? '',
+            'location_url' => $redirects['location'] ?? '',
+            'pdf_dinein1' => $pdf1,
+            'pdf_dinein2' => $pdf2
+        ]);
+        $newBranchId = (int)$db->lastInsertId();
+
+        // Insert schedules if provided
+        if (isset($input['openingTime']) && is_array($input['openingTime'])) {
+            $schedStmt = $db->prepare("INSERT INTO branch_schedules (branch_id, schedule_type, day_pt, day_en, time_pt, time_en, display_order)
+                VALUES (:bid, 'opening', :day_pt, :day_en, :time_pt, :time_en, :order)");
+            $order = 1;
+            foreach ($input['openingTime'] as $s) {
+                if (is_array($s) && (!empty($s['dayPt']) || !empty($s['timePt']) || !empty($s['timeEn']))) {
+                    $schedStmt->execute([
+                        'bid' => $newBranchId,
+                        'day_pt' => $s['dayPt'] ?? '',
+                        'day_en' => $s['dayEn'] ?? '',
+                        'time_pt' => $s['timePt'] ?? '',
+                        'time_en' => $s['timeEn'] ?? '',
+                        'order' => $order++
+                    ]);
+                }
+            }
+        }
+
+        // Insert reviews if provided
+        if (isset($input['reviews']) && is_array($input['reviews'])) {
+            $revStmt = $db->prepare("INSERT INTO branch_reviews (branch_id, name, url, display_order) VALUES (:bid, :name, :url, :order)");
+            $order = 1;
+            foreach ($input['reviews'] as $r) {
+                if (is_array($r) && !empty($r['name']) && !empty($r['url'])) {
+                    $revStmt->execute([
+                        'bid' => $newBranchId,
+                        'name' => $r['name'],
+                        'url' => $r['url'],
+                        'order' => $order++
+                    ]);
+                }
+            }
+        }
+
+        $db->commit();
+        return fetchBranchesData($db, $newBranchId);
+    } catch (Exception $e) {
+        $db->rollBack();
+        throw $e;
+    }
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 try {
@@ -92,80 +192,12 @@ try {
                 throw $e;
             }
         } else {
-            // Custom Branch Creation
-            $identifier = !empty($input['identifier']) ? trim($input['identifier']) : 'branch-' . uniqid();
-            $existingId = findBranchId($db, $identifier);
-            if ($existingId !== null) {
-                http_response_code(400);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => "Branch identifier '{$identifier}' already exists."
-                ]);
-                exit();
-            }
+            // Custom Branch Creation / Save
+            $id = isset($input['id']) && $input['id'] !== null && $input['id'] !== '' && $input['id'] !== 'null' ? (int)$input['id'] : null;
 
-            $db->beginTransaction();
-            try {
-                $stmt = $db->prepare("INSERT INTO branches (
-                    identifier, name, address, phone, lat, long, is_active,
-                    reservation_url, delivery_url, pickup_url, location_url, pdf_dinein1, pdf_dinein2
-                ) VALUES (
-                    :identifier, :name, :address, :phone, :lat, :long, :is_active,
-                    :reservation_url, :delivery_url, :pickup_url, :location_url, :pdf_dinein1, :pdf_dinein2
-                )");
-                $stmt->execute([
-                    'identifier' => $identifier,
-                    'name' => $input['name'] ?? 'Nova Filial',
-                    'address' => $input['address'] ?? '',
-                    'phone' => $input['phone'] ?? '',
-                    'lat' => isset($input['lat']) ? (float)$input['lat'] : 38.7552,
-                    'long' => isset($input['long']) ? (float)$input['long'] : -9.2202,
-                    'is_active' => isset($input['isActive']) ? ($input['isActive'] ? 1 : 0) : 0,
-                    'reservation_url' => $input['redirects']['reservation'] ?? '',
-                    'delivery_url' => $input['redirects']['delivery'] ?? '',
-                    'pickup_url' => $input['redirects']['pickup'] ?? '',
-                    'location_url' => $input['redirects']['location'] ?? '',
-                    'pdf_dinein1' => $input['redirects']['pdf']['dinein1'] ?? 'assets/pdfs/Menu.pdf',
-                    'pdf_dinein2' => $input['redirects']['pdf']['dinein2'] ?? ''
-                ]);
-                $newBranchId = (int)$db->lastInsertId();
-
-                // Insert schedules if provided
-                if (isset($input['openingTime']) && is_array($input['openingTime'])) {
-                    $schedStmt = $db->prepare("INSERT INTO branch_schedules (branch_id, schedule_type, day_pt, day_en, time_pt, time_en, display_order)
-                        VALUES (:bid, 'opening', :day_pt, :day_en, :time_pt, :time_en, :order)");
-                    $order = 1;
-                    foreach ($input['openingTime'] as $s) {
-                        $schedStmt->execute([
-                            'bid' => $newBranchId,
-                            'day_pt' => $s['dayPt'] ?? '',
-                            'day_en' => $s['dayEn'] ?? '',
-                            'time_pt' => $s['timePt'] ?? '',
-                            'time_en' => $s['timeEn'] ?? '',
-                            'order' => $order++
-                        ]);
-                    }
-                }
-
-                // Insert reviews if provided
-                if (isset($input['reviews']) && is_array($input['reviews'])) {
-                    $revStmt = $db->prepare("INSERT INTO branch_reviews (branch_id, name, url, display_order) VALUES (:bid, :name, :url, :order)");
-                    $order = 1;
-                    foreach ($input['reviews'] as $r) {
-                        if (!empty($r['name']) && !empty($r['url'])) {
-                            $revStmt->execute([
-                                'bid' => $newBranchId,
-                                'name' => $r['name'],
-                                'url' => $r['url'],
-                                'order' => $order++
-                            ]);
-                        }
-                    }
-                }
-
-                $db->commit();
-                $newBranch = fetchBranchesData($db, $newBranchId);
-
+            if ($id === null) {
+                // ID NULL CASE AS NEW: create new branch
+                $newBranch = createBranchRecord($db, $input);
                 http_response_code(201);
                 echo json_encode([
                     'status' => 'success',
@@ -173,9 +205,109 @@ try {
                     'data' => $newBranch,
                     'createdAt' => date('Y-m-d H:i:s')
                 ]);
-            } catch (Exception $e) {
-                $db->rollBack();
-                throw $e;
+            } else {
+                // Update branch with specified ID
+                $branchId = findBranchId($db, $id);
+                if (!$branchId) {
+                    http_response_code(404);
+                    echo json_encode(['status' => 'error', 'message' => "Branch with ID {$id} not found"]);
+                    exit();
+                }
+
+                $newIdent = !empty($input['identifier']) ? trim($input['identifier']) : null;
+                if ($newIdent) {
+                    $stmtCheck = $db->prepare("SELECT id FROM branches WHERE LOWER(identifier) = LOWER(:ident) AND id != :id LIMIT 1");
+                    $stmtCheck->execute(['ident' => $newIdent, 'id' => $branchId]);
+                    if ($stmtCheck->fetchColumn() !== false) {
+                        http_response_code(400);
+                        echo json_encode(['status' => 'error', 'message' => "Branch identifier '{$newIdent}' is already in use by another branch. Branch identifier must be unique."]);
+                        exit();
+                    }
+                }
+
+                $db->beginTransaction();
+                try {
+                    $stmt = $db->prepare("UPDATE branches SET
+                        identifier = COALESCE(:ident, identifier),
+                        name = COALESCE(:name, name),
+                        address = COALESCE(:addr, address),
+                        phone = COALESCE(:phone, phone),
+                        lat = COALESCE(:lat, lat),
+                        long = COALESCE(:lng, long),
+                        is_active = COALESCE(:status, is_active),
+                        reservation_url = COALESCE(:res, reservation_url),
+                        delivery_url = COALESCE(:del, delivery_url),
+                        pickup_url = COALESCE(:pick, pickup_url),
+                        location_url = COALESCE(:loc, location_url),
+                        pdf_dinein1 = COALESCE(:pdf1, pdf_dinein1),
+                        pdf_dinein2 = COALESCE(:pdf2, pdf_dinein2),
+                        updated_at = CURRENT_TIMESTAMP
+                        WHERE id = :id");
+                    $stmt->execute([
+                        'ident' => $newIdent,
+                        'name' => $input['name'] ?? null,
+                        'addr' => $input['address'] ?? null,
+                        'phone' => $input['phone'] ?? null,
+                        'lat' => isset($input['lat']) ? (float)$input['lat'] : null,
+                        'lng' => isset($input['long']) ? (float)$input['long'] : null,
+                        'status' => isset($input['isActive']) ? ($input['isActive'] ? 1 : 0) : null,
+                        'res' => $input['redirects']['reservation'] ?? null,
+                        'del' => $input['redirects']['delivery'] ?? null,
+                        'pick' => $input['redirects']['pickup'] ?? null,
+                        'loc' => $input['redirects']['location'] ?? null,
+                        'pdf1' => $input['redirects']['pdf']['dinein1'] ?? null,
+                        'pdf2' => $input['redirects']['pdf']['dinein2'] ?? null,
+                        'id' => $branchId
+                    ]);
+
+                    // Schedules
+                    if (isset($input['openingTime']) && is_array($input['openingTime'])) {
+                        $db->prepare("DELETE FROM branch_schedules WHERE branch_id = :bid")->execute(['bid' => $branchId]);
+                        $schedStmt = $db->prepare("INSERT INTO branch_schedules (branch_id, schedule_type, day_pt, day_en, time_pt, time_en, display_order)
+                            VALUES (:bid, 'opening', :day_pt, :day_en, :time_pt, :time_en, :order)");
+                        $order = 1;
+                        foreach ($input['openingTime'] as $s) {
+                            $schedStmt->execute([
+                                'bid' => $branchId,
+                                'day_pt' => $s['dayPt'] ?? '',
+                                'day_en' => $s['dayEn'] ?? '',
+                                'time_pt' => $s['timePt'] ?? '',
+                                'time_en' => $s['timeEn'] ?? '',
+                                'order' => $order++
+                            ]);
+                        }
+                    }
+
+                    // Reviews
+                    if (isset($input['reviews']) && is_array($input['reviews'])) {
+                        $db->prepare("DELETE FROM branch_reviews WHERE branch_id = :bid")->execute(['bid' => $branchId]);
+                        $revStmt = $db->prepare("INSERT INTO branch_reviews (branch_id, name, url, display_order) VALUES (:bid, :name, :url, :order)");
+                        $order = 1;
+                        foreach ($input['reviews'] as $r) {
+                            if (!empty($r['name']) && !empty($r['url'])) {
+                                $revStmt->execute([
+                                    'bid' => $branchId,
+                                    'name' => $r['name'],
+                                    'url' => $r['url'],
+                                    'order' => $order++
+                                ]);
+                            }
+                        }
+                    }
+
+                    $db->commit();
+                    $updatedBranch = fetchBranchesData($db, $branchId);
+                    http_response_code(200);
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Branch updated successfully',
+                        'data' => $updatedBranch,
+                        'updatedAt' => date('Y-m-d H:i:s')
+                    ]);
+                } catch (Exception $e) {
+                    $db->rollBack();
+                    throw $e;
+                }
             }
         }
     } elseif ($method === 'PUT' || $method === 'PATCH') {
@@ -183,16 +315,37 @@ try {
         $section = isset($_GET['section']) ? trim($_GET['section']) : 'all';
         $identifier = isset($_GET['identifier']) ? trim($_GET['identifier']) : (isset($input['identifier']) ? $input['identifier'] : null);
         $id = isset($_GET['id']) ? trim($_GET['id']) : (isset($input['id']) ? $input['id'] : null);
-        $targetKey = $id !== null && $id !== '' ? $id : ($identifier !== null && $identifier !== '' ? $identifier : null);
 
+        $isIdNull = ($id === null || $id === '' || $id === 'null' || $id === 0 || $id === '0');
+        $targetKey = !$isIdNull ? $id : ($identifier !== null && $identifier !== '' && $identifier !== 'null' ? $identifier : null);
+
+        // ID NULL CASE AS NEW: If targetKey is null or id is explicitly null, treat as new branch creation
         if (!$targetKey) {
-            http_response_code(400);
-            echo json_encode(['status' => 'error', 'message' => 'Missing branch ID or identifier for update']);
+            $newBranch = createBranchRecord($db, $input);
+            http_response_code(201);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Branch created successfully',
+                'data' => $newBranch,
+                'createdAt' => date('Y-m-d H:i:s')
+            ]);
             exit();
         }
 
         $branchId = findBranchId($db, $targetKey);
         if (!$branchId) {
+            if ($isIdNull) {
+                // Fallback: create as new
+                $newBranch = createBranchRecord($db, $input);
+                http_response_code(201);
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Branch created successfully',
+                    'data' => $newBranch,
+                    'createdAt' => date('Y-m-d H:i:s')
+                ]);
+                exit();
+            }
             http_response_code(404);
             echo json_encode(['status' => 'error', 'message' => "Branch '{$targetKey}' not found"]);
             exit();
@@ -207,13 +360,13 @@ try {
             } elseif ($section === 'info' || $section === 'general') {
                 $newIdent = !empty($input['identifier']) ? trim($input['identifier']) : null;
                 if ($newIdent) {
-                    // Check duplicate identifier if changed
-                    $stmtCheck = $db->prepare("SELECT id FROM branches WHERE identifier = :ident AND id != :id LIMIT 1");
+                    // Check duplicate identifier if changed (case-insensitive)
+                    $stmtCheck = $db->prepare("SELECT id FROM branches WHERE LOWER(identifier) = LOWER(:ident) AND id != :id LIMIT 1");
                     $stmtCheck->execute(['ident' => $newIdent, 'id' => $branchId]);
                     if ($stmtCheck->fetchColumn() !== false) {
                         $db->rollBack();
                         http_response_code(400);
-                        echo json_encode(['status' => 'error', 'message' => "Identifier '{$newIdent}' is already in use by another branch."]);
+                        echo json_encode(['status' => 'error', 'message' => "Branch identifier '{$newIdent}' is already in use by another branch. Branch identifier must be unique."]);
                         exit();
                     }
                 }

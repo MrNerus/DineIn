@@ -3,16 +3,32 @@
   <div class="page-header">
     <div class="header-left">
       <div class="header-icon-box">
-        <i class="material-symbols-outlined">edit_location</i>
+        <i class="material-symbols-outlined">{{ isEditMode() ? 'edit_location' : 'add_location' }}</i>
       </div>
       <div>
         <h1 class="page-title">
-          Edit Branch: {{ branchForm.get('name')?.value || originalIdentifier() || 'New Branch' }}
+          {{ isEditMode() ? ('Edit Branch: ' + (branchForm.get('name')?.value || originalIdentifier() || 'Branch Details')) : 'Create New Branch' }}
         </h1>
       </div>
     </div>
 
     <div class="header-actions">
+      <button 
+        type="button" 
+        class="btn save-btn" 
+        (click)="saveFullBranch()" 
+        [disabled]="isSavingBranch() || managementService.isSaving()"
+        style="padding: 0.7rem 1.4rem;"
+      >
+        @if (isSavingBranch() || managementService.isSaving()) {
+          <i class="material-symbols-outlined spin-icon">sync</i>
+          <span>{{ isEditMode() ? 'Saving Branch...' : 'Creating Branch...' }}</span>
+        } @else {
+          <i class="material-symbols-outlined">save</i>
+          <span>{{ isEditMode() ? 'Save Branch' : 'Create Branch' }}</span>
+        }
+      </button>
+
       <a routerLink="/management/branches" class="cancel-btn glass">
         Back to Branches
       </a>
@@ -75,19 +91,6 @@
       @if (activeSection() === 'info') {
       <div class="form-section glass">
         <div class="form-grid">
-          <!-- Active Status Banner / Switch -->
-          <div class="form-group full-width status-banner-card">
-            <div class="status-banner-left">
-              <span class="status-banner-title">Branch Visibility & Active Status</span>
-              <span class="status-banner-desc">Inactive branches are kept as drafts and hidden from the public portal.</span>
-            </div>
-            <label class="switch-control">
-              <input type="checkbox" formControlName="isActive" />
-              <span class="slider-round"></span>
-              <span class="switch-text">{{ branchForm.get('isActive')?.value ? 'Active (Live)' : 'Inactive (Draft)' }}</span>
-            </label>
-          </div>
-
           <div class="form-group">
             <label for="branchId" class="form-label">Unique Identifier (Slug) *</label>
             <div class="input-wrapper" [class.input-error]="branchForm.get('identifier')?.invalid && branchForm.get('identifier')?.touched">
@@ -186,18 +189,15 @@
               />
             </div>
           </div>
-        </div>
+          <div class="form-group">
+            <label for="isActive" class="form-label">Is Active</label>
 
-        <div class="section-add-entry">
-          <button type="button" class="btn save-btn" (click)="saveGeneralInfo()" [disabled]="savingSection() === 'info' || managementService.isSaving()">
-            @if (savingSection() === 'info') {
-              <i class="material-symbols-outlined spin-icon">sync</i>
-              <span>Saving in Database...</span>
-            } @else {
-              <i class="material-symbols-outlined">save</i>
-              <span>Save General Info</span>
-            }
-          </button>
+              <label class="switch-control">
+                <input type="checkbox" formControlName="isActive" id="isActive"/>
+                <span class="slider-round"></span>
+                <span class="switch-text">{{ branchForm.get('isActive')?.value ? 'Active (Live)' : 'Inactive (Draft)' }}</span>
+              </label>
+          </div>
         </div>
       </div>
     }
@@ -282,15 +282,6 @@
             <button type="button" class="btn add-row-btn" (click)="addOpeningTime()">
               <i class="material-symbols-outlined">add</i>
               <span>Add Schedule Slot</span>
-            </button>
-            <button type="button" class="btn save-btn" (click)="saveSchedule()" [disabled]="savingSection() === 'schedule' || managementService.isSaving()">
-              @if (savingSection() === 'schedule') {
-                <i class="material-symbols-outlined spin-icon">sync</i>
-                <span>Saving in Database...</span>
-              } @else {
-                <i class="material-symbols-outlined">save</i>
-                <span>Save Schedule Slots</span>
-              }
             </button>
           </div>
         </div>
@@ -385,18 +376,6 @@
             </div>
           </div>
         </div>
-
-        <div class="section-add-entry">
-          <button type="button" class="btn save-btn" (click)="saveRedirects()" [disabled]="savingSection() === 'redirects' || managementService.isSaving()">
-            @if (savingSection() === 'redirects') {
-              <i class="material-symbols-outlined spin-icon">sync</i>
-              <span>Saving in Database...</span>
-            } @else {
-              <i class="material-symbols-outlined">save</i>
-              <span>Save Redirection URLs</span>
-            }
-          </button>
-        </div>
       </div>
     }
 
@@ -456,16 +435,6 @@
             <button type="button" class="btn add-row-btn" (click)="addReview()">
               <i class="material-symbols-outlined">add</i>
               <span>Add Review Channel</span>
-            </button>
-
-            <button type="button" class="btn save-btn" (click)="saveReviews()" [disabled]="savingSection() === 'reviews' || managementService.isSaving()">
-              @if (savingSection() === 'reviews') {
-                <i class="material-symbols-outlined spin-icon">sync</i>
-                <span>Saving in Database...</span>
-              } @else {
-                <i class="material-symbols-outlined">save</i>
-                <span>Save Review Channel</span>
-              }
             </button>
           </div>
         </div>

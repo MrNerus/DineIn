@@ -152,6 +152,62 @@ export class ManagementService {
   }
 
   /**
+   * Saves or creates a branch directly in the backend SQLite database.
+   * If id is null/undefined, creates a new branch via POST.
+   * If id is provided, updates the existing branch via PUT.
+   */
+  public saveBranch(branchData: Partial<Branch>): Observable<Branch> {
+    this.isSaving.set(true);
+
+    const isNew = !branchData.id;
+    const url = isNew
+      ? `${this.configService.backend_url}/api/branches.php`
+      : `${this.configService.backend_url}/api/branches.php?id=${encodeURIComponent(String(branchData.id))}`;
+
+    const request$ = isNew
+      ? this.http.post<ApiResponse<Branch>>(url, branchData)
+      : this.http.put<ApiResponse<Branch>>(url, branchData);
+
+    return request$.pipe(
+      map(res => res.data),
+      tap({
+        next: (savedBranch) => {
+          const current = this.company();
+          if (current) {
+            const branches = [...(current.branchInfo || [])];
+            const index = branches.findIndex(
+              b => (b.id && savedBranch.id && String(b.id) === String(savedBranch.id)) ||
+                   (b.identifier && savedBranch.identifier && b.identifier.toLowerCase() === savedBranch.identifier.toLowerCase())
+            );
+
+            if (index !== -1) {
+              branches[index] = savedBranch;
+            } else {
+              branches.push(savedBranch);
+            }
+
+            this.company.set({
+              ...current,
+              branchInfo: branches
+            });
+          }
+
+          this.isSaving.set(false);
+          const msg = isNew 
+            ? `Restaurante "${savedBranch.name}" criado com sucesso!`
+            : `Restaurante "${savedBranch.name}" guardado com sucesso!`;
+          this.showNotification(msg, 'success');
+        },
+        error: (err) => {
+          this.isSaving.set(false);
+          const errorMsg = err?.error?.message || 'Falha ao guardar restaurante no servidor.';
+          this.showNotification(errorMsg, 'error');
+        }
+      })
+    );
+  }
+
+  /**
    * Saves an individual section of a branch directly to the backend.
    */
   public saveBranchSection(
